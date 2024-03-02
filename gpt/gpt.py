@@ -1,99 +1,91 @@
-"""
-MIT License
-
-Copyright (c) 2023 Michelangelo27
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-import os
-import socket
 import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
 from fake_useragent import UserAgent
 
 
 class ChatGPTAutomation:
 
-    def __init__(self, user_data_dir: str = './'):
+    def __init__(self, user_data_dir: str = './', wait_for_login: bool = False):
         op = webdriver.ChromeOptions()
         op.add_argument(f"user-agent={UserAgent.random}")
 
         self.driver = uc.Chrome(options=op, user_data_dir=user_data_dir, use_subprocess=True, port=34562)
         url = r"https://chat.openai.com"
-        time.sleep(3)
         self.driver.get(url)
-        time.sleep(3)
-        # wait for the elements to load
-        self.wait_for_human_verification()
+        if wait_for_login:
+            self.wait_for_human_verification()
+        # wait for the prompt box to appear
+        WebDriverWait(self.driver, 60).until(
+            EC.presence_of_element_located((By.XPATH, '//textarea[contains(@id, "prompt-textarea")]')))
 
-    @staticmethod
-    def find_available_port():
-        """ This function finds and returns an available port number on the local machine by creating a temporary
-            socket, binding it to an ephemeral port, and then closing the socket. """
+    @property
+    def agent_turns(self):
+        return self.driver.find_elements(by=By.CSS_SELECTOR,
+                                         value='div.text-base > div.text-base > div.agent-turn')
 
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(('', 0))
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            return s.getsockname()[1]
+    @property
+    def response_numbers(self):
+        return len(self.agent_turns)
 
-    def send_prompt_to_chatgpt(self, prompt):
-        """ Sends a message to ChatGPT and waits for 20 seconds for the response """
-
+    def ask(self, prompt: str):
         input_box = self.driver.find_element(by=By.XPATH, value='//textarea[contains(@id, "prompt-textarea")]')
         self.driver.execute_script(f"arguments[0].value = `{prompt}`;", input_box)
+        current_response_numbers = self.response_numbers
         input_box.send_keys(Keys.RETURN)
         input_box.submit()
-        time.sleep(20)
+        # wait for the response to get started
+        WebDriverWait(self.driver, 20).until(lambda _: self.response_numbers > current_response_numbers)
+        # wait for the response to be completed
+        response = self.wait_for_response()
+        # if the response is empty or too long, regenerate it
+        while response.strip() == '' or self.is_long_response(response):
+            response = self.regenerate()
+        return response
 
-    def return_chatgpt_conversation(self):
-        """
-        :return: returns a list of items, even items are the submitted questions (prompts) and odd items are chatgpt response
-        """
+    def regenerate(self):
+        last_response = self.return_last_response()
+        response_element = self.agent_turns[-1]
+        response_element.find_elements(by=By.CSS_SELECTOR, value="span[data-state='closed']")[-2].click()
 
-        return self.driver.find_elements(by=By.CSS_SELECTOR, value='div.text-base')
+        def is_changed(_):
+            return last_response != self.return_last_response()
 
-    def save_conversation(self, file_name):
-        """
-        It saves the full chatgpt conversation of the tab open in chrome into a text file, with the following format:
-            prompt: ...
-            response: ...
-            delimiter
-            prompt: ...
-            response: ...
+        # wait for the new response to get started
+        WebDriverWait(self.driver, 20).until(is_changed)
+        # wait for the new response to be completed
+        return self.wait_for_response()
 
-        :param file_name: name of the file where you want to save
-        """
+    @staticmethod
+    def is_long_response(response: str):
+        if 'Copy code' in response:  # This means gpt is explaining the code
+            return True
+        return False
 
-        directory_name = "conversations"
-        if not os.path.exists(directory_name):
-            os.makedirs(directory_name)
+    def new_chat(self):
+        # move to home page
+        self.driver.get(r"https://chat.openai.com")
 
-        delimiter = "|^_^|"
-        chatgpt_conversation = self.return_chatgpt_conversation()
-        with open(os.path.join(directory_name, file_name), "a") as file:
-            for i in range(0, len(chatgpt_conversation), 2):
-                file.write(
-                    f"prompt: {chatgpt_conversation[i].text}\nresponse: {chatgpt_conversation[i + 1].text}\n\n{delimiter}\n\n")
+    def wait_for_response(self) -> str:
+        """ Waits until the response from chatgpt is done """
+        last_text = None
+
+        def is_stable(_):
+            nonlocal last_text
+            response = self.return_last_response()
+            try:
+                return response == last_text or self.is_long_response(response)
+            finally:
+                last_text = response
+
+        # wait until it's not changing anymore
+        WebDriverWait(self.driver, 60, poll_frequency=1).until(is_stable)
+        return self.return_last_response()
 
     def return_last_response(self):
         """ :return: the text of the last chatgpt response """
