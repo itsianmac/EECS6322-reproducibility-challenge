@@ -17,7 +17,7 @@ class GPTClient:
     Args:
         user_data_dir (str): the path to the user data directory of the browser. Defaults to './'
         wait_for_login (bool): whether to wait for the user to log in or complete the human verification process.
-            Defaults to False.
+            You will only need to set this to True if you are using a new user data directory. Defaults to False.
     """
 
     def __init__(self, user_data_dir: str = './', wait_for_login: bool = False):
