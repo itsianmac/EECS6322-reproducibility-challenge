@@ -11,7 +11,7 @@ import undetected_chromedriver as uc
 from fake_useragent import UserAgent
 
 
-class ChatGPTAutomation:
+class GPTClient:
     """ A class to automate the chat with chatgpt using selenium
 
     Args:
