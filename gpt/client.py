@@ -15,12 +15,12 @@ class GPTClient:
     """ A class to automate the chat with chatgpt using selenium
 
     Args:
-        user_data_dir (str): the path to the user data directory of the browser. Defaults to './'
+        user_data_dir (str): the path to the user data directory of the browser. Defaults to './user-data'
         wait_for_login (bool): whether to wait for the user to log in or complete the human verification process.
             You will only need to set this to True if you are using a new user data directory. Defaults to False.
     """
 
-    def __init__(self, user_data_dir: str = './', wait_for_login: bool = False):
+    def __init__(self, user_data_dir: str = './user-data', wait_for_login: bool = False):
         op = webdriver.ChromeOptions()
         op.add_argument(f"user-agent={UserAgent.random}")
 
