@@ -44,7 +44,7 @@ class GPTClient:
                                          value='div.text-base > div.text-base > div.agent-turn')
 
     @property
-    def response_numbers(self) -> int:
+    def response_count(self) -> int:
         """ the number of chatgpt responses
 
         Returns:
@@ -65,14 +65,14 @@ class GPTClient:
         # fill the prompt box
         input_box = self.driver.find_element(by=By.XPATH, value='//textarea[contains(@id, "prompt-textarea")]')
         self.driver.execute_script(f"arguments[0].value = `{prompt}`;", input_box)
-        current_response_numbers = self.response_numbers
+        current_response_count = self.response_count
 
         # send the prompt
         input_box.send_keys(Keys.RETURN)
         input_box.submit()
 
         # wait for the response to get started
-        WebDriverWait(self.driver, 20).until(lambda _: self.response_numbers > current_response_numbers)
+        WebDriverWait(self.driver, 20).until(lambda _: self.response_count > current_response_count)
 
         # wait for the response to be completed
         response = self.wait_for_response()
