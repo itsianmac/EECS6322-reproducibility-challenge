@@ -1,11 +1,9 @@
 import re
-from typing import Any, Dict, Tuple
+from typing import Any, Dict
 
 import numpy as np
-from PIL import Image, ImageDraw
-import PIL
-import torch
-from transformers import AutoImageProcessor, MaskFormerModel
+from PIL import Image
+from transformers import AutoImageProcessor, MaskFormerForInstanceSegmentation
 
 from modules.visprog_module import VisProgModule, ParsedStep
 
@@ -15,7 +13,7 @@ class Seg(VisProgModule):
     def __init__(self, device: str = "cpu"):
         super().__init__()
         self.image_processor = AutoImageProcessor.from_pretrained("facebook/maskformer-swin-base-ade")
-        self.model = MaskFormerModel.from_pretrained("facebook/maskformer-swin-base-ade")
+        self.model = MaskFormerForInstanceSegmentation.from_pretrained("facebook/maskformer-swin-base-ade")
         self.model = self.model.to(device)
         self.device = device
 
