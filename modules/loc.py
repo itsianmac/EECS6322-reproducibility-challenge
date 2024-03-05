@@ -64,7 +64,7 @@ class Loc(VisProgModule):
         Tuple[float,...]
             The box of the object in the image (x1, y1, x2, y2)
         """
-        inputs = self.processor(text=[object], images=image, return_tensors="pt")
+        inputs = self.processor(text=[object], images=image, return_tensors="pt").to(self.device)
         outputs = self.model(**inputs)
         target_sizes = torch.Tensor([image.size[::-1]])
         results = self.processor.post_process_object_detection(outputs=outputs, target_sizes=target_sizes,
