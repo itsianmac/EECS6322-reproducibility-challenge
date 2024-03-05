@@ -69,8 +69,8 @@ class VisProgModule():
 
         inputs = parsed_step.inputs.copy()
         # Get values of input variables form state
-        for var_name in parsed_step.input_var_names:
-            inputs[var_name] = state[var_name]
+        for input_name, var_name in parsed_step.input_var_names:
+            inputs[input_name] = state[var_name]
 
         # Perform computation using the loaded module
         output = self.perform_module_function(**inputs)

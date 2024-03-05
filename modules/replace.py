@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict
+from typing import Dict
 
 import numpy as np
 from PIL import Image
