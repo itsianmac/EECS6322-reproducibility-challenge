@@ -2,13 +2,13 @@ import re
 from typing import Any, Dict
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 import PIL
 
 from modules.visprog_module import VisProgModule, ParsedStep
 
 
-class ColorPop(VisProgModule):
+class BGBlur(VisProgModule):
 
     def parse(self, step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
@@ -17,7 +17,7 @@ class ColorPop(VisProgModule):
         Parameters
         ----------
         step : str
-            with the format OUTPUT=COLORPOP(image=IMAGE,object=OBJ)
+            with the format OUTPUT=BGBLUR(image=IMAGE,object=OBJ)
 
         Returns
         -------
@@ -26,7 +26,7 @@ class ColorPop(VisProgModule):
             in the original Visprog paper... so will need to take some liberties here
             and just use a torch tensor or image... can also leave it untyped
         """
-        pattern = re.compile(r"(?P<output>.*)\s*=\s*COLORPOP\s*"
+        pattern = re.compile(r"(?P<output>.*)\s*=\s*BGBLUR\s*"
                              r"\(\s*image\s*=\s*(?P<image>.*)\s*"
                              r",\s*object\s*=\s*(?P<object>.*)\s*\)")
         match = pattern.match(step)
@@ -51,8 +51,9 @@ class ColorPop(VisProgModule):
         Image.Image
             The color popped image
         """
+        blured_image = np.array(image.filter(ImageFilter.GaussianBlur(radius=5)))
         image_array = np.array(image)
-        image_array[object] = image_array[object].mean(axis=-1).astype(int)[..., None]
+        image_array[~object] = blured_image[~object]
         return PIL.Image.fromarray(image_array)
 
     def html(self, output: Image.Image, image: Image.Image, object: np.ndarray) -> Dict[str, Any]:
