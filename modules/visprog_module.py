@@ -1,10 +1,22 @@
+from typing import Any, Dict
+
+from dataclasses import dataclass, field
+
+
+@dataclass
+class ParsedStep:
+    output_var_name: str
+    inputs: Dict[str, Any] = field(default_factory=dict)
+    input_var_names: Dict[str, str] = field(default_factory=dict)
+
+
 class VisProgModule():
     
     def __init__(self):
         """ Load a trained model, move it to gpu, etc. """
         pass
 
-    def html(self, inputs: list, output: Any):
+    def html(self, output: Any, **inputs):
         """ Return an html string visualizing step I/O
 
         Parameters
@@ -18,7 +30,7 @@ class VisProgModule():
         """
         pass
 
-    def parse(self, step: str):
+    def parse(self, step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names 
             and output variable name. 
 
@@ -37,7 +49,7 @@ class VisProgModule():
         """
         pass
 
-    def perform_module_function(self, inputs):
+    def perform_module_function(self, **inputs):
         """ NOTE: I added this for us. The idea is we can implement
             this, parse, and html, and just call execute in a loop on 
             a list of VisProgModules.
@@ -53,19 +65,20 @@ class VisProgModule():
         pass
 
     def execute(self, step: str, state: dict):
-        inputs, input_var_names, output_var_name = self.parse(step)
-        
+        parsed_step = self.parse(step)
+
+        inputs = parsed_step.inputs.copy()
         # Get values of input variables form state
-        for var_name in input_var_names:
-            inputs.append(state[var_name])
+        for var_name in parsed_step.input_var_names:
+            inputs[var_name] = state[var_name]
 
         # Perform computation using the loaded module
-        output = peform_module_function(inputs)
+        output = self.perform_module_function(**inputs)
 
         # Update state
-        state[output_var_name] = output
+        state[parsed_step.output_var_name] = output
 
-        step_html = self.html(inputs, output)
+        step_html = self.html(output, **inputs)
 
         return output, step_html
 
