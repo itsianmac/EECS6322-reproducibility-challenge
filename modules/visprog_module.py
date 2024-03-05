@@ -16,7 +16,7 @@ class VisProgModule():
         """ Load a trained model, move it to gpu, etc. """
         pass
 
-    def html(self, output: Any, **inputs):
+    def html(self, output: Any, **inputs) -> Dict[str, Any]:
         """ Return an html string visualizing step I/O
 
         Parameters

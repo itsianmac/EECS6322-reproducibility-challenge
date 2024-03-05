@@ -33,7 +33,10 @@ class ColorPop(VisProgModule):
         if match is None:
             raise ValueError(f"Could not parse step: {step}")
         return ParsedStep(match.group('output'),
-                          input_var_names=[match.group('image'), match.group('object')])
+                          input_var_names={
+                              'image': match.group('image'),
+                              'object': match.group('object')
+                          })
 
     def perform_module_function(self, image: Image.Image, object: np.ndarray) -> Image.Image:
         """ Perform the color pop operation on the image using the object mask
