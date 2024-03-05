@@ -9,3 +9,4 @@ transformers
 torch
 face-detection
 diffusers
+scipy

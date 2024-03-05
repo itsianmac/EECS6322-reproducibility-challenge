@@ -75,7 +75,7 @@ class Seg(VisProgModule):
         segments = []
         for class_label in unique_classes:
             mask = output == class_label
-            masked_image = image_array * mask
+            masked_image = image_array * mask[..., None]
             masked_image = Image.fromarray(masked_image)
             segments.append(masked_image)
 
