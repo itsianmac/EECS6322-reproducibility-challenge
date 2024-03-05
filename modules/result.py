@@ -38,7 +38,6 @@ class Result(VisProgModule):
         return ParsedStep(match.group('output'),
                           input_var_names=inputs)
 
-
     def perform_module_function(self, **kwargs: Any) -> Any:
         return kwargs
 

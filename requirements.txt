@@ -5,3 +5,5 @@ fake-useragent==1.4.0
 augly
 pillow
 numpy
+transformers
+torch
