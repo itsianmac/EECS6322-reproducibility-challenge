@@ -40,7 +40,7 @@ class Emoji(VisProgModule):
                           inputs={'emoji': match.group('emoji')},
                           input_var_names={
                               'image': match.group('image'),
-                              'bbox': match.group('object')
+                              'boxes': match.group('object')
                           })
 
     @staticmethod
@@ -59,7 +59,8 @@ class Emoji(VisProgModule):
         """
         return os.path.join(SMILEY_EMOJI_DIR, f"{emoji}.png")
 
-    def perform_module_function(self, image: Image.Image, bbox: Tuple[float,...], emoji: str) -> Image.Image:
+    def perform_module_function(self, image: Image.Image, boxes: Tuple[Tuple[float, ...], ...],
+                                emoji: str) -> Image.Image:
         """ Perform the color pop operation on the image using the object mask
 
         Parameters
@@ -67,7 +68,7 @@ class Emoji(VisProgModule):
         image : Image.Image
             The original image
 
-        bbox : np.ndarray
+        boxes : np.ndarray
             The object bounding box
 
         emoji : str
@@ -78,12 +79,15 @@ class Emoji(VisProgModule):
         Image.Image
             The color popped image
         """
+        # TODO: which box we should use?
+        bbox = boxes[0]
         aug_image = imaugs.overlay_emoji(image, emoji_path=self.get_emoji_path(emoji),
                                          x_pos=bbox[0] / image.size[0], y_pos=bbox[1] / image.size[1],
                                          emoji_size=max(bbox[2] - bbox[0], bbox[3] - bbox[1]) / image.size[1])
         return aug_image
 
-    def html(self, output: Image.Image, image: Image.Image, bbox: Tuple[float,...], emoji: str) -> Dict[str, Any]:
+    def html(self, output: Image.Image, image: Image.Image, boxes: Tuple[Tuple[float, ...], ...],
+             emoji: str) -> Dict[str, Any]:
         """ Generate HTML to display the output
 
         Parameters
