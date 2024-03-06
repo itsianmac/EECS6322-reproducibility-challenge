@@ -86,7 +86,7 @@ class VisProgModule:
             raise ValueError(f"Step {step} does not match pattern {self.pattern}")
         return match
 
-    def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, str]:
+    def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, Dict[str, Any]]:
         if match is None:
             match = self.match(step)
         parsed_step = self.parse(match, step)
