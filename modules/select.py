@@ -98,7 +98,7 @@ class Select(VisProgModule):
         masked_images = []
         for category_id in category_ids:
             mask = seg_map == category_id
-            masked_image = image * mask
+            masked_image = image * mask[..., None]
             masked_image = Image.fromarray(masked_image)
             masked_images.append(masked_image)
 
