@@ -85,7 +85,7 @@ class Emoji(VisProgModule):
         y_pos = y1 / image.size[1]
         aug_image = imaugs.overlay_emoji(image, emoji_path=self.get_emoji_path(emoji),
                                          x_pos=x_pos, y_pos=y_pos,
-                                         emoji_size=y2 - y1)
+                                         emoji_size=(y2 - y1) / image.size[1])
         return aug_image
 
     def html(self, output: Image.Image, image: Image.Image, boxes: Tuple[Tuple[float, ...], ...],
