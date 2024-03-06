@@ -91,7 +91,7 @@ class Replace(VisProgModule):
             The HTML to display the output
         """
         image_array = np.array(image)
-        masked_image = image_array * seg_map
+        masked_image = image_array * (~seg_map[..., None])
         masked_image = Image.fromarray(masked_image)
 
         return {
