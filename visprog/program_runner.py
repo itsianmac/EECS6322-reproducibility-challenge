@@ -23,7 +23,7 @@ class ProgramRunner:
         step_details = []
         output = None
         for i, step in enumerate(steps):
-            matched: Tuple[VisProgModule, Optional[re.Match]] = next((module, match
+            matched: Tuple[VisProgModule, Optional[re.Match]] = next(((module, match)
                                                                       for module in self.modules
                                                                       if (match := module.match(step))),
                                                                      None)
