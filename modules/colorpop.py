@@ -55,8 +55,9 @@ class ColorPop(VisProgModule):
             The color popped image
         """
         image_array = np.array(image)
+        image_grayscale = np.array(image.convert('L').convert('RGB'))
         mask = object[..., None].repeat(3, axis=-1)
-        image_array[mask] = image_array[mask].mean(axis=-1).astype(int)[..., None]
+        image_array = np.where(mask, image_array, image_grayscale)
         return PIL.Image.fromarray(image_array)
 
     def html(self, output: Image.Image, image: Image.Image, object: np.ndarray) -> Dict[str, Any]:
