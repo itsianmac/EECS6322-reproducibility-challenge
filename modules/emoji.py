@@ -81,9 +81,11 @@ class Emoji(VisProgModule):
         """
         # TODO: which box we should use?
         bbox = boxes[0]
+        x_pos = (bbox[0] + image.size[0] / 2 - image.size[1] / 2) / image.size[0]   # to center the emoji horizontally
+        y_pos = bbox[1] / image.size[1]
         aug_image = imaugs.overlay_emoji(image, emoji_path=self.get_emoji_path(emoji),
-                                         x_pos=bbox[0] / image.size[0], y_pos=bbox[1] / image.size[1],
-                                         emoji_size=max(bbox[2] - bbox[0], bbox[3] - bbox[1]) / image.size[1])
+                                         x_pos=x_pos, y_pos=y_pos,
+                                         emoji_size=bbox[3] - bbox[1])
         return aug_image
 
     def html(self, output: Image.Image, image: Image.Image, boxes: Tuple[Tuple[float, ...], ...],
