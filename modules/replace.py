@@ -72,7 +72,7 @@ class Replace(VisProgModule):
         Image.Image
             The image with the object replaced
         """
-        return self.pipe(prompt=prompt, image=image, mask_image=seg_map).images[0]
+        return self.pipe(prompt=prompt, image=image, mask_image=seg_map.astype('float')).images[0]
 
     def html(self, output: Image.Image, image: Image.Image, seg_map: np.ndarray, prompt: str) -> str:
         """ Generate HTML to display the output
