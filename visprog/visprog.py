@@ -18,4 +18,4 @@ class VisProg:
         prompt = self.prompt_factory(seed=seed, **prompt)
         program = self.gpt.ask(prompt)
         steps = [step.strip() for step in program.split('\n') if step.strip()]
-        return steps, self.program_runner.execute(steps, initial_state)
+        return self.program_runner.execute(steps, initial_state)
