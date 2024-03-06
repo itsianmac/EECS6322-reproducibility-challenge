@@ -68,7 +68,7 @@ class VisProgModule:
 
         pass
 
-    def match(self, step: str) -> re.Match[str]:
+    def match(self, step: str) -> Optional[re.Match[str]]:
         """ Match the step to the pattern and return the match object
 
         Parameters
@@ -81,14 +81,13 @@ class VisProgModule:
         re.Match[str]
             The match object
         """
-        match = self.pattern.match(step)
-        if match is None:
-            raise ValueError(f"Step {step} does not match pattern {self.pattern}")
-        return match
+        return self.pattern.match(step)
 
     def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, Dict[str, Any]]:
         if match is None:
             match = self.match(step)
+            if match is None:
+                raise ValueError(f"Step {step} does not match pattern {self.pattern}")
         parsed_step = self.parse(match, step)
 
         inputs = parsed_step.inputs.copy()
