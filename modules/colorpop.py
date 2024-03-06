@@ -55,7 +55,7 @@ class ColorPop(VisProgModule):
             The color popped image
         """
         image_array = np.array(image)
-        mask = object[..., None]
+        mask = object[..., None].repeat(3, axis=-1)
         image_array[mask] = image_array[mask].mean(axis=-1).astype(int)[..., None]
         return PIL.Image.fromarray(image_array)
 
