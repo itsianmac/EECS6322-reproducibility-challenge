@@ -86,7 +86,8 @@ class Select(VisProgModule):
         return seg_map, category_ids
 
     def perform_module_function(self, image: Image.Image, object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
-                                query: str, category: Optional[str] = None) -> np.ndarray:
+                                query: str,
+                                category: Optional[str] = None) -> Union[np.ndarray, Tuple[Tuple[float, ...], ...]]:
         """ Select the object in the image using the object mask
 
         Parameters
@@ -126,9 +127,14 @@ class Select(VisProgModule):
         best_index_per_query = logits_per_image.argmax(dim=0)
         assert len(best_index_per_query) == len(queries)
         selected_category_ids = [category_ids[i] for i in best_index_per_query]
-        return np.isin(seg_map, selected_category_ids)
+        if isinstance(object, np.ndarray):
+            return np.isin(seg_map, selected_category_ids)
+        else:
+            selected_boxes = [object[i - 1] for i in best_index_per_query]
+            return selected_boxes
 
-    def html(self, output: np.ndarray, image: Image.Image, object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
+    def html(self, output: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
+             image: Image.Image, object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
              query: str, category: Optional[str] = None) -> Dict[str, Any]:
         """ Generate HTML to display the output
 
@@ -145,13 +151,25 @@ class Select(VisProgModule):
         Dict[str, Any]
             The HTML to display
         """
-        image_array = np.array(image)
-        masked_image = image_array * output[..., None]
-        masked_image = Image.fromarray(masked_image)
+        if isinstance(object, np.ndarray):
+            image_array = np.array(image)
+            masked_image = image_array * output[..., None]
+            masked_image = Image.fromarray(masked_image)
+            return {
+                'prompt': query,
+                'category': category,
+                'input': image,
+                'output': masked_image
+            }
+
+        image_with_bbox = image.copy()
+        draw = ImageDraw.Draw(image_with_bbox)
+        for box in output:
+            draw.rectangle(box, outline="red", width=3)
 
         return {
             'prompt': query,
             'category': category,
             'input': image,
-            'output': masked_image
+            'output': image_with_bbox
         }
