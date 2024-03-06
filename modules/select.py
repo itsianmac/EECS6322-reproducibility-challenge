@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict, Tuple, Optional
+from typing import Any, Dict, Tuple, Optional, Union, List
 
 import numpy as np
 from PIL import Image, ImageDraw
@@ -56,10 +56,36 @@ class Select(VisProgModule):
                               else match.group('category').strip("'")
                           }, input_var_names={
                               'image': match.group('image'),
-                              'seg_map': match.group('object')
+                              'object': match.group('object')
                           })
 
-    def perform_module_function(self, image: Image.Image, seg_map: np.ndarray,
+    def get_seg_map_and_category_ids(self, image: Image.Image, object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
+                                     category: Optional[str] = None) -> Tuple[np.ndarray, List[int]]:
+        if isinstance(object, np.ndarray):  # object is a segmentation map
+            seg_map = object
+            unique_labels = set(np.unique(seg_map))
+            category_ids = []
+            if category is not None:
+                keywords = re.split(r'[,-]', category)
+                category_ids = [self.category_name_to_id[keyword] for keyword in keywords
+                                if
+                                keyword in self.category_name_to_id
+                                and self.category_name_to_id[keyword] in unique_labels]
+
+            if len(category_ids) == 0:
+                category_ids = list(np.unique(seg_map))
+
+        else:   # object is a list of bounding boxes
+            seg_map = np.zeros(image.size[::-1], dtype=np.uint8)
+            for i, box in enumerate(object):
+                x1, y1, x2, y2 = box
+                seg_map[y1:y2, x1:x2] = i + 1
+
+            category_ids = list(range(len(object) + 1))
+
+        return seg_map, category_ids
+
+    def perform_module_function(self, image: Image.Image, object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
                                 query: str, category: Optional[str] = None) -> np.ndarray:
         """ Select the object in the image using the object mask
 
@@ -68,8 +94,8 @@ class Select(VisProgModule):
         image : Image.Image
             The original image
 
-        seg_map : np.ndarray
-            The mask of the object in the image
+        object : Union[np.ndarray, Tuple[Tuple[float, ...], ...]]
+            The segmentation map or bounding boxes
 
         query : str
             The text prompt for the object
@@ -83,20 +109,11 @@ class Select(VisProgModule):
             The mask of the selected object in the image
         """
         queries = query.split(',')
+        image_array = np.array(image)
 
-        unique_labels = set(np.unique(seg_map))
-        category_ids = []
-        if category is not None:
-            keywords = re.split(r'[,-]', category)
-            category_ids = [self.category_name_to_id[keyword] for keyword in keywords
-                             if
-                             keyword in self.category_name_to_id and self.category_name_to_id[keyword] in unique_labels]
-
-        if len(category_ids) == 0:
-            category_ids = list(np.unique(seg_map))
+        seg_map, category_ids = self.get_seg_map_and_category_ids(image, object, category)
 
         masked_images = []
-        image_array = np.array(image)
         for category_id in category_ids:
             mask = seg_map == category_id
             masked_image = image_array * mask[..., None]
@@ -111,8 +128,8 @@ class Select(VisProgModule):
         selected_category_ids = [category_ids[i] for i in best_index_per_query]
         return np.isin(seg_map, selected_category_ids)
 
-    def html(self, output: np.ndarray, image: Image.Image, seg_map: np.ndarray, query: str,
-             category: Optional[str] = None) -> Dict[str, Any]:
+    def html(self, output: np.ndarray, image: Image.Image, object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]],
+             query: str, category: Optional[str] = None) -> Dict[str, Any]:
         """ Generate HTML to display the output
 
         Parameters
