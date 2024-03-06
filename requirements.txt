@@ -10,3 +10,4 @@ torch
 git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 diffusers
 scipy
+accelerate

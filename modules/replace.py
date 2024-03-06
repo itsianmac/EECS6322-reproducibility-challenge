@@ -18,7 +18,7 @@ class Replace(VisProgModule):
             revision="fp16",
             torch_dtype=torch.float16,
         )
-        self.model = self.pipe.to(device)
+        # self.model = self.pipe.to(device)
         self.device = device
 
     def parse(self, step: str) -> ParsedStep:
