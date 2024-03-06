@@ -61,7 +61,7 @@ class Seg(VisProgModule):
         predicted_semantic_map = self.image_processor.post_process_semantic_segmentation(
             outputs, target_sizes=[image.size[::-1]]
         )[0]
-        return predicted_semantic_map.numpy()
+        return predicted_semantic_map.detach().cpu().numpy()
 
     def html(self, output: np.ndarray, image: Image.Image) -> Dict[str, Any]:
         """ Generate HTML to display the output
