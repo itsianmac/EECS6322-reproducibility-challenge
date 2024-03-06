@@ -6,7 +6,7 @@ from PIL import Image
 from modules.visprog_module import VisProgModule, ParsedStep
 
 
-class Eval(VisProgModule):
+class Count(VisProgModule):
 
     def parse(self, step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
