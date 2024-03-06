@@ -28,6 +28,7 @@ class Result(VisProgModule):
         match = pattern.match(step)
         if match is None:
             raise ValueError(f"Could not parse step: {step}")
+        output_name = match.group('output')
         variable_pattern = re.compile(r"(?P<dict_key>[a-zA-Z0-9_]+)\s*=\s*(?P<var>[a-zA-Z0-9_]+)")
         # iterate through the matches and add them to the dictionary
         inputs = {}
@@ -35,7 +36,7 @@ class Result(VisProgModule):
             if i == 0:
                 continue  # skip the first match, which is the output
             inputs[match.group('dict_key')] = match.group('var')
-        return ParsedStep(match.group('output'),
+        return ParsedStep(output_name,
                           input_var_names=inputs)
 
     def perform_module_function(self, **kwargs: Any) -> Any:
