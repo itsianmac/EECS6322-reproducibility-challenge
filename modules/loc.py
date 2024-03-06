@@ -43,9 +43,11 @@ class Loc(VisProgModule):
         if match is None:
             raise ValueError(f"Could not parse step: {step}")
         return ParsedStep(match.group('output'),
-                          input_var_names={
-                              'image': match.group('image'),
+                          inputs={
                               'object': match.group('object')
+                          },
+                          input_var_names={
+                              'image': match.group('image')
                           })
 
     def perform_module_function(self, image: Image.Image, object: str) -> Tuple[Tuple[float,...],...]:
