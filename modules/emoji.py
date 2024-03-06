@@ -80,12 +80,12 @@ class Emoji(VisProgModule):
             The color popped image
         """
         # TODO: which box we should use?
-        bbox = boxes[0]
-        x_pos = (bbox[0] + image.size[0] / 2 - image.size[1] / 2) / image.size[0]   # to center the emoji horizontally
-        y_pos = bbox[1] / image.size[1]
+        x1, y1, x2, y2 = boxes[0]
+        x_pos = (x1 + x2 - (y2 - y1)) * 0.5 / image.size[0]   # to center the emoji horizontally
+        y_pos = y1 / image.size[1]
         aug_image = imaugs.overlay_emoji(image, emoji_path=self.get_emoji_path(emoji),
                                          x_pos=x_pos, y_pos=y_pos,
-                                         emoji_size=bbox[3] - bbox[1])
+                                         emoji_size=y2 - y1)
         return aug_image
 
     def html(self, output: Image.Image, image: Image.Image, boxes: Tuple[Tuple[float, ...], ...],
