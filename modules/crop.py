@@ -38,7 +38,7 @@ class Crop(VisProgModule):
                               'box': match.group('box')
                           })
 
-    def perform_module_function(self, image: Image.Image, box: Tuple[float,...]) -> Image.Image:
+    def perform_module_function(self, image: Image.Image, box: Tuple[Tuple[float, ...], ...]) -> Image.Image:
         """ Perform the color pop operation on the image using the object mask
 
         Parameters
@@ -54,7 +54,8 @@ class Crop(VisProgModule):
         Image.Image
             The color popped image
         """
-        return image.crop(box)
+        # TODO: which box we should use?
+        return image.crop(box[0])
 
     def html(self, output: Image.Image, image: Image.Image, box: Tuple[float,...]) -> Dict[str, Any]:
         """ Generate HTML to display the output
