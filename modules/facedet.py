@@ -4,9 +4,7 @@ from typing import Any, Dict, Tuple
 import face_detection
 import numpy as np
 from PIL import Image, ImageDraw
-import PIL
 import torch
-from transformers import OwlViTProcessor, OwlViTForObjectDetection
 
 from modules.visprog_module import VisProgModule, ParsedStep
 

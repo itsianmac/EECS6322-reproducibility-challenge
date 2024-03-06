@@ -54,7 +54,7 @@ class Eval(VisProgModule):
         Image.Image
             The color popped image
         """
-        return eval(expr, __globals=kwargs)
+        return eval(expr, kwargs)
 
     def html(self, output: Any, expr: str, **kwargs) -> Dict[str, Any]:
         """ Generate HTML to display the output

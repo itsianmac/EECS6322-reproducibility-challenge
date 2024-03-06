@@ -7,6 +7,6 @@ pillow
 numpy
 transformers
 torch
-face-detection
+git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
 diffusers
 scipy
