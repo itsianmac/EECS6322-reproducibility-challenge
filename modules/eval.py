@@ -26,7 +26,7 @@ class Eval(VisProgModule):
         """
         pattern = re.compile(r"(?P<output>.*)\s*=\s*EVAL\s*"
                              r"\(\s*expr\s*=\s*\"(?P<expr>.*)\"\s*\)")
-        replace_pattern = re.compile(r"\{(?P<var>.*)}")
+        replace_pattern = re.compile(r"\{(?P<var>[^}]+)}")
         variable_names = []
         for match in replace_pattern.finditer(step):
             step = step.replace(match.group(0), match.group('var'))
