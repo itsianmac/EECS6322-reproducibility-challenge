@@ -71,7 +71,7 @@ class Loc(VisProgModule):
         target_sizes = torch.Tensor([image.size[::-1]])
         results = self.processor.post_process_object_detection(outputs=outputs, target_sizes=target_sizes,
                                                                threshold=self.threshold)
-        boxes = results[0]['boxes'][0].detach().cpu().numpy()
+        boxes = results[0]['boxes'].detach().cpu().numpy()
         return tuple(tuple(box) for box in boxes)
 
     def html(self, output: Tuple[Tuple[float,...],...], image: Image.Image, object: str) -> Dict[str, Any]:
