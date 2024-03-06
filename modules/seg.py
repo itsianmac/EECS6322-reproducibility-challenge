@@ -58,7 +58,7 @@ class Seg(VisProgModule):
         """
         inputs = self.image_processor(image, return_tensors="pt").to(self.device)
         outputs = self.model(**inputs)
-        predicted_semantic_map = self.image_processor.post_process_semantic_segmentation(   # TODO: I'm assuming this is a map of class labels
+        predicted_semantic_map = self.image_processor.post_process_semantic_segmentation(
             outputs, target_sizes=[image.size[::-1]]
         )[0]
         return predicted_semantic_map.numpy()
