@@ -9,13 +9,18 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class ColorPop(VisProgModule):
+    pattern = re.compile(r"(?P<output>.*)\s*=\s*COLORPOP\s*"
+                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
+                         r",\s*object\s*=\s*(?P<object>.*)\s*\)")
 
-    def parse(self, step: str) -> ParsedStep:
+    def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
             and output variable name.
 
         Parameters
         ----------
+        match : re.Match[str]
+            The match object from the regex pattern
         step : str
             with the format OUTPUT=COLORPOP(image=IMAGE,object=OBJ)
 
@@ -26,12 +31,6 @@ class ColorPop(VisProgModule):
             in the original Visprog paper... so will need to take some liberties here
             and just use a torch tensor or image... can also leave it untyped
         """
-        pattern = re.compile(r"(?P<output>.*)\s*=\s*COLORPOP\s*"
-                             r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                             r",\s*object\s*=\s*(?P<object>.*)\s*\)")
-        match = pattern.match(step)
-        if match is None:
-            raise ValueError(f"Could not parse step: {step}")
         return ParsedStep(match.group('output'),
                           input_var_names={
                               'image': match.group('image'),

@@ -1,4 +1,5 @@
-from typing import Any, Dict
+import re
+from typing import Any, Dict, Optional, Tuple
 
 from dataclasses import dataclass, field
 
@@ -10,7 +11,8 @@ class ParsedStep:
     input_var_names: Dict[str, str] = field(default_factory=dict)
 
 
-class VisProgModule():
+class VisProgModule:
+    pattern: re.Pattern[str]
     
     def __init__(self):
         """ Load a trained model, move it to gpu, etc. """
@@ -30,12 +32,14 @@ class VisProgModule():
         """
         pass
 
-    def parse(self, step: str) -> ParsedStep:
+    def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names 
             and output variable name. 
 
         Parameters
         ----------
+        match : re.Match[str]
+
         step : str
 
         Returns
@@ -64,8 +68,28 @@ class VisProgModule():
 
         pass
 
-    def execute(self, step: str, state: dict):
-        parsed_step = self.parse(step)
+    def match(self, step: str) -> re.Match[str]:
+        """ Match the step to the pattern and return the match object
+
+        Parameters
+        ----------
+        step : str
+            The step to match
+
+        Returns
+        -------
+        re.Match[str]
+            The match object
+        """
+        match = self.pattern.match(step)
+        if match is None:
+            raise ValueError(f"Step {step} does not match pattern {self.pattern}")
+        return match
+
+    def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, str]:
+        if match is None:
+            match = self.match(step)
+        parsed_step = self.parse(match, step)
 
         inputs = parsed_step.inputs.copy()
         # Get values of input variables form state

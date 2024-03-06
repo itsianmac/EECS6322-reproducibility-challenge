@@ -10,6 +10,10 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Replace(VisProgModule):
+    pattern = re.compile(r"(?P<output>.*)\s*=\s*REPLACE\s*"
+                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
+                         r",\s*object\s*=\s*(?P<object>.*)\s*"
+                         r",\s*prompt\s*=\s*'(?P<prompt>.*)'\s*\)")
 
     def __init__(self, device: str = "cpu"):
         super().__init__()
@@ -23,12 +27,14 @@ class Replace(VisProgModule):
         self.model = self.pipe.to(device)
         self.device = device
 
-    def parse(self, step: str) -> ParsedStep:
+    def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
             and output variable name.
 
         Parameters
         ----------
+        match : re.Match[str]
+            The match object from the regex pattern
         step : str
             with the format OUTPUT=REPLACE(image=IMAGE,object=OBJ,prompt='blue bus')
 
@@ -39,13 +45,6 @@ class Replace(VisProgModule):
             in the original Visprog paper... so will need to take some liberties here
             and just use a torch tensor or image... can also leave it untyped
         """
-        pattern = re.compile(r"(?P<output>.*)\s*=\s*REPLACE\s*"
-                             r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                             r",\s*object\s*=\s*(?P<object>.*)\s*"
-                             r",\s*prompt\s*=\s*'(?P<prompt>.*)'\s*\)")
-        match = pattern.match(step)
-        if match is None:
-            raise ValueError(f"Could not parse step: {step}")
         return ParsedStep(match.group('output'),
                           inputs={
                               'prompt': match.group('prompt')

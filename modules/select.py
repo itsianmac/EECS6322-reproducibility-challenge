@@ -11,6 +11,11 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Select(VisProgModule):
+    pattern = re.compile(r"(?P<output>.*)\s*=\s*SELECT\s*"
+                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
+                         r",\s*object\s*=\s*(?P<object>.*)\s*"
+                         r",\s*query\s*=\s*'(?P<query>.*)'\s*"
+                         r",\s*category\s*=\s*(?P<category>.*)\s*\)")
 
     def __init__(self, category_id_to_name: Dict[int, str], category_name_to_id: Dict[str, int], device: str = "cpu"):
         super().__init__()
@@ -25,12 +30,14 @@ class Select(VisProgModule):
             for key in keys:
                 self.category_name_to_id[key] = v
 
-    def parse(self, step: str) -> ParsedStep:
+    def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
             and output variable name.
 
         Parameters
         ----------
+        match : re.Match[str]
+            The match object from the regex pattern
         step : str
             with the format OUTPUT=SELECT(image=IMAGE,object=OBJ,query='<prompt>',category=None or '<category>')
 
@@ -41,14 +48,6 @@ class Select(VisProgModule):
             in the original Visprog paper... so will need to take some liberties here
             and just use a torch tensor or image... can also leave it untyped
         """
-        pattern = re.compile(r"(?P<output>.*)\s*=\s*SELECT\s*"
-                             r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                             r",\s*object\s*=\s*(?P<object>.*)\s*"
-                             r",\s*query\s*=\s*'(?P<query>.*)'\s*"
-                             r",\s*category\s*=\s*(?P<category>.*)\s*\)")
-        match = pattern.match(step)
-        if match is None:
-            raise ValueError(f"Could not parse step: {step}")
         return ParsedStep(match.group('output'),
                           inputs={
                               'query': match.group('query'),

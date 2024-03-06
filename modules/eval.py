@@ -7,13 +7,17 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Eval(VisProgModule):
+    pattern = re.compile(r"(?P<output>.*)\s*=\s*EVAL\s*"
+                         r"\(\s*expr\s*=\s*\"(?P<expr>.*)\"\s*\)")
 
-    def parse(self, step: str) -> ParsedStep:
+    def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
             and output variable name.
 
         Parameters
         ----------
+        match : re.Match[str]
+            The match object from the regex pattern
         step : str
             with the format ANSWER=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
 
@@ -24,18 +28,14 @@ class Eval(VisProgModule):
             in the original Visprog paper... so will need to take some liberties here
             and just use a torch tensor or image... can also leave it untyped
         """
-        pattern = re.compile(r"(?P<output>.*)\s*=\s*EVAL\s*"
-                             r"\(\s*expr\s*=\s*\"(?P<expr>.*)\"\s*\)")
         replace_pattern = re.compile(r"\{(?P<var>[^}]+)}")
         variable_names = []
-        for match in replace_pattern.finditer(step):
-            step = step.replace(match.group(0), match.group('var'))
-            variable_names.append(match.group('var'))
-        match = pattern.match(step)
-        if match is None:
-            raise ValueError(f"Could not parse step: {step}")
+        expression = match.group('expr')
+        for var_match in replace_pattern.finditer(step):
+            expression = expression.replace(var_match.group(0), var_match.group('var'))
+            variable_names.append(var_match.group('var'))
         return ParsedStep(match.group('output'),
-                          inputs={'expr': match.group('expr')},
+                          inputs={'expr': expression},
                           input_var_names={var: var for var in variable_names})
 
     def perform_module_function(self, expr: str, **kwargs) -> Any:
