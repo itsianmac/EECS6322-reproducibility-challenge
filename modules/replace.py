@@ -15,8 +15,9 @@ class Replace(VisProgModule):
         super().__init__()
         self.pipe = StableDiffusionInpaintPipeline.from_pretrained(
             "runwayml/stable-diffusion-inpainting",
-            revision="fp16",
-            torch_dtype=torch.float16,
+            # TODO: fix device
+            # revision="fp16",
+            # torch_dtype=torch.float16,
         )
         # self.model = self.pipe.to(device)
         self.device = device
