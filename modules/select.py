@@ -108,7 +108,7 @@ class Select(VisProgModule):
         best_index_per_query = logits_per_image.argmax(dim=0)
         assert len(best_index_per_query) == len(queries)
         selected_category_ids = [category_ids[i] for i in best_index_per_query]
-        return np.isin(seg_map, selected_category_ids).astype(np.uint8)
+        return np.isin(seg_map, selected_category_ids)
 
     def html(self, output: np.ndarray, image: Image.Image, seg_map: np.ndarray, query: str,
              category: Optional[str] = None) -> Dict[str, Any]:
