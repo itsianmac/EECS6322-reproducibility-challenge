@@ -29,7 +29,7 @@ class Eval(VisProgModule):
         replace_pattern = re.compile(r"\{(?P<var>.*)}")
         variable_names = []
         for match in replace_pattern.finditer(step):
-            step = step.replace(match.group(0), f"inputs['{match.group('var')}']")
+            step = step.replace(match.group(0), match.group('var'))
             variable_names.append(match.group('var'))
         match = pattern.match(step)
         if match is None:
