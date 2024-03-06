@@ -78,7 +78,7 @@ class Select(VisProgModule):
         else:   # object is a list of bounding boxes
             seg_map = np.zeros(image.size[::-1], dtype=np.uint8)
             for i, box in enumerate(object):
-                x1, y1, x2, y2 = box
+                x1, y1, x2, y2 = map(int, box)
                 seg_map[y1:y2, x1:x2] = i + 1
 
             category_ids = list(range(len(object) + 1))
