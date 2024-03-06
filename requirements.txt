@@ -2,3 +2,12 @@ selenium==4.18.1
 webdriver-manager==4.0.1
 undetected-chromedriver==3.5.5
 fake-useragent==1.4.0
+augly
+pillow
+numpy
+transformers
+torch
+git+https://github.com/hukkelas/DSFD-Pytorch-Inference.git
+diffusers
+scipy
+accelerate
