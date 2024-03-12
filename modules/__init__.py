@@ -3,6 +3,10 @@ from .bgblur import BGBlur
 from .colorpop import ColorPop
 from .count import Count
 from .crop import Crop
+from .crop_left import CropLeft
+from .crop_right import CropRight
+from .crop_above import CropAbove
+from .crop_below import CropBelow
 from .emoji import Emoji
 from .eval import Eval
 from .facedet import FaceDet
