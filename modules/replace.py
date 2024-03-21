@@ -119,7 +119,8 @@ class Replace(VisProgModule):
 
         image_with_bbox = image.copy()
         draw = ImageDraw.Draw(image_with_bbox)
-        draw.rectangle(object[0], outline="red", width=3)
+        for obj in object:
+            draw.rectangle(obj, outline="red", width=3)
 
         return {
             'input': image,

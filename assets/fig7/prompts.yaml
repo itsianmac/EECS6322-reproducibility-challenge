@@ -100,9 +100,9 @@
       IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Emma Watson, Jennifer Lawrence')
       FINAL_RESULT = RESULT(var=IMAGE0)
     - |
-      OBJ0 = SEG(image=IMAGE)
-      ANNE_HATHAWAY = SELECT(image=IMAGE, object=OBJ0, query='Anne Hathaway', category='person')
-      MERYL_STREEP = SELECT(image=IMAGE, object=OBJ0, query='Meryl Streep', category='person')
+      OBJ0 = FACEDET(image=IMAGE)
+      ANNE_HATHAWAY = SELECT(image=IMAGE, object=OBJ0, query='Anne Hathaway', category=None)
+      MERYL_STREEP = SELECT(image=IMAGE, object=OBJ0, query='Meryl Streep', category=None)
       IMAGE0 = REPLACE(image=IMAGE, object=ANNE_HATHAWAY, prompt='Emma Watson')
       IMAGE1 = REPLACE(image=IMAGE0, object=MERYL_STREEP, prompt='Jennifer Lawrence')
       FINAL_RESULT = RESULT(var=IMAGE1)
