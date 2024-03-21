@@ -4,17 +4,17 @@
     instruction: Replace Leonardo DiCaprio with Leonardo DiCaprio wearing sunglasses
   programs:
     - |
-      OBJ0=SEG(image=IMAGE)
-      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='Leonardo DiCaprio',category=None)
-      IMAGE0=EMOJI(image=IMAGE,object=OBJ1,emoji='smiling_face_with_sunglasses')
-      FINAL_RESULT=RESULT(var=IMAGE0)
+      OBJ0 = FACEDET(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Leonardo DiCaprio', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Leonardo DiCaprio wearing sunglasses')
+      FINAL_RESULT = RESULT(var=IMAGE0)
     - |
       OBJ0 = SEG(image=IMAGE)
       OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Leonardo DiCaprio', category='person')
       IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Leonardo DiCaprio wearing sunglasses')
       FINAL_RESULT = RESULT(var=IMAGE0)
     - |
-      OBJ0 = FACEDET(image=IMAGE)
+      OBJ0 = SEG(image=IMAGE)
       OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Leonardo DiCaprio', category=None)
       IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Leonardo DiCaprio wearing sunglasses')
       FINAL_RESULT = RESULT(var=IMAGE0)
