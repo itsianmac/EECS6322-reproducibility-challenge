@@ -9,9 +9,9 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class ColorPop(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*COLORPOP\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*object\s*=\s*(?P<object>.*)\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*COLORPOP\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*object\s*=\s*(?P<object>\S*)\s*\)")
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
@@ -56,7 +56,7 @@ class ColorPop(VisProgModule):
         image_array = np.array(image)
         image_grayscale = np.array(image.convert('L').convert('RGB'))
         mask = object[..., None].repeat(3, axis=-1)
-        image_array = np.where(mask, image_grayscale, image_array)
+        image_array = np.where(mask, image_array, image_grayscale)
         return PIL.Image.fromarray(image_array)
 
     def html(self, output: Image.Image, image: Image.Image, object: np.ndarray) -> Dict[str, Any]:

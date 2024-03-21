@@ -1,8 +1,8 @@
 import re
-from typing import Dict
+from typing import Dict, Union, Tuple
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 import torch
 from diffusers import StableDiffusionInpaintPipeline
 
@@ -10,9 +10,9 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Replace(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*REPLACE\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*object\s*=\s*(?P<object>.*)\s*"
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*REPLACE\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*object\s*=\s*(?P<object>\S*)\s*"
                          r",\s*prompt\s*=\s*'(?P<prompt>.*)'\s*\)")
 
     def __init__(self, device: str = "cpu"):
@@ -50,10 +50,23 @@ class Replace(VisProgModule):
                               'prompt': match.group('prompt')
                           }, input_var_names={
                 'image': match.group('image'),
-                'seg_map': match.group('object')
+                'object': match.group('object')
             })
 
-    def perform_module_function(self, image: Image.Image, seg_map: np.ndarray, prompt: str) -> Image.Image:
+    @staticmethod
+    def get_seg_map(image: Image.Image,
+                    object: Union[np.ndarray, Tuple[Tuple[float, ...], ...]]) -> np.ndarray:
+        if isinstance(object, np.ndarray):  # object is a segmentation map
+            seg_map = object
+        else:   # object is a list of bounding boxes
+            seg_map = np.zeros(image.size[::-1], dtype=np.uint8)
+            for obj in object:
+                x1, y1, x2, y2 = map(int, obj)
+                seg_map[y1:y2, x1:x2] = 1
+
+        return seg_map
+
+    def perform_module_function(self, image: Image.Image, object: np.ndarray, prompt: str) -> Image.Image:
         """ Perform the color pop operation on the image using the object mask
 
         Parameters
@@ -61,7 +74,7 @@ class Replace(VisProgModule):
         image : Image.Image
             The original image
 
-        seg_map : np.ndarray
+        object : np.ndarray
             The mask of the object in the image
 
         prompt : str
@@ -72,10 +85,11 @@ class Replace(VisProgModule):
         Image.Image
             The image with the object replaced
         """
+        seg_map = self.get_seg_map(image, object)
         output: Image.Image = self.pipe(prompt=prompt, image=image, mask_image=seg_map.astype('float')).images[0]
         return output.resize(image.size)    # resize to original size because the output is square
 
-    def html(self, output: Image.Image, image: Image.Image, seg_map: np.ndarray, prompt: str) -> str:
+    def html(self, output: Image.Image, image: Image.Image, object: np.ndarray, prompt: str) -> str:
         """ Generate HTML to display the output
 
         Parameters
@@ -91,13 +105,26 @@ class Replace(VisProgModule):
         str
             The HTML to display the output
         """
-        image_array = np.array(image)
-        masked_image = image_array * (~seg_map[..., None])
-        masked_image = Image.fromarray(masked_image)
+        if isinstance(object, np.ndarray):
+            image_array = np.array(image)
+            masked_image = image_array * (~object[..., None])
+            masked_image = Image.fromarray(masked_image)
+
+            return {
+                'input': image,
+                'prompt': prompt,
+                'masked_image': masked_image,
+                'output': output,
+            }
+
+        image_with_bbox = image.copy()
+        draw = ImageDraw.Draw(image_with_bbox)
+        for obj in object:
+            draw.rectangle(obj, outline="red", width=3)
 
         return {
             'input': image,
             'prompt': prompt,
-            'masked_image': masked_image,
+            'masked_image': image_with_bbox,
             'output': output,
         }

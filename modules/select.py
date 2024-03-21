@@ -11,11 +11,11 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Select(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*SELECT\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*object\s*=\s*(?P<object>.*)\s*"
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*SELECT\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*object\s*=\s*(?P<object>\S*)\s*"
                          r",\s*query\s*=\s*'(?P<query>.*)'\s*"
-                         r",\s*category\s*=\s*(?P<category>.*)\s*\)")
+                         r",\s*category\s*=\s*(?P<category>\S.*\S*)\s*\)")
 
     def __init__(self, category_id_to_name: Dict[int, str], category_name_to_id: Dict[str, int], device: str = "cpu"):
         super().__init__()

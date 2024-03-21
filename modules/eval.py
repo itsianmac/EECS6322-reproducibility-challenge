@@ -7,8 +7,8 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Eval(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*EVAL\s*"
-                         r"\(\s*expr\s*=\s*\"(?P<expr>.*)\"\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*EVAL\s*"
+                         r"\(\s*expr\s*=\s*\"(?P<expr>\S*)\"\s*\)")
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names

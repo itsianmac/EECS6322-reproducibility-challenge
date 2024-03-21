@@ -10,8 +10,8 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class FaceDet(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*FACEDET\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*FACEDET\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*\)")
 
     def __init__(self, device: str = "cpu", confidence_threshold: float = 0.1, nms_iou_threshold: float = 0.1):
         super().__init__()

@@ -7,9 +7,9 @@ from modules import Crop
 
 
 class CropRight(Crop):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*CROP_RIGHTOF\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*box\s*=\s*(?P<box>.*)\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*CROP_RIGHTOF\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*box\s*=\s*(?P<box>\S*)\s*\)")
 
     def perform_module_function(self, image: Image.Image, box: Tuple[Tuple[float, ...], ...]) -> Image.Image:
         """ Perform the color pop operation on the image using the object mask

@@ -19,21 +19,29 @@ class ProgramRunner:
     def __init__(self, modules: List[VisProgModule]):
         self.modules = modules
 
-    def execute(self, steps: List[str], initial_state: Dict[str, Any]) -> Tuple[List[str], ProgramResult]:
+    def execute_program(self, program: str, initial_state: Dict[str, Any]) -> Tuple[List[str], ProgramResult]:
+        steps = [step.strip() for step in program.split('\n') if step.strip()]
+        return self.execute_steps(steps, initial_state)
+
+    def match_step(self, step: str) -> Optional[Tuple[VisProgModule, re.Match]]:
+        matched = next(((module, match)
+                        for module in self.modules
+                        if (match := module.match(step))),
+                       None)
+        return matched
+
+    def execute_steps(self, steps: List[str], initial_state: Dict[str, Any]) -> Tuple[List[str], ProgramResult]:
         state = initial_state.copy()
         step_details = []
         output = None
         executed_steps = []
         for i, step in enumerate(steps):
-            matched: Tuple[VisProgModule, Optional[re.Match]] = next(((module, match)
-                                                                      for module in self.modules
-                                                                      if (match := module.match(step))),
-                                                                     (None, None))
-            module, match = matched
-            if match is None:
+            matched: Tuple[VisProgModule, Optional[re.Match]] = self.match_step(step)
+            if matched is None:
                 warnings.warn(f"No module matched step {i}: {step}. Skipping."
                               f" This may be a bug in the program generation.")
                 continue
+            module, match = matched
             output, details = module.execute(step, state, match=match)
             executed_steps.append(step)
             step_details.append(details)

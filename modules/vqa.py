@@ -11,8 +11,8 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class VQA(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*VQA\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*VQA\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
                          r",\s*question\s*=\s*'(?P<question>.*)'\s*\)")
 
     def __init__(self, device: str = "cpu"):

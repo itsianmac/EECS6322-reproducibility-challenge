@@ -12,10 +12,10 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Emoji(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*EMOJI\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*object\s*=\s*(?P<object>.*)\s*"
-                         r",\s*emoji\s*=\s*'(?P<emoji>.*)'\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*EMOJI\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*object\s*=\s*(?P<object>\S*)\s*"
+                         r",\s*emoji\s*=\s*'(?P<emoji>\S*)'\s*\)")
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
