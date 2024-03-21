@@ -14,7 +14,7 @@
       IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Leonardo DiCaprio wearing sunglasses')
       FINAL_RESULT = RESULT(var=IMAGE0)
     - |
-      OBJ0 = SEG(image=IMAGE)
+      OBJ0 = FACEDET(image=IMAGE)
       OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Leonardo DiCaprio', category=None)
       IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Leonardo DiCaprio wearing sunglasses')
       FINAL_RESULT = RESULT(var=IMAGE0)
