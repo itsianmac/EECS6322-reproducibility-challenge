@@ -78,7 +78,7 @@ class GPTClient:
         response = self.wait_for_response()
 
         # if the response is empty or too long, regenerate it
-        while response.strip() == '' or self.is_long_response(response):
+        while response.strip() == '':
             response = self.regenerate()
         return response
 
@@ -92,6 +92,9 @@ class GPTClient:
 
         # click the regenerate button
         response_element = self.agent_turns[-1]
+        WebDriverWait(self.driver, 20) \
+            .until(lambda _: len(response_element.find_elements(by=By.CSS_SELECTOR,
+                                                                value="span[data-state='closed']")) > 1)
         response_element.find_elements(by=By.CSS_SELECTOR, value="span[data-state='closed']")[-2].click()
 
         def is_changed(_):
@@ -103,23 +106,9 @@ class GPTClient:
         # wait for the new response to be completed
         return self.wait_for_response()
 
-    @staticmethod
-    def is_long_response(response: str) -> bool:
-        """ Checks if the response is too long
-
-        Args:
-            response (str): the response to check
-
-        Returns:
-            bool: True if the response is too long, False otherwise
-        """
-        if 'Copy code' in response:  # This means gpt is explaining the code
-            return True
-        return False
-
     def new_chat(self) -> None:
         """ Opens a new chat with chatgpt """
-        self.driver.get(r"https://chat.openai.com")
+        self.driver.find_elements(by=By.CSS_SELECTOR, value='a[href="/"]')[-1].click()
 
     def wait_for_response(self) -> str:
         """ Waits until the response from chatgpt is completed and returns it
@@ -135,7 +124,7 @@ class GPTClient:
             try:
                 # if it's the same as the last one, it's stable
                 # or if it's already too long, we'd rather not wait for it continue
-                return response == last_text or self.is_long_response(response)
+                return response == last_text
             finally:
                 last_text = response
 

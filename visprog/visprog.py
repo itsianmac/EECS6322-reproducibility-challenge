@@ -17,5 +17,4 @@ class VisProg:
     def run(self, initial_state: Dict[str, Any], seed: int = 42, **prompt: str) -> Tuple[List[str], ProgramResult]:
         prompt = self.prompt_factory(seed=seed, **prompt)
         program = self.gpt.ask(prompt)
-        steps = [step.strip() for step in program.split('\n') if step.strip()]
-        return self.program_runner.execute(steps, initial_state)
+        return self.program_runner.execute_program(program, initial_state)
