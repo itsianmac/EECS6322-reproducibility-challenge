@@ -1,0 +1,180 @@
+- id: 1
+  image: leo-dicaprio-brad-pitt.jpg
+  prompt:
+    instruction: Replace Leonardo DiCaprio with Leonardo DiCaprio wearing sunglasses
+  programs:
+    - |
+      Program:
+      OBJ0=SEG(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='Leonardo DiCaprio',category=None)
+      IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='Leonardo DiCaprio wearing sunglasses')
+      FINAL_RESULT=RESULT(var=IMAGE0)
+    - |
+      Program:
+      OBJ0=SEG(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='Leonardo DiCaprio',category='person')
+      IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='Leonardo DiCaprio wearing sunglasses')
+      FINAL_RESULT=RESULT(var=IMAGE0)
+    - |
+      Program:
+      OBJ0=SEG(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='Leonardo DiCaprio',category=None)
+      IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='Leonardo DiCaprio wearing sunglasses')
+      FINAL_RESULT=RESULT(var=IMAGE0)
+    - |
+      OBJ0=SEG(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='Leonardo DiCaprio',category=None)
+      IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='Leonardo DiCaprio wearing sunglasses')
+      FINAL_RESULT=RESULT(var=IMAGE0)
+    - |
+      OBJ0 = FACEDET(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Leonardo DiCaprio', category=None)
+      IMAGE0 = EMOJI(image=IMAGE, object=OBJ1, emoji='smiling_face_with_sunglasses')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+
+- id: 2
+  image: trump-obama.webp
+  prompt:
+    instruction: Create a colorpop of the woman in blue and the woman in red and blur the background
+  programs:
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='woman in blue', category=None)
+      OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='woman in red', category=None)
+      IMAGE0 = COLORPOP(image=IMAGE, object=OBJ1)
+      IMAGE1 = COLORPOP(image=IMAGE0, object=OBJ2)
+      IMAGE2 = BGBLUR(image=IMAGE1, object=None)
+      FINAL_RESULT = RESULT(var=IMAGE2)
+    - |-
+      OBJ0=SEG(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='woman in blue,woman in red',category=None)
+      IMAGE0=COLORPOP(image=IMAGE,object=OBJ1)
+      IMAGE1=BGBLUR(image=IMAGE0,object=OBJ0)
+      FINAL_RESULT=RESULT(var=IMAGE1)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='woman in blue', category=None)
+      OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='woman in red', category=None)
+      IMAGE0 = COLORPOP(image=IMAGE, object=OBJ1)
+      IMAGE1 = COLORPOP(image=IMAGE, object=OBJ2)
+      IMAGE2 = BGBLUR(image=IMAGE, object=[OBJ1, OBJ2])
+      FINAL_RESULT = RESULT(var=IMAGE2)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='woman in blue', category=None)
+      OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='woman in red', category=None)
+      IMAGE0 = COLORPOP(image=IMAGE, object=[OBJ1, OBJ2])
+      IMAGE1 = BGBLUR(image=IMAGE0, object=[OBJ1, OBJ2])
+      FINAL_RESULT = RESULT(var=IMAGE1)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='woman in blue', category=None)
+      OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='woman in red', category=None)
+      IMAGE0 = COLORPOP(image=IMAGE, object=[OBJ1, OBJ2])
+      IMAGE1 = BGBLUR(image=IMAGE0, object=[OBJ1, OBJ2])
+      FINAL_RESULT = RESULT(var=IMAGE1)
+
+- id: 3
+  image: anne-hathaway-meryl-streep.jpeg
+  prompt:
+    instruction: Replace Anne Hathaway with Emma Watson and Meryl Streep with Jennifer Lawrence
+  programs:
+    - |-
+      OBJ0 = FACEDET(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Anne Hathaway', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Emma Watson')
+      OBJ2 = SELECT(image=IMAGE0, object=OBJ0, query='Meryl Streep', category=None)
+      IMAGE1 = REPLACE(image=IMAGE0, object=OBJ2, prompt='Jennifer Lawrence')
+      FINAL_RESULT = RESULT(var=IMAGE1)
+    - |-
+      OBJ0 = FACEDET(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Anne Hathaway,Meryl Streep', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Emma Watson')
+      OBJ2 = SELECT(image=IMAGE0, object=OBJ0, query='Meryl Streep', category=None)
+      IMAGE1 = REPLACE(image=IMAGE0, object=OBJ2, prompt='Jennifer Lawrence')
+      FINAL_RESULT = RESULT(var=IMAGE1)
+    - |-
+      OBJ0=FACEDET(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='Anne Hathaway,Meryl Streep',category=None)
+      IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='Emma Watson')
+      OBJ2=SEG(image=IMAGE0)
+      OBJ3=SELECT(image=IMAGE0,object=OBJ2,query='Meryl Streep',category=None)
+      IMAGE1=REPLACE(image=IMAGE0,object=OBJ3,prompt='Jennifer Lawrence')
+      FINAL_RESULT=RESULT(var=IMAGE1)
+    - |-
+      OBJ0 = FACEDET(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Anne Hathaway,Meryl Streep', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Emma Watson')
+      OBJ2 = SEG(image=IMAGE0)
+      OBJ3 = SELECT(image=IMAGE0, object=OBJ2, query='Meryl Streep', category=None)
+      IMAGE1 = REPLACE(image=IMAGE0, object=OBJ3, prompt='Jennifer Lawrence')
+      FINAL_RESULT = RESULT(var=IMAGE1)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='Anne Hathaway', category=None)
+      OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='Meryl Streep', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='Emma Watson')
+      IMAGE1 = REPLACE(image=IMAGE0, object=OBJ2, prompt='Jennifer Lawrence')
+      FINAL_RESULT = RESULT(var=IMAGE1)
+
+- id: 4
+  image: desert.webp
+  prompt:
+    instruction: Replace the desert by sandy beach
+  programs:
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='desert', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='sandy beach')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='desert', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='sandy beach')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='desert', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='sandy beach')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='desert', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='sandy beach')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='desert', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='sandy beach')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+
+- id: 5
+  image: couch.jpeg
+  prompt:
+    instruction: Replace the couch with a plush blue couch
+  programs:
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='couch', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='plush blue couch')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='couch', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='plush blue couch')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='couch', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='plush blue couch')
+      FINAL_RESULT = RESULT(var=IMAGE0)
+    - |-
+      OBJ0=SEG(image=IMAGE)
+      OBJ1=SELECT(image=IMAGE,object=OBJ0,query='couch',category=None)
+      IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='plush blue couch')
+      FINAL_RESULT=RESULT(var=IMAGE0)
+    - |-
+      OBJ0 = SEG(image=IMAGE)
+      OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='couch', category=None)
+      IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='plush blue couch')
+      FINAL_RESULT = RESULT(var=IMAGE0)
