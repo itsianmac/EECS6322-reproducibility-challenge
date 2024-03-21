@@ -13,7 +13,7 @@ class Replace(VisProgModule):
     pattern = re.compile(r"(?P<output>\S*)\s*=\s*REPLACE\s*"
                          r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
                          r",\s*object\s*=\s*(?P<object>\S*)\s*"
-                         r",\s*prompt\s*=\s*'(?P<prompt>\S*)'\s*\)")
+                         r",\s*prompt\s*=\s*'(?P<prompt>.*)'\s*\)")
 
     def __init__(self, device: str = "cpu"):
         super().__init__()

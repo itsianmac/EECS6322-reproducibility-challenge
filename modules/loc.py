@@ -13,7 +13,7 @@ from modules.visprog_module import VisProgModule, ParsedStep
 class Loc(VisProgModule):
     pattern = re.compile(r"(?P<output>\S*)\s*=\s*LOC\s*"
                          r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
-                         r",\s*object\s*=\s*'(?P<object>\S*)'\s*\)")
+                         r",\s*object\s*=\s*'(?P<object>.*)'\s*\)")
 
     def __init__(self, device: str = "cpu", threshold: float = 0.1):
         super().__init__()
