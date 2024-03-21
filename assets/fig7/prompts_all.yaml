@@ -49,7 +49,7 @@
       OBJ0=SEG(image=IMAGE)
       OBJ1=SELECT(image=IMAGE,object=OBJ0,query='woman in blue,woman in red',category=None)
       IMAGE0=COLORPOP(image=IMAGE,object=OBJ1)
-      IMAGE1=BGBLUR(image=IMAGE0,object=OBJ0)
+      IMAGE1=BGBLUR(image=IMAGE0,object=OBJ1)
       FINAL_RESULT=RESULT(var=IMAGE1)
     - |-
       OBJ0 = SEG(image=IMAGE)
