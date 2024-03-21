@@ -10,10 +10,10 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Replace(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*REPLACE\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*object\s*=\s*(?P<object>.*)\s*"
-                         r",\s*prompt\s*=\s*'(?P<prompt>.*)'\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*REPLACE\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*object\s*=\s*(?P<object>\S*)\s*"
+                         r",\s*prompt\s*=\s*'(?P<prompt>\S*)'\s*\)")
 
     def __init__(self, device: str = "cpu"):
         super().__init__()

@@ -7,7 +7,7 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Result(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*RESULT\s*.*")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*RESULT\s*.*")
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names

@@ -9,9 +9,9 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Crop(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*CROP\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*"
-                         r",\s*box\s*=\s*(?P<box>.*)\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*CROP\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+                         r",\s*box\s*=\s*(?P<box>\S*)\s*\)")
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names

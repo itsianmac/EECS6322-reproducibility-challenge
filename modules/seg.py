@@ -9,8 +9,8 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 
 class Seg(VisProgModule):
-    pattern = re.compile(r"(?P<output>.*)\s*=\s*SEG\s*"
-                         r"\(\s*image\s*=\s*(?P<image>.*)\s*\)")
+    pattern = re.compile(r"(?P<output>\S*)\s*=\s*SEG\s*"
+                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*\)")
 
     def __init__(self, device: str = "cpu"):
         super().__init__()
