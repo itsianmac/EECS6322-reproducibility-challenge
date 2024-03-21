@@ -60,8 +60,9 @@ class Replace(VisProgModule):
             seg_map = object
         else:   # object is a list of bounding boxes
             seg_map = np.zeros(image.size[::-1], dtype=np.uint8)
-            x1, y1, x2, y2 = map(int, object[0])
-            seg_map[y1:y2, x1:x2] = 1
+            for obj in object:
+                x1, y1, x2, y2 = map(int, obj)
+                seg_map[y1:y2, x1:x2] = 1
 
         return seg_map
 
