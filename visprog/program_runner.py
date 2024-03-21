@@ -23,6 +23,13 @@ class ProgramRunner:
         steps = [step.strip() for step in program.split('\n') if step.strip()]
         return self.execute_steps(steps, initial_state)
 
+    def match_step(self, step: str) -> Optional[Tuple[VisProgModule, re.Match]]:
+        matched = next(((module, match)
+                        for module in self.modules
+                        if (match := module.match(step))),
+                       None)
+        return matched
+
     def execute_steps(self, steps: List[str], initial_state: Dict[str, Any]) -> Tuple[List[str], ProgramResult]:
         state = initial_state.copy()
         step_details = []
@@ -33,11 +40,11 @@ class ProgramRunner:
                                                                       for module in self.modules
                                                                       if (match := module.match(step))),
                                                                      (None, None))
-            module, match = matched
-            if match is None:
+            if matched is None:
                 warnings.warn(f"No module matched step {i}: {step}. Skipping."
                               f" This may be a bug in the program generation.")
                 continue
+            module, match = matched
             output, details = module.execute(step, state, match=match)
             executed_steps.append(step)
             step_details.append(details)
