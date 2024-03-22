@@ -12,3 +12,4 @@ diffusers
 scipy
 accelerate
 PyYAML
+tqdm
