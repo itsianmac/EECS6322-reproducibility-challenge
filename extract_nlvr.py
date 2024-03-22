@@ -51,5 +51,6 @@ def main():
             label=sample['label'].lower() == 'true',
         ))
 
+    os.makedirs(os.path.dirname(args.prompt_file), exist_ok=True)
     with open(args.prompt_file, 'w') as f:
         yaml.dump(prompts, f)
