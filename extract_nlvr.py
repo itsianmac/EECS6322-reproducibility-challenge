@@ -32,8 +32,15 @@ def main():
     with open(args.nlvr_metadata, 'r') as f:
         raw_data = [json.loads(line) for line in f]
 
-    prompts = []
+    prompts_by_sentence = {}
     for sample in tqdm(raw_data, total=len(raw_data)):
+        split, set_id, pair_id, sentence_id = sample['identifier'].split('-')
+        sentence_uid = f'{split}-{set_id}-{sentence_id}'
+        if sentence_uid not in prompts_by_sentence:
+            prompts_by_sentence[sentence_uid] = dict(
+                sentence=sample['sentence'],
+                pairs=[],
+            )
         image_prefix = '-'.join(sample['identifier'].split('-')[:-1])
         left_image = f'{image_prefix}-img0.png'
         right_image = f'{image_prefix}-img1.png'
@@ -41,14 +48,23 @@ def main():
             continue
         if not os.path.exists(os.path.join(args.data_dir, right_image)):
             continue
-        prompts.append(dict(
-            id=sample['identifier'],
+        assert prompts_by_sentence[sentence_uid]['sentence'] == sample['sentence'], \
+            f'Sentence mismatch for {sentence_uid} for pair {pair_id}'
+        prompts_by_sentence[sentence_uid]['pairs'].append(dict(
+            id=pair_id,
             left_image=left_image,
             right_image=right_image,
-            prompt=dict(
-                statement=sample['sentence'],
-            ),
             label=sample['label'].lower() == 'true',
+        ))
+
+    prompts = []
+    for sentence_uid, sentence_data in prompts_by_sentence.items():
+        prompts.append(dict(
+            id=sentence_uid,
+            prompt=dict(
+                statement=sentence_data['sentence'],
+            ),
+            pairs=sentence_data['pairs'],
         ))
 
     os.makedirs(os.path.dirname(args.prompt_file), exist_ok=True)
