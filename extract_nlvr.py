@@ -33,6 +33,7 @@ def main():
         raw_data = [json.loads(line) for line in f]
 
     prompts_by_sentence = {}
+    extracted_pairs = 0
     for sample in tqdm(raw_data, total=len(raw_data)):
         split, set_id, pair_id, sentence_id = sample['identifier'].split('-')
         sentence_uid = f'{split}-{set_id}-{sentence_id}'
@@ -50,8 +51,9 @@ def main():
             continue
         assert prompts_by_sentence[sentence_uid]['sentence'] == sample['sentence'], \
             f'Sentence mismatch for {sentence_uid} for pair {pair_id}'
+        extracted_pairs += 1
         prompts_by_sentence[sentence_uid]['pairs'].append(dict(
-            id=pair_id,
+            id=int(pair_id),
             left_image=left_image,
             right_image=right_image,
             label=sample['label'].lower() == 'true',
@@ -66,6 +68,8 @@ def main():
             ),
             pairs=sentence_data['pairs'],
         ))
+
+    print(f'Extracted {len(prompts)} sentences with a total of {extracted_pairs} pairs')
 
     os.makedirs(os.path.dirname(args.prompt_file), exist_ok=True)
     with open(args.prompt_file, 'w') as f:
