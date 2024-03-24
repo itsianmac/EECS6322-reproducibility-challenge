@@ -1,6 +1,7 @@
 import argparse
 import importlib
 import os
+import re
 import time
 import random
 
@@ -11,6 +12,9 @@ from gpt import GPTClient
 from instructions import PromptFactory
 
 
+CODE_REGEX = re.compile(r'\S+\s*=\s*\S+\s*\([^)]*\)')
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Ask ChatGPT to generate programs for each instruction',
@@ -19,7 +23,7 @@ def main():
     parser.add_argument(
         '-c', '--context',
         type=str,
-        choices=['gqa', 'imgedit'],
+        choices=['gqa', 'imgedit', 'nlvr'],
         default='gqa',
     )
     parser.add_argument(
@@ -75,18 +79,25 @@ def main():
                 prompt = prompt_factory(seed=rng.randint(0, 2**32-1), **prompt_object['prompt'])
                 try:
                     program = gpt.ask(prompt)
-                except TimeoutException:
-                    print('TimeoutException')
+                    lines = [line.strip() for line in program.strip().split('\n') if CODE_REGEX.match(line)]
+                    program = '\n'.join(lines)
+                    if not program:
+                        raise ValueError('No program generated')
+                    prompt_object['programs'].append(program)
+                    print(f'Generated program: {program}')
+                    with open(args.output_file, 'w') as f:
+                        yaml.dump(prompts, f, default_style='|', sort_keys=False)
+                except (TimeoutException, ValueError) as e:
+                    if isinstance(e, ValueError):
+                        print('ValueError')
+                        if not e.args or e.args[0] != 'No program generated':
+                            raise
+                    else:
+                        print('TimeoutException')
+                finally:
                     gpt.new_chat()
+                    print('waiting 5 seconds')
                     time.sleep(5)
-                    continue
-                prompt_object['programs'].append(program)
-                print(f'Generated program: {program}')
-                print('waiting 5 seconds')
-                with open(args.output_file, 'w') as f:
-                    yaml.dump(prompts, f, default_style='|')
-                gpt.new_chat()
-                time.sleep(5)
             print(f'Generated {args.num_tries} programs for prompt {prompt_object["id"]}')
             print('---------')
     finally:

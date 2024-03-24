@@ -1,10 +1,7 @@
 import re
-from typing import Any, Dict, Tuple, Optional
+from typing import Any, Dict
 
-import numpy as np
-from PIL import Image, ImageDraw
-import PIL
-import torch
+from PIL import Image
 from transformers import ViltProcessor, ViltForQuestionAnswering
 
 from modules.visprog_module import VisProgModule, ParsedStep
@@ -14,6 +11,9 @@ class VQA(VisProgModule):
     pattern = re.compile(r"(?P<output>\S*)\s*=\s*VQA\s*"
                          r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
                          r",\s*question\s*=\s*'(?P<question>.*)'\s*\)")
+    int_pattern = re.compile(r'^\d+$')
+    true_pattern = re.compile(r'(yes|true)', re.IGNORECASE)
+    false_pattern = re.compile(r'(no|false)', re.IGNORECASE)
 
     def __init__(self, device: str = "cpu"):
         super().__init__()
@@ -67,7 +67,14 @@ class VQA(VisProgModule):
         outputs = self.model(**encoding)
         logits = outputs.logits
         idx = logits.argmax(-1).item()
-        return self.model.config.id2label[idx]
+        label = self.model.config.id2label[idx]
+        if self.true_pattern.match(label):
+            return True
+        if self.false_pattern.match(label):
+            return False
+        if self.int_pattern.match(label):
+            return int(label)
+        return label
 
     def html(self, output: str, image: Image.Image, question: str) -> Dict[str, Any]:
         """ Generate HTML to display the output

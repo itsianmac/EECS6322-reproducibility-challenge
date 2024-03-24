@@ -1,7 +1,6 @@
 from typing import Literal
 
-from instructions import PromptFactory
-
+from instructions import PromptFactory, BulkPromptFactory
 
 NLVR_EXAMPLES = [
 """Statement: An image shows one bare hand with the thumb on the right holding up a belly-first, head-up crab, with water in the background.
@@ -119,3 +118,13 @@ Program:
                          format_,
                          method=method,
                          num_prompts=num_prompts)
+
+
+def get_bulk_prompt_factory(method: Literal['all', 'random'] = 'random', num_prompts: int = 8) -> BulkPromptFactory:
+    prefix = "Think step by step if the statement is True or False."
+    format_ = "Statement: {statement}"
+    return BulkPromptFactory(prefix,
+                             NLVR_EXAMPLES,
+                             format_,
+                             method=method,
+                             num_prompts=num_prompts)

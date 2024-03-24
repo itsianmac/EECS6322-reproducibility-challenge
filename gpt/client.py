@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import StaleElementReferenceException
 import undetected_chromedriver as uc
 from fake_useragent import UserAgent
 
@@ -75,7 +76,12 @@ class GPTClient:
         WebDriverWait(self.driver, 20).until(lambda _: self.response_count > current_response_count)
 
         # wait for the response to be completed
-        response = self.wait_for_response()
+        while True:
+            try:
+                response = self.wait_for_response()
+                break
+            except StaleElementReferenceException:
+                pass
 
         # if the response is empty or too long, regenerate it
         while response.strip() == '':
@@ -129,7 +135,7 @@ class GPTClient:
                 last_text = response
 
         # wait until it's not changing anymore
-        WebDriverWait(self.driver, 60, poll_frequency=1).until(is_stable)
+        WebDriverWait(self.driver, 120, poll_frequency=1).until(is_stable)
         return self.last_response
 
     @property

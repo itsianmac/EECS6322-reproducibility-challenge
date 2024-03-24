@@ -1,1 +1,1 @@
-from .prompt_factory import PromptFactory
+from .prompt_factory import PromptFactory, BulkPromptFactory
