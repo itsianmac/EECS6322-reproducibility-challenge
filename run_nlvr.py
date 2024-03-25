@@ -79,9 +79,11 @@ def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_q
                         if left_image.size[0] <= 3 or left_image.size[1] <= 3:
                             write_queue.put((i, j, pair_object['id'],
                                              None, [], None, f'Image {left_image_path} is too small'))
+                            continue
                         if right_image.size[0] <= 3 or right_image.size[1] <= 3:
                             write_queue.put((i, j, pair_object['id'],
                                              None, [], None, f'Image {right_image_path} is too small'))
+                            continue
                     except OSError as e:
                         write_queue.put((i, j,  pair_object['id'], None, [], None, str(e)))
                         continue
