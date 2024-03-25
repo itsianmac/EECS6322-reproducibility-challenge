@@ -11,6 +11,14 @@ class ParsedStep:
     input_var_names: Dict[str, str] = field(default_factory=dict)
 
 
+class ExecutionError(Exception):
+
+    def __init__(self, step: str, error: str, previous_step_details: Optional[list] = None):
+        self.step = step
+        self.error = error
+        self.previous_step_details = previous_step_details
+
+
 class VisProgModule:
     pattern: re.Pattern[str]
     
@@ -93,6 +101,8 @@ class VisProgModule:
         inputs = parsed_step.inputs.copy()
         # Get values of input variables form state
         for input_name, var_name in parsed_step.input_var_names.items():
+            if var_name not in state:
+                raise ExecutionError(step, f"Variable {var_name} not found in state")
             inputs[input_name] = state[var_name]
 
         # Perform computation using the loaded module

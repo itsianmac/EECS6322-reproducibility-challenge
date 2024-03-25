@@ -1,4 +1,4 @@
-from .visprog_module import VisProgModule
+from .visprog_module import VisProgModule, ExecutionError
 from .bgblur import BGBlur
 from .colorpop import ColorPop
 from .count import Count
