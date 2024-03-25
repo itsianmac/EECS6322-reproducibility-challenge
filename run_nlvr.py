@@ -1,6 +1,7 @@
 import argparse
 import os
 import threading
+import time
 import traceback
 from queue import Queue
 from typing import Optional, Tuple, List, Any
@@ -48,6 +49,7 @@ def write_results(output_file: str, write_queue: Queue, statement_details: Any):
                     yaml.dump(statement_details, f, default_style='|', sort_keys=False)
     except Exception:
         traceback.print_exc()
+        time.sleep(1)
 
 
 def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_queue: Queue):
@@ -80,6 +82,7 @@ def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_q
                     run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
     except Exception:
         traceback.print_exc()
+        time.sleep(1)
     finally:
         run_queue.put(None)
 
