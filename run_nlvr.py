@@ -12,19 +12,11 @@ from modules import VQA, Eval, Result, ExecutionError
 from visprog import ProgramRunner
 
 
-def do_nlvr(program_runner: ProgramRunner, program: str, images_dir: str,
-            left_image_name: str, right_image_name: str) -> Tuple[Optional[bool], List[Any], Optional[str]]:
-    try:
-        left_image_path = os.path.join(images_dir, left_image_name)
-        right_image_path = os.path.join(images_dir, right_image_name)
-        left_image = Image.open(left_image_path).convert('RGB')
-        right_image = Image.open(right_image_path).convert('RGB')
-        if left_image.size[0] <= 3 or left_image.size[1] <= 3:
-            return None, [], f'Image {left_image_path} is too small'
-        if right_image.size[0] <= 3 or right_image.size[1] <= 3:
-            return None, [], f'Image {right_image_path} is too small'
-    except OSError as e:
-        return None, [], str(e)
+object_lock = threading.Lock()
+
+
+def do_nlvr(program_runner: ProgramRunner, program: str,
+            left_image: Image.Image, right_image: Image) -> Tuple[Optional[bool], List[Any], Optional[str]]:
     initial_state = {
         'LEFT': left_image,
         'RIGHT': right_image,
@@ -40,13 +32,48 @@ def do_nlvr(program_runner: ProgramRunner, program: str, images_dir: str,
     return prediction, step_details, None
 
 
-def write_results(output_file: str, blocking_queue: Queue):
+def write_results(output_file: str, write_queue: Queue, statement_details: Any):
     while True:
-        statement_details = blocking_queue.get(block=True)
-        if statement_details is None:
+        element = write_queue.get(block=True)
+        if element is None:
             break
-        with open(output_file, 'w') as f:
-            yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+        i, j, pair_id, prediction, step_details, error = element
+        with object_lock:
+            statement_details[i]['programs'][j]['results'][pair_id] = dict(prediction=prediction,
+                                                                           steps=step_details,
+                                                                           error=error)
+            with open(output_file, 'w') as f:
+                yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+
+
+def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_queue: Queue):
+    for i, statement_detail in tqdm(enumerate(statement_details), desc='running programs', total=len(statement_details)):
+        programs = statement_detail['programs']
+        pairs = statement_detail['pairs']
+        for j in range(len(programs)):
+            if isinstance(programs[j], str):
+                with object_lock:
+                    programs[j] = dict(program=programs[j])
+            if 'results' not in programs[j]:
+                with object_lock:
+                    programs[j]['results'] = {}
+            for pair_object in pairs:
+                if pair_object['id'] in programs[j]['results']:
+                    continue
+                try:
+                    left_image_path = os.path.join(images_dir, pair_object['left_image'])
+                    right_image_path = os.path.join(images_dir, pair_object['right_image'])
+                    left_image = Image.open(left_image_path).convert('RGB')
+                    right_image = Image.open(right_image_path).convert('RGB')
+                    if left_image.size[0] <= 3 or left_image.size[1] <= 3:
+                        return None, [], f'Image {left_image_path} is too small'
+                    if right_image.size[0] <= 3 or right_image.size[1] <= 3:
+                        return None, [], f'Image {right_image_path} is too small'
+                except OSError as e:
+                    write_queue.put((i, j,  pair_object['id'], None, [], str(e)))
+                    continue
+                run_queue.put((i, j, pair_object['id'], programs[i]['program'], left_image, right_image))
+    run_queue.put(None)
 
 
 def main():
@@ -84,32 +111,24 @@ def main():
         statement_details = yaml.safe_load(f)
 
     os.makedirs(os.path.dirname(args.output_file), exist_ok=True)
-    blocking_queue = Queue(maxsize=-1)
-    write_results_thread = threading.Thread(target=write_results, args=(args.output_file, blocking_queue))
+    write_queue = Queue(maxsize=-1)
+    run_queue = Queue(maxsize=64)
+    write_results_thread = threading.Thread(target=write_results, args=(args.output_file, write_queue, statement_details))
     write_results_thread.start()
+    read_thread = threading.Thread(target=read_nlvr, args=(statement_details, args.images_dir, run_queue, write_queue))
+    read_thread.start()
 
-    for statement_detail in tqdm(statement_details, desc='running programs', total=len(statement_details)):
-        programs = statement_detail['programs']
-        pairs = statement_detail['pairs']
-        for i in range(len(programs)):
-            if isinstance(programs[i], str):
-                programs[i] = dict(program=programs[i])
-            if 'results' not in programs[i]:
-                programs[i]['results'] = {}
-            for pair_object in pairs:
-                if pair_object['id'] in programs[i]['results']:
-                    continue
-                prediction, step_details, error = do_nlvr(program_runner, programs[i]['program'], args.images_dir,
-                                                          pair_object['left_image'], pair_object['right_image'])
-                programs[i]['results'][pair_object['id']] = dict(prediction=prediction,
-                                                                 steps=step_details,
-                                                                 error=error)
-                # with open(args.output_file, 'w') as f:
-                #     yaml.dump(statement_details, f, default_style='|', sort_keys=False)
-                blocking_queue.put(statement_details)
+    while True:
+        run_element = run_queue.get(block=True)
+        if run_element is None:
+            break
+        i, j, pair_id, program, left_image, right_image = run_element
+        prediction, step_details, error = do_nlvr(program_runner, program, left_image, right_image)
+        write_queue.put((i, j, pair_id, prediction, step_details, error))
 
-    blocking_queue.put(None)
+    write_queue.put(None)
     write_results_thread.join()
+    read_thread.join()
 
 
 if __name__ == '__main__':
