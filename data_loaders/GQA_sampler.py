@@ -4,58 +4,60 @@ from typing import Dict, List, Tuple
 
 
 class GQA_Sampler:
-    def __init__(self, gqa_val_info: dict, gqa_test_info: dict):
+    def __init__(self, opts):
+        self.opts = {}
 
         print("Loading GQA questions")
-
-        gqa_val_path = gqa_val_info["path"]
-        gqa_val_data_keys = gqa_val_info["data_keys"]
-        self.gqa_val_samples_per_group = gqa_val_info["samples_per_group"]
-
-        self.val_questions = json.load(open(gqa_val_path))
-
-        # Caching all keys for easy access
-        self.val_keys = self.val_questions.keys()
-
-        # The data we care about...
-        self.val_data_keys = gqa_val_data_keys
-
-        self.val_group = gqa_val_info["group_key"]
-
-        gqa_test_path = gqa_test_info["path"]
-        gqa_test_data_keys = gqa_test_info["data_keys"]
-        self.gqa_test_samples_per_group = gqa_test_info["samples_per_group"]
-
-        self.testdev_questions = json.load(open(gqa_test_path))
-
-        # Caching all keys for easy access
-        self.tesdtev_keys = self.testdev_questions.keys()
-
-        # The data we care about...
-        self.testdev_data_keys = gqa_test_data_keys
-
-        self.testdev_group = gqa_test_info["group_key"]
+        for opt in opts:
+            name = opt["opt_name"]
+            self.opts[name] = {}
+            self.opts[name]["samples_per_group"] = opt["samples_per_group"]
+            self.opts[name]["questions"] = json.load(open(opt["path"]))
+            self.opts[name]["data_keys"] = opt["data_keys"]
+            self.opts[name]["group_key"] = opt["group_key"]
+            self.opts[name]["keys"] = self.opts[name]["questions"].keys()
 
         print("Loading GQA questions complete!")
 
-    def get_samples(self, sample_type: str = "val"):
+        # gqa_val_path = gqa_val_info["path"]
+        # gqa_val_data_keys = gqa_val_info["data_keys"]
+        # self.gqa_val_samples_per_group = gqa_val_info["samples_per_group"]
+        #
+        # self.val_questions = json.load(open(gqa_val_path))
+        #
+        # # Caching all keys for easy access
+        # self.val_keys = self.val_questions.keys()
+        #
+        # # The data we care about...
+        # self.val_data_keys = gqa_val_data_keys
+        #
+        # self.val_group = gqa_val_info["group_key"]
+        #
+        # gqa_test_path = gqa_test_info["path"]
+        # gqa_test_data_keys = gqa_test_info["data_keys"]
+        # self.gqa_test_samples_per_group = gqa_test_info["samples_per_group"]
+        #
+        # self.testdev_questions = json.load(open(gqa_test_path))
+        #
+        # # Caching all keys for easy access
+        # self.tesdtev_keys = self.testdev_questions.keys()
+        #
+        # # The data we care about...
+        # self.testdev_data_keys = gqa_test_data_keys
+        #
+        # self.testdev_group = gqa_test_info["group_key"]
 
-        # HACK: easier to just make this a dictionary off the top of initialization,
-        # or better yet, pass the number of samples etc...
-        if sample_type == "val":
-            group_type = self.val_group
-            questions = self.val_questions
-            keys = self.val_keys
-            data_keys = self.val_data_keys
-            samples_per_group = self.gqa_val_samples_per_group
-        elif sample_type == "testdev":
-            group_type = self.testdev_group
-            questions = self.testdev_questions
-            keys = self.tesdtev_keys
-            data_keys = self.testdev_data_keys
-            samples_per_group = self.gqa_test_samples_per_group
+    def get_samples(self, sample_type: str):
+
+        # Unroll info from opts dictionary...
+        if sample_type in self.opts:
+            samples_per_group = self.opts[sample_type]["samples_per_group"]
+            questions = self.opts[sample_type]["questions"]
+            data_keys = self.opts[sample_type]["data_keys"]
+            group_type = self.opts[sample_type]["group_key"]
+            keys = self.opts[sample_type]["keys"]
         else:
-            raise ValueError("Invalid type. Must be 'val' or 'testdev'")
+            raise ValueError(f"Invalid type. Must be one of {self.opts.keys()}")
 
         # ===== Get testdev GQA samples =====
         # Get unique groups from the test set
@@ -136,6 +138,7 @@ if __name__ == "__main__":
     #       due to chatgpt limitations... even the global groups are probably too much
     group_key = "global"  # one of 'local', 'global',
     validation_opts = {
+        "opt_name": "val",
         "path": "../data/GQA/val_balanced_questions.json",
         "data_keys": ["imageId", "question", "answer", "fullAnswer", "groups"],
         "samples_per_group": 5,
@@ -143,15 +146,18 @@ if __name__ == "__main__":
     }
 
     test_opts = {
+        "opt_name": "testdev",
         "path": "../data/GQA/testdev_balanced_questions.json",
         "data_keys": ["imageId", "question", "answer", "fullAnswer", "groups"],
         "samples_per_group": 20,
         "group_key": group_key,  # one of 'local', 'global'
     }
 
-    gqa_sampler = GQA_Sampler(validation_opts, test_opts)
+    opts = [validation_opts, test_opts]
+    sample_sets = [opt["opt_name"] for opt in opts]
 
-    sample_sets = ["val", "testdev"]
+    gqa_sampler = GQA_Sampler(opts)
+
     val_samples, testdev_samples = gqa_sampler.get_visprog_gqa_samples(sample_sets)
 
     # Print out the validation samples
