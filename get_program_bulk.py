@@ -58,6 +58,11 @@ def main():
         default=['./user-data'],
     )
     parser.add_argument(
+        '--split-by',
+        type=str,
+        default='FINAL_ANSWER',
+    )
+    parser.add_argument(
         '--gpt-auth',
         action='store_true',
         default=False,
@@ -110,7 +115,7 @@ def main():
                         gpt = GPTClient(args.gpt_user_dirs[current_gpt_index], wait_for_login=args.gpt_auth)
                         continue
                     lines = [line.strip() for line in program.strip().split('\n') if CODE_REGEX.match(line)]
-                    final_lines = [-1] + [i for i, line in enumerate(lines) if 'FINAL_ANSWER' in line]
+                    final_lines = [-1] + [i for i, line in enumerate(lines) if args.split_by in line]
                     if not final_lines:
                         raise ValueError('No program generated')
                     if len(final_lines) != len(prompt_objects) + 1:
