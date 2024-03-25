@@ -47,9 +47,8 @@ def write_results(output_file: str, write_queue: Queue, statement_details: Any):
                                                                                error=error)
                 with open(output_file, 'w') as f:
                     yaml.dump(statement_details, f, default_style='|', sort_keys=False)
-    except Exception as e:
+    except:
         traceback.print_exc()
-        print(e, flush=True)
         time.sleep(1)
     finally:
         print('Done writing results')
@@ -83,9 +82,8 @@ def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_q
                         write_queue.put((i, j,  pair_object['id'], None, [], str(e)))
                         continue
                     run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
-    except Exception as e:
+    except:
         traceback.print_exc()
-        print(e, flush=True)
         time.sleep(1)
     finally:
         run_queue.put(None)
