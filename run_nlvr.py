@@ -83,3 +83,7 @@ def main():
                                                                  error=error)
                 with open(args.output_file, 'w') as f:
                     yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+
+
+if __name__ == '__main__':
+    main()
