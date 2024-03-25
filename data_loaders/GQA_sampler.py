@@ -19,34 +19,6 @@ class GQA_Sampler:
 
         print("Loading GQA questions complete!")
 
-        # gqa_val_path = gqa_val_info["path"]
-        # gqa_val_data_keys = gqa_val_info["data_keys"]
-        # self.gqa_val_samples_per_group = gqa_val_info["samples_per_group"]
-        #
-        # self.val_questions = json.load(open(gqa_val_path))
-        #
-        # # Caching all keys for easy access
-        # self.val_keys = self.val_questions.keys()
-        #
-        # # The data we care about...
-        # self.val_data_keys = gqa_val_data_keys
-        #
-        # self.val_group = gqa_val_info["group_key"]
-        #
-        # gqa_test_path = gqa_test_info["path"]
-        # gqa_test_data_keys = gqa_test_info["data_keys"]
-        # self.gqa_test_samples_per_group = gqa_test_info["samples_per_group"]
-        #
-        # self.testdev_questions = json.load(open(gqa_test_path))
-        #
-        # # Caching all keys for easy access
-        # self.tesdtev_keys = self.testdev_questions.keys()
-        #
-        # # The data we care about...
-        # self.testdev_data_keys = gqa_test_data_keys
-        #
-        # self.testdev_group = gqa_test_info["group_key"]
-
     def get_samples(self, sample_type: str):
 
         # Unroll info from opts dictionary...
