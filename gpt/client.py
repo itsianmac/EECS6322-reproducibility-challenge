@@ -97,10 +97,15 @@ class GPTClient:
         previous_response = self.last_response
 
         # click the regenerate button
-        response_element = self.agent_turns[-1]
-        WebDriverWait(self.driver, 20) \
-            .until(lambda _: len(response_element.find_elements(by=By.CSS_SELECTOR,
-                                                                value="span[data-state='closed']")) > 1)
+        while True:
+            try:
+                response_element = self.agent_turns[-1]
+                WebDriverWait(self.driver, 20) \
+                    .until(lambda _: len(response_element.find_elements(by=By.CSS_SELECTOR,
+                                                                        value="span[data-state='closed']")) > 1)
+                break
+            except StaleElementReferenceException:
+                pass
         response_element.find_elements(by=By.CSS_SELECTOR, value="span[data-state='closed']")[-2].click()
 
         def is_changed(_):

@@ -1,6 +1,7 @@
 import argparse
 import os
 import threading
+import traceback
 from queue import Queue
 from typing import Optional, Tuple, List, Any
 
@@ -33,47 +34,54 @@ def do_nlvr(program_runner: ProgramRunner, program: str,
 
 
 def write_results(output_file: str, write_queue: Queue, statement_details: Any):
-    while True:
-        element = write_queue.get(block=True)
-        if element is None:
-            break
-        i, j, pair_id, prediction, step_details, error = element
-        with object_lock:
-            statement_details[i]['programs'][j]['results'][pair_id] = dict(prediction=prediction,
-                                                                           steps=step_details,
-                                                                           error=error)
-            with open(output_file, 'w') as f:
-                yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+    try:
+        while True:
+            element = write_queue.get(block=True)
+            if element is None:
+                break
+            i, j, pair_id, prediction, step_details, error = element
+            with object_lock:
+                statement_details[i]['programs'][j]['results'][pair_id] = dict(prediction=prediction,
+                                                                               steps=step_details,
+                                                                               error=error)
+                with open(output_file, 'w') as f:
+                    yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+    except Exception:
+        traceback.print_exc()
 
 
 def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_queue: Queue):
-    for i, statement_detail in tqdm(enumerate(statement_details), desc='running programs', total=len(statement_details)):
-        programs = statement_detail['programs']
-        pairs = statement_detail['pairs']
-        for j in range(len(programs)):
-            if isinstance(programs[j], str):
-                with object_lock:
-                    programs[j] = dict(program=programs[j])
-            if 'results' not in programs[j]:
-                with object_lock:
-                    programs[j]['results'] = {}
-            for pair_object in pairs:
-                if pair_object['id'] in programs[j]['results']:
-                    continue
-                try:
-                    left_image_path = os.path.join(images_dir, pair_object['left_image'])
-                    right_image_path = os.path.join(images_dir, pair_object['right_image'])
-                    left_image = Image.open(left_image_path).convert('RGB')
-                    right_image = Image.open(right_image_path).convert('RGB')
-                    if left_image.size[0] <= 3 or left_image.size[1] <= 3:
-                        return None, [], f'Image {left_image_path} is too small'
-                    if right_image.size[0] <= 3 or right_image.size[1] <= 3:
-                        return None, [], f'Image {right_image_path} is too small'
-                except OSError as e:
-                    write_queue.put((i, j,  pair_object['id'], None, [], str(e)))
-                    continue
-                run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
-    run_queue.put(None)
+    try:
+        for i, statement_detail in tqdm(enumerate(statement_details), desc='running programs', total=len(statement_details)):
+            programs = statement_detail['programs']
+            pairs = statement_detail['pairs']
+            for j in range(len(programs)):
+                if isinstance(programs[j], str):
+                    with object_lock:
+                        programs[j] = dict(program=programs[j])
+                if 'results' not in programs[j]:
+                    with object_lock:
+                        programs[j]['results'] = {}
+                for pair_object in pairs:
+                    if pair_object['id'] in programs[j]['results']:
+                        continue
+                    try:
+                        left_image_path = os.path.join(images_dir, pair_object['left_image'])
+                        right_image_path = os.path.join(images_dir, pair_object['right_image'])
+                        left_image = Image.open(left_image_path).convert('RGB')
+                        right_image = Image.open(right_image_path).convert('RGB')
+                        if left_image.size[0] <= 3 or left_image.size[1] <= 3:
+                            return None, [], f'Image {left_image_path} is too small'
+                        if right_image.size[0] <= 3 or right_image.size[1] <= 3:
+                            return None, [], f'Image {right_image_path} is too small'
+                    except OSError as e:
+                        write_queue.put((i, j,  pair_object['id'], None, [], str(e)))
+                        continue
+                    run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
+    except Exception:
+        traceback.print_exc()
+    finally:
+        run_queue.put(None)
 
 
 def main():
