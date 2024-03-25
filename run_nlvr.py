@@ -40,11 +40,12 @@ def write_results(output_file: str, write_queue: Queue, statement_details: Any):
             element = write_queue.get(block=True)
             if element is None:
                 break
-            i, j, pair_id, prediction, step_details, error = element
+            i, j, pair_id, prediction, step_details, execution_error, data_error = element
             with object_lock:
                 statement_details[i]['programs'][j]['results'][pair_id] = dict(prediction=prediction,
                                                                                steps=step_details,
-                                                                               error=error)
+                                                                               execution_error=execution_error,
+                                                                               data_error=data_error)
                 with open(output_file, 'w') as f:
                     yaml.dump(statement_details, f, default_style='|', sort_keys=False)
     except:
@@ -75,11 +76,13 @@ def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_q
                         left_image = Image.open(left_image_path).convert('RGB')
                         right_image = Image.open(right_image_path).convert('RGB')
                         if left_image.size[0] <= 3 or left_image.size[1] <= 3:
-                            return None, [], f'Image {left_image_path} is too small'
+                            write_queue.put((i, j, pair_object['id'],
+                                             None, [], None, f'Image {left_image_path} is too small'))
                         if right_image.size[0] <= 3 or right_image.size[1] <= 3:
-                            return None, [], f'Image {right_image_path} is too small'
+                            write_queue.put((i, j, pair_object['id'],
+                                             None, [], None, f'Image {right_image_path} is too small'))
                     except OSError as e:
-                        write_queue.put((i, j,  pair_object['id'], None, [], str(e)))
+                        write_queue.put((i, j,  pair_object['id'], None, [], None, str(e)))
                         continue
                     run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
     except:
@@ -138,7 +141,7 @@ def main():
             break
         i, j, pair_id, program, left_image, right_image = run_element
         prediction, step_details, error = do_nlvr(program_runner, program, left_image, right_image)
-        write_queue.put((i, j, pair_id, prediction, step_details, error))
+        write_queue.put((i, j, pair_id, prediction, step_details, error, None))
 
     write_queue.put(None)
     write_results_thread.join()
