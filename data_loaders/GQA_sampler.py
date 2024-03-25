@@ -73,15 +73,13 @@ class GQA_Sampler:
 
     def get_visprog_gqa_samples(self, sample_sets: List) -> List[List[Dict]]:
         """
-        To evaluate on a diverse set of question types (~100 detailed types),
-        we randomly sample up to k samples per question type from the balanced val
-        (k = 5) and test-dev (k = 20) sets."
-
+        Samples based on the options provided in the constructor.
 
         Parameters
         ----------
         sample_sets : List
-            List of strings specifying the sample sets to return. Must be one of 'val' or 'testdev'.
+            List of strings specifying the sample sets to return.
+            Must appear in the opts under the opt_name key.
 
         Returns
         -------
@@ -108,6 +106,12 @@ if __name__ == "__main__":
 
     # NOTE: way more local groups than global groups... so we'll use global groups
     #       due to chatgpt limitations... even the global groups are probably too much
+    """
+    To evaluate on a diverse set of question types (~100 detailed types),
+    we randomly sample up to k samples per question type from the balanced val
+    (k = 5) and test-dev (k = 20) sets."
+    """
+
     group_key = "global"  # one of 'local', 'global',
     validation_opts = {
         "opt_name": "val",
