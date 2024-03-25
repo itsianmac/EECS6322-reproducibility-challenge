@@ -14,8 +14,8 @@ def do_nlvr(program_runner: ProgramRunner, program: str, images_dir: str,
             left_image_name: str, right_image_name: str) -> Tuple[Optional[bool], List[Any], Optional[str]]:
     left_image_path = os.path.join(images_dir, left_image_name)
     right_image_path = os.path.join(images_dir, right_image_name)
-    left_image = Image.open(left_image_path)
-    right_image = Image.open(right_image_path)
+    left_image = Image.open(left_image_path).convert('RGB')
+    right_image = Image.open(right_image_path).convert('RGB')
     initial_state = {
         'LEFT': left_image,
         'RIGHT': right_image,
