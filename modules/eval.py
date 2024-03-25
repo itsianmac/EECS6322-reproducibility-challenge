@@ -8,7 +8,7 @@ from modules.visprog_module import VisProgModule, ParsedStep
 
 class Eval(VisProgModule):
     pattern = re.compile(r"(?P<output>\S*)\s*=\s*EVAL\s*"
-                         r"\(\s*expr\s*=\s*\"(?P<expr>\S*)\"\s*\)")
+                         r"\(\s*expr\s*=\s*[\"\'](?P<expr>.*)[\"\']\s*\)")
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
@@ -33,6 +33,7 @@ class Eval(VisProgModule):
         expression = match.group('expr')
         for var_match in replace_pattern.finditer(step):
             expression = expression.replace(var_match.group(0), var_match.group('var'))
+            expression = expression.replace('xor', '^')
             variable_names.append(var_match.group('var'))
         return ParsedStep(match.group('output'),
                           inputs={'expr': expression},
