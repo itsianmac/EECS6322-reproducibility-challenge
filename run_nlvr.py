@@ -72,7 +72,7 @@ def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_q
                 except OSError as e:
                     write_queue.put((i, j,  pair_object['id'], None, [], str(e)))
                     continue
-                run_queue.put((i, j, pair_object['id'], programs[i]['program'], left_image, right_image))
+                run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
     run_queue.put(None)
 
 
