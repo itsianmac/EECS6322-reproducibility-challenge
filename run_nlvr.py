@@ -1,5 +1,7 @@
 import argparse
 import os
+import threading
+from queue import Queue
 from typing import Optional, Tuple, List, Any
 
 import yaml
@@ -38,6 +40,15 @@ def do_nlvr(program_runner: ProgramRunner, program: str, images_dir: str,
     return prediction, step_details, None
 
 
+def write_results(output_file: str, blocking_queue: Queue):
+    while True:
+        statement_details = blocking_queue.get(block=True)
+        if statement_details is None:
+            break
+        with open(output_file, 'w') as f:
+            yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Run all programs in a NLVR yaml file',
@@ -73,6 +84,9 @@ def main():
         statement_details = yaml.safe_load(f)
 
     os.makedirs(os.path.dirname(args.output_file), exist_ok=True)
+    blocking_queue = Queue(maxsize=-1)
+    write_results_thread = threading.Thread(target=write_results, args=(args.output_file, blocking_queue))
+    write_results_thread.start()
 
     for statement_detail in tqdm(statement_details, desc='running programs', total=len(statement_details)):
         programs = statement_detail['programs']
@@ -90,8 +104,12 @@ def main():
                 programs[i]['results'][pair_object['id']] = dict(prediction=prediction,
                                                                  steps=step_details,
                                                                  error=error)
-                with open(args.output_file, 'w') as f:
-                    yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+                # with open(args.output_file, 'w') as f:
+                #     yaml.dump(statement_details, f, default_style='|', sort_keys=False)
+                blocking_queue.put(statement_details)
+
+    blocking_queue.put(None)
+    write_results_thread.join()
 
 
 if __name__ == '__main__':
