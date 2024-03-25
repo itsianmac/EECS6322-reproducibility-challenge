@@ -27,6 +27,8 @@ def do_nlvr(program_runner: ProgramRunner, program: str, images_dir: str,
         steps, result = program_runner.execute_program(program, initial_state)
     except ExecutionError as e:
         return None, [d.get('output', None) for d in e.previous_step_details], e.error
+    if not isinstance(result.output, dict):
+        return None, [], f'Expected output to be a dictionary, got {type(result.output)} with value {result.output}'
     prediction = result.output.get('var', None)
     step_details = [d.get('output', None) for d in result.step_details[:-1]]
     return prediction, step_details, None
