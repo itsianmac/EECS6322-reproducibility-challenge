@@ -17,6 +17,10 @@ def do_nlvr(program_runner: ProgramRunner, program: str, images_dir: str,
         right_image_path = os.path.join(images_dir, right_image_name)
         left_image = Image.open(left_image_path).convert('RGB')
         right_image = Image.open(right_image_path).convert('RGB')
+        if left_image.size[0] <= 3 or left_image.size[1] <= 3:
+            return None, [], f'Image {left_image_path} is too small'
+        if right_image.size[0] <= 3 or right_image.size[1] <= 3:
+            return None, [], f'Image {right_image_path} is too small'
     except OSError as e:
         return None, [], str(e)
     initial_state = {
