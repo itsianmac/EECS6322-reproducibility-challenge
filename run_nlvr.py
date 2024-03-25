@@ -23,6 +23,7 @@ def do_nlvr(program_runner: ProgramRunner, program: str,
         'LEFT': left_image,
         'RIGHT': right_image,
     }
+    print(left_image.size, right_image.size)
     try:
         steps, result = program_runner.execute_program(program, initial_state)
     except ExecutionError as e:
