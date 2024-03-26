@@ -62,6 +62,8 @@ class Eval(VisProgModule):
             return super().execute(step, state, match)
         except SyntaxError:
             raise ExecutionError(step, 'invalid syntax')
+        except NameError as e:
+            raise ExecutionError(step, f'invalid variable name: {e.name}')
 
     def html(self, output: Any, expr: str, **kwargs) -> Dict[str, Any]:
         """ Generate HTML to display the output
