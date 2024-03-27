@@ -1,5 +1,6 @@
 import argparse
 import os
+import queue
 import threading
 import time
 import traceback
@@ -55,7 +56,7 @@ def write_results(output_file: str, write_queue: Queue, statement_details: Any):
         print('Done writing results')
 
 
-def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_queue: Queue):
+def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_queue: Queue, finish_event: threading.Event):
     try:
         for i, statement_detail in tqdm(enumerate(statement_details), desc='running programs', total=len(statement_details)):
             programs = statement_detail['programs']
@@ -86,7 +87,13 @@ def read_nlvr(statement_details: Any, images_dir: str, run_queue: Queue, write_q
                     except OSError as e:
                         write_queue.put((i, j,  pair_object['id'], None, [], None, str(e)))
                         continue
-                    run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image))
+                    while True:
+                        try:
+                            run_queue.put((i, j, pair_object['id'], programs[j]['program'], left_image, right_image), timeout=1)
+                            break
+                        except queue.Full:
+                            if finish_event.is_set():
+                                return
     except:
         traceback.print_exc()
         time.sleep(1)
@@ -132,18 +139,22 @@ def main():
     os.makedirs(os.path.dirname(args.output_file), exist_ok=True)
     write_queue = Queue(maxsize=-1)
     run_queue = Queue(maxsize=64)
+    finish_event = threading.Event()
     write_results_thread = threading.Thread(target=write_results, args=(args.output_file, write_queue, statement_details))
     write_results_thread.start()
     read_thread = threading.Thread(target=read_nlvr, args=(statement_details, args.images_dir, run_queue, write_queue))
     read_thread.start()
 
-    while True:
-        run_element = run_queue.get(block=True)
-        if run_element is None:
-            break
-        i, j, pair_id, program, left_image, right_image = run_element
-        prediction, step_details, error = do_nlvr(program_runner, program, left_image, right_image)
-        write_queue.put((i, j, pair_id, prediction, step_details, error, None))
+    try:
+        while True:
+            run_element = run_queue.get(block=True)
+            if run_element is None:
+                break
+            i, j, pair_id, program, left_image, right_image = run_element
+            prediction, step_details, error = do_nlvr(program_runner, program, left_image, right_image)
+            write_queue.put((i, j, pair_id, prediction, step_details, error, None))
+    finally:
+        finish_event.set()
 
     write_queue.put(None)
     write_results_thread.join()

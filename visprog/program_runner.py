@@ -37,15 +37,21 @@ class ProgramRunner:
         executed_steps = []
         try:
             for i, step in enumerate(steps):
-                matched: Tuple[VisProgModule, Optional[re.Match]] = self.match_step(step)
-                if matched is None:
-                    warnings.warn(f"No module matched step {i}: {step}. Skipping."
-                                  f" This may be a bug in the program generation.")
-                    continue
-                module, match = matched
-                output, details = module.execute(step, state, match=match)
-                executed_steps.append(step)
-                step_details.append(details)
+                try:
+                    matched: Tuple[VisProgModule, Optional[re.Match]] = self.match_step(step)
+                    if matched is None:
+                        warnings.warn(f"No module matched step {i}: {step}. Skipping."
+                                      f" This may be a bug in the program generation.")
+                        continue
+                    module, match = matched
+                    output, details = module.execute(step, state, match=match)
+                    executed_steps.append(step)
+                    step_details.append(details)
+                except ExecutionError as e:
+                    raise
+                except Exception as e:
+                    print(f"Error in executing step {i}: {step}, {e}")
+                    raise
         except ExecutionError as e:
             raise ExecutionError(e.step, e.error, previous_step_details=step_details)
 
