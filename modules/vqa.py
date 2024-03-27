@@ -1,10 +1,10 @@
 import re
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Tuple
 
 from PIL import Image
 from transformers import ViltProcessor, ViltForQuestionAnswering
 
-from modules.visprog_module import VisProgModule, ParsedStep
+from modules.visprog_module import VisProgModule, ParsedStep, ExecutionError
 
 
 class VQA(VisProgModule):
@@ -75,6 +75,12 @@ class VQA(VisProgModule):
         if self.int_pattern.match(label):
             return int(label)
         return label
+
+    def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, Dict[str, Any]]:
+        try:
+            return super().execute(step, state, match)
+        except RuntimeError as e:
+            raise ExecutionError(step, f'Runtime error: {e}')
 
     def html(self, output: str, image: Image.Image, question: str) -> Dict[str, Any]:
         """ Generate HTML to display the output
