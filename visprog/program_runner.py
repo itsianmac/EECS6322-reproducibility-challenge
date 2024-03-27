@@ -1,5 +1,4 @@
 import re
-import warnings
 
 from dataclasses import dataclass
 from typing import List, Dict, Any, Tuple, Optional
@@ -40,8 +39,6 @@ class ProgramRunner:
                 try:
                     matched: Tuple[VisProgModule, Optional[re.Match]] = self.match_step(step)
                     if matched is None:
-                        warnings.warn(f"No module matched step {i}: {step}. Skipping."
-                                      f" This may be a bug in the program generation.")
                         continue
                     module, match = matched
                     output, details = module.execute(step, state, match=match)
