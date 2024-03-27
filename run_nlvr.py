@@ -142,7 +142,7 @@ def main():
     finish_event = threading.Event()
     write_results_thread = threading.Thread(target=write_results, args=(args.output_file, write_queue, statement_details))
     write_results_thread.start()
-    read_thread = threading.Thread(target=read_nlvr, args=(statement_details, args.images_dir, run_queue, write_queue))
+    read_thread = threading.Thread(target=read_nlvr, args=(statement_details, args.images_dir, run_queue, write_queue, finish_event))
     read_thread.start()
 
     try:
