@@ -94,22 +94,25 @@ class GPTClient:
         Returns:
             str: the new response from chatgpt
         """
-        previous_response = self.last_response
 
         # click the regenerate button
         while True:
             try:
+                previous_response = self.last_response
                 response_element = self.agent_turns[-1]
                 WebDriverWait(self.driver, 20) \
                     .until(lambda _: len(response_element.find_elements(by=By.CSS_SELECTOR,
                                                                         value="span[data-state='closed']")) > 1)
+                response_element.find_elements(by=By.CSS_SELECTOR, value="span[data-state='closed']")[-2].click()
                 break
             except StaleElementReferenceException:
                 pass
-        response_element.find_elements(by=By.CSS_SELECTOR, value="span[data-state='closed']")[-2].click()
 
         def is_changed(_):
-            return previous_response != self.last_response
+            try:
+                return previous_response != self.last_response
+            except StaleElementReferenceException:
+                return False
 
         # wait for the new response to get started
         WebDriverWait(self.driver, 20).until(is_changed)
