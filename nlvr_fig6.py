@@ -57,7 +57,7 @@ def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
         )
     accuracy_mean = np.mean(average_accuracies)
     accuracy_std = np.std(average_accuracies)
-    confidence_interval_95 = 1.96 * accuracy_std
+    confidence_interval_95 = 1.96 * accuracy_std / np.sqrt(len(average_accuracies))
     return dict(
         accuracy_mean=accuracy_mean,
         confidence_interval_95=confidence_interval_95,
