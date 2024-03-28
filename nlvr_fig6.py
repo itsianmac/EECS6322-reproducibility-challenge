@@ -49,17 +49,19 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
 def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
     average_accuracies: List[float] = [stat['outcome_counts'][stat['label']] / (stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None])
                                        if stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None] > 0
-                                       else 0.5
+                                       else 0
                                        for stat in stats if stat['n_tries'] > stat['data_errors']]
+    threshold = 1 / len(set(stat['label'] for stat in stats))
+    average_correct = [accuracy >= threshold for accuracy in average_accuracies]
     print(f'w/o voting', len(average_accuracies))
-    if len(average_accuracies) == 0:        # TODO: we don't need this line
+    if len(average_correct) == 0:        # TODO: we don't need this line
         return dict(
             accuracy_mean=0.5,
             confidence_interval_95=0.0,
         )
-    accuracy_mean = np.mean(average_accuracies)
-    accuracy_std = np.std(average_accuracies)
-    confidence_interval_95 = 1.96 * accuracy_std / np.sqrt(len(average_accuracies))
+    accuracy_mean = np.mean(average_correct)
+    accuracy_std = np.std(average_correct)
+    confidence_interval_95 = 1.96 * accuracy_std / np.sqrt(len(average_correct))
     return dict(
         accuracy_mean=accuracy_mean,
         confidence_interval_95=confidence_interval_95,
