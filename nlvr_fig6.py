@@ -1,73 +1,11 @@
 import argparse
-from collections import defaultdict, Counter
-from typing import List, Dict, Any, Hashable
+from typing import Dict, Any
 
 import numpy as np
-import yaml
 import matplotlib.pyplot as plt
 
-
-def compute_stats(results_file: str) -> List[Dict[str, Any]]:
-    with open(results_file, 'r') as f:
-        results = yaml.safe_load(f)
-
-    stats: List[Dict[str, Any]] = []
-    for prompt in results:
-        for pair in prompt['pairs']:
-            try:
-                results = [program_object['results'][pair['id']]
-                           for program_object in prompt['programs']]
-                if len(results) < 5:
-                    continue
-                label = pair['label']
-                outcome_counts = defaultdict(lambda: 0, Counter(result['prediction']
-                                                                if isinstance(result['prediction'], Hashable)
-                                                                else None   # for unhashable results like dictionaries which are program errors
-                                                                for result in results
-                                                                if result['execution_error'] is None
-                                                                and result['data_error'] is None))
-                execution_errors = len([result['execution_error'] for result in results
-                                        if result['execution_error'] is not None])
-                data_errors = len([result['data_error'] for result in results
-                                   if result['data_error'] is not None])
-                assert sum(outcome_counts.values()) + execution_errors + data_errors == len(results), \
-                    f'Inconsistent results for prompt {prompt["id"]}, pair {pair["id"]} in {results_file}'
-                stats.append(dict(
-                    label=label,
-                    outcome_counts=outcome_counts,
-                    execution_errors=execution_errors,
-                    data_errors=data_errors,
-                    n_tries=len(results),
-                ))
-            except:
-                print(f'Error in prompt {prompt["id"]}, pair {pair["id"]} in {results_file}. results: {results}')
-                raise
-    return stats
-
-
-def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
-    average_accuracies: List[float] = [stat['outcome_counts'][stat['label']] / (stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None])
-                                       for stat in stats if stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None] > 0]
-    print(f'w/o voting', len(average_accuracies))
-    accuracy_mean = np.mean(average_accuracies)
-    accuracy_std = np.std(average_accuracies)
-    confidence_interval_95 = 1.96 * accuracy_std / np.sqrt(len(average_accuracies))
-    return dict(
-        accuracy_mean=accuracy_mean,
-        confidence_interval_95=confidence_interval_95,
-    )
-
-
-def aggregate_with_voting(stats: List[Dict[str, Any]]) -> float:
-    none_null_outcome_counts = [{k: v for k, v in stat['outcome_counts'].items() if k is not None}
-                                for stat in stats]
-    majority_correct = [max(outcome_counts.items(), key=lambda x: x[1])[0] == stat['label']
-                        if len(outcome_counts) > 0 else False
-                        for stat, outcome_counts in zip(stats, none_null_outcome_counts)
-                        if stat['n_tries'] > stat['data_errors']]
-    print('w/ voting', len(majority_correct))
-    accuracy_mean = np.mean(majority_correct)
-    return accuracy_mean
+from evaluation.common import aggregate_without_voting, aggregate_with_voting
+from evaluation.nlvr import compute_stats
 
 
 def process_results(results_file: str) -> Dict[str, Any]:
