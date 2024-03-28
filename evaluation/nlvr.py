@@ -15,7 +15,8 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
             try:
                 execution_results = [program_object['results'][pair['id']]
                                      for program_object in prompt['programs']
-                                     if isinstance(program_object, dict)]  # TODO: remove this
+                                     if isinstance(program_object, dict)  # TODO: remove this
+                                     and pair['id'] in program_object['results']]  # TODO: remove this
                 if len(execution_results) < 5:    # TODO: this should not be necessary
                     continue
                 label = pair['label']
