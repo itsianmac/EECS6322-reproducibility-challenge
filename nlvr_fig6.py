@@ -1,6 +1,6 @@
 import argparse
 from collections import defaultdict, Counter
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Hashable
 
 import numpy as np
 import yaml
@@ -15,14 +15,16 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
     for prompt in results:
         for pair in prompt['pairs']:
             try:
-                results = [program_object['results'][pair['id']] for program_object in prompt['programs']
+                results = [program_object['results'][pair['id']]
+                           for program_object in prompt['programs']
                            if isinstance(program_object, dict) and pair['id'] in program_object['results']]  # TODO: remove this line
                 if len(results) < 5:
                     continue
                 label = pair['label']
                 outcome_counts = defaultdict(lambda: 0, Counter(result['prediction'] for result in results
                                                                 if result['execution_error'] is None
-                                                                and result['data_error'] is None))
+                                                                and result['data_error'] is None
+                                                                and isinstance(result['prediction'], Hashable)))  # for dictionary results which are program errors
                 execution_errors = len([result['execution_error'] for result in results
                                         if result['execution_error'] is not None])
                 data_errors = len([result['data_error'] for result in results
