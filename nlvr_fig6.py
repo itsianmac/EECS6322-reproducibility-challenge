@@ -110,6 +110,7 @@ def build_figure(results: Dict[str, Dict[str, Any]]) -> plt.Figure:
     ax.set_ylim(y_min, y_max)
     ax.set_xticks(r + w / 2)
     ax.set_xticklabels(results.keys())
+    ax.set_yticks(np.arange(int(np.ceil(y_min)), int(np.floor(y_max)) + 1, 2))
 
     ax.legend()
 
