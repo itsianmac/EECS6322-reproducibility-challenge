@@ -37,7 +37,7 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
                     n_tries=len(results),
                 ))
             except:
-                print(f'Error in prompt {prompt["id"]}, pair {pair["id"]} in {results_file}')
+                print(f'Error in prompt {prompt["id"]}, pair {pair["id"]} in {results_file}. results: {results}')
                 raise
     return stats
 
