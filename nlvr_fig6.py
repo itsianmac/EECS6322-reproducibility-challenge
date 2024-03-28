@@ -50,6 +50,11 @@ def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
     average_accuracies: List[float] = [stat['outcome_counts'][stat['label']] / (stat['n_tries'] - stat['data_errors'])
                                        for stat in stats if stat['n_tries'] > stat['data_errors']]
     print(f'w/o voting', len(average_accuracies))
+    if len(average_accuracies) == 0:        # TODO: we don't need this line
+        return dict(
+            accuracy_mean=0.0,
+            confidence_interval_95=0.0,
+        )
     accuracy_mean = np.mean(average_accuracies)
     accuracy_std = np.std(average_accuracies)
     confidence_interval_95 = 1.96 * accuracy_std
@@ -67,6 +72,8 @@ def aggregate_with_voting(stats: List[Dict[str, Any]]) -> float:
                         for stat, outcome_counts in zip(stats, none_null_outcome_counts)
                         if stat['n_tries'] > stat['data_errors']]
     print('w/ voting', len(majority_correct))
+    if len(majority_correct) == 0:        # TODO: we don't need this line
+        return 0.0
     accuracy_mean = np.mean(majority_correct)
     return accuracy_mean
 
