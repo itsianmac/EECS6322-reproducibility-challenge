@@ -16,8 +16,7 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
         for pair in prompt['pairs']:
             try:
                 results = [program_object['results'][pair['id']]
-                           for program_object in prompt['programs']
-                           if isinstance(program_object, dict) and pair['id'] in program_object['results']]  # TODO: remove this line
+                           for program_object in prompt['programs']]
                 if len(results) < 5:
                     continue
                 label = pair['label']
@@ -50,13 +49,6 @@ def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
     average_accuracies: List[float] = [stat['outcome_counts'][stat['label']] / (stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None])
                                        for stat in stats if stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None] > 0]
     print(f'w/o voting', len(average_accuracies))
-    if len(average_accuracies) == 0:        # TODO: we don't need this line
-        return dict(
-            accuracy_mean=0.5,
-            confidence_interval_95=0.0,
-        )
-    # threshold = 1 / len(set(stat['label'] for stat in stats))
-    # average_correct = [accuracy >= threshold for accuracy in average_accuracies]
     accuracy_mean = np.mean(average_accuracies)
     accuracy_std = np.std(average_accuracies)
     confidence_interval_95 = 1.96 * accuracy_std / np.sqrt(len(average_accuracies))
@@ -74,8 +66,6 @@ def aggregate_with_voting(stats: List[Dict[str, Any]]) -> float:
                         for stat, outcome_counts in zip(stats, none_null_outcome_counts)
                         if stat['n_tries'] > stat['data_errors']]
     print('w/ voting', len(majority_correct))
-    if len(majority_correct) == 0:        # TODO: we don't need this line
-        return 0.5
     accuracy_mean = np.mean(majority_correct)
     return accuracy_mean
 
