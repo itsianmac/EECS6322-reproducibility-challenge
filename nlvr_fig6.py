@@ -14,7 +14,8 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
     stats: List[Dict[str, Any]] = []
     for prompt in results:
         for pair in prompt['pairs']:
-            results = [program_object['results'][pair['id']] for program_object in prompt['programs']]
+            results = [program_object['results'][pair['id']] for program_object in prompt['programs']
+                       if pair['id'] in program_object['results']]  # TODO: remove this line
             label = pair['label']
             outcome_counts = defaultdict(lambda: 0, Counter(result['prediction'] for result in results
                                                             if result['prediction'] is not None))
