@@ -66,6 +66,26 @@ class Replace(VisProgModule):
 
         return seg_map
 
+    @staticmethod
+    def square_image(image: Image.Image) -> Image.Image:
+        max_dim = max(image.size)
+        new_image = Image.new('RGB', (max_dim, max_dim), (255, 255, 255))
+        new_image.paste(image, (0, 0))
+        return new_image
+
+    @staticmethod
+    def square_seg_map(seg_map: np.ndarray) -> np.ndarray:
+        max_dim = max(seg_map.shape)
+        new_seg_map = np.zeros((max_dim, max_dim), dtype=np.uint8)
+        new_seg_map[:seg_map.shape[0], :seg_map.shape[1]] = seg_map
+        return new_seg_map
+
+    @staticmethod
+    def desquare_image(output: Image.Image, image: Image.Image) -> Image.Image:
+        max_dim = max(image.size)
+        output = output.resize((max_dim, max_dim))
+        return output.crop((0, 0, *image.size))
+
     def perform_module_function(self, image: Image.Image, object: np.ndarray, prompt: str) -> Image.Image:
         """ Perform the color pop operation on the image using the object mask
 
@@ -86,8 +106,11 @@ class Replace(VisProgModule):
             The image with the object replaced
         """
         seg_map = self.get_seg_map(image, object)
-        output: Image.Image = self.pipe(prompt=prompt, image=image, mask_image=seg_map.astype('float')).images[0]
-        return output.resize(image.size)    # resize to original size because the output is square
+        square_image = self.square_image(image)
+        square_seg_map = self.square_seg_map(seg_map)
+        output: Image.Image = self.pipe(prompt=prompt, image=square_image,
+                                        mask_image=square_seg_map.astype('float')).images[0]
+        return self.desquare_image(output, image)
 
     def html(self, output: Image.Image, image: Image.Image, object: np.ndarray, prompt: str) -> str:
         """ Generate HTML to display the output
