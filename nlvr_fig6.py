@@ -18,7 +18,8 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
                        if pair['id'] in program_object['results']]  # TODO: remove this line
             label = pair['label']
             outcome_counts = defaultdict(lambda: 0, Counter(result['prediction'] for result in results
-                                                            if result['prediction'] is not None))
+                                                            if result['execution_error'] is None
+                                                            and result['data_error'] is None))
             execution_errors = len([result['execution_error'] for result in results
                                     if result['execution_error'] is not None])
             data_errors = len([result['data_error'] for result in results
