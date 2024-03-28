@@ -5,8 +5,7 @@
   "prompt":
     "question": |-
       Are there both ties and glasses in the picture?
-  "label": !!bool |-
-    false
+  "label": "no"
   "programs":
   - |-
     BOX0=LOC(image=IMAGE,object='tie')
