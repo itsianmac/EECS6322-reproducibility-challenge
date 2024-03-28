@@ -128,3 +128,7 @@ def main():
 
     fig = build_figure(results)
     fig.savefig(args.figure_file)
+
+
+if __name__ == '__main__':
+    main()
