@@ -1,0 +1,35 @@
+- "id": !!int |-
+    1
+  "image": |-
+    grizzly.webp
+  "prompt":
+    "instruction": |-
+      Replace the ground with with white snow and the bear with a white polar bear
+  "programs":
+  - |-
+    OBJ0 = SEG(image=IMAGE)
+    OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='bear', category=None)
+    OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='ground', category=None)
+    IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='white polar bear')
+    IMAGE1 = REPLACE(image=IMAGE0, object=OBJ2, prompt='white snow')
+    FINAL_RESULT = RESULT(var=IMAGE1)
+  - |-
+    OBJ0 = SEG(image=IMAGE)
+    OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='ground', category=None)
+    OBJ2 = SELECT(image=IMAGE, object=OBJ0, query='bear', category=None)
+    IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='white snow')
+    IMAGE1 = REPLACE(image=IMAGE0, object=OBJ2, prompt='white polar bear')
+    FINAL_RESULT = RESULT(var=IMAGE1)
+  - |-
+    OBJ0 = SEG(image=IMAGE)
+    OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='ground,bear', category=None)
+    IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='white snow, white polar bear')
+    FINAL_RESULT = RESULT(var=IMAGE0)
+  - |-
+    OBJ0 = SEG(image=IMAGE)
+    OBJ1 = SELECT(image=IMAGE, object=OBJ0, query='bear', category=None)
+    IMAGE0 = REPLACE(image=IMAGE, object=OBJ1, prompt='white polar bear')
+    OBJ2 = SEG(image=IMAGE0)
+    OBJ3 = SELECT(image=IMAGE0, object=OBJ2, query='ground', category=None)
+    IMAGE1 = REPLACE(image=IMAGE0, object=OBJ3, prompt='white snow')
+    FINAL_RESULT = RESULT(var=IMAGE1)
