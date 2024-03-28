@@ -15,12 +15,13 @@ class VQA(VisProgModule):
     true_pattern = re.compile(r'(yes|true)', re.IGNORECASE)
     false_pattern = re.compile(r'(no|false)', re.IGNORECASE)
 
-    def __init__(self, device: str = "cpu"):
+    def __init__(self, device: str = "cpu", cast_from_string: bool = False):
         super().__init__()
         self.processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.model = self.model.to(device)
         self.device = device
+        self.cast_from_string = cast_from_string
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
@@ -68,12 +69,13 @@ class VQA(VisProgModule):
         logits = outputs.logits
         idx = logits.argmax(-1).item()
         label = self.model.config.id2label[idx]
-        if self.true_pattern.match(label):
-            return True
-        if self.false_pattern.match(label):
-            return False
-        if self.int_pattern.match(label):
-            return int(label)
+        if self.cast_from_string:
+            if self.true_pattern.match(label):
+                return True
+            if self.false_pattern.match(label):
+                return False
+            if self.int_pattern.match(label):
+                return int(label)
         return label
 
     def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, Dict[str, Any]]:

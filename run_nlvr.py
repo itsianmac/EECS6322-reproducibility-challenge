@@ -127,7 +127,7 @@ def main():
 
     args = parser.parse_args()
 
-    vqa = VQA(device=args.device)
+    vqa = VQA(device=args.device, cast_from_string=True)
     eval_ = Eval()
     result = Result()
     modules = [vqa, eval_, result]

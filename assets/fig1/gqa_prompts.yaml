@@ -1,0 +1,17 @@
+- "id": !!int |-
+    1
+  "image": |-
+    kid.png
+  "prompt":
+    "question": |-
+      Are there both ties and glasses in the picture?
+  "label": !!bool |-
+    false
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='tie')
+    BOX1=LOC(image=IMAGE,object='glasses')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=COUNT(box=BOX1)
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} > 0 and {ANSWER1} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
