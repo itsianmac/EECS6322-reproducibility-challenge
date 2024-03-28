@@ -14,27 +14,31 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
     stats: List[Dict[str, Any]] = []
     for prompt in results:
         for pair in prompt['pairs']:
-            results = [program_object['results'][pair['id']] for program_object in prompt['programs']
-                       if isinstance(program_object, dict) and pair['id'] in program_object['results']]  # TODO: remove this line
-            if len(results) < 5:
-                continue
-            label = pair['label']
-            outcome_counts = defaultdict(lambda: 0, Counter(result['prediction'] for result in results
-                                                            if result['execution_error'] is None
-                                                            and result['data_error'] is None))
-            execution_errors = len([result['execution_error'] for result in results
-                                    if result['execution_error'] is not None])
-            data_errors = len([result['data_error'] for result in results
-                               if result['data_error'] is not None])
-            assert sum(outcome_counts.values()) + execution_errors + data_errors == len(results), \
-                f'Inconsistent results for prompt {prompt["id"]}, pair {pair["id"]} in {results_file}'
-            stats.append(dict(
-                label=label,
-                outcome_counts=outcome_counts,
-                execution_errors=execution_errors,
-                data_errors=data_errors,
-                n_tries=len(results),
-            ))
+            try:
+                results = [program_object['results'][pair['id']] for program_object in prompt['programs']
+                           if isinstance(program_object, dict) and pair['id'] in program_object['results']]  # TODO: remove this line
+                if len(results) < 5:
+                    continue
+                label = pair['label']
+                outcome_counts = defaultdict(lambda: 0, Counter(result['prediction'] for result in results
+                                                                if result['execution_error'] is None
+                                                                and result['data_error'] is None))
+                execution_errors = len([result['execution_error'] for result in results
+                                        if result['execution_error'] is not None])
+                data_errors = len([result['data_error'] for result in results
+                                   if result['data_error'] is not None])
+                assert sum(outcome_counts.values()) + execution_errors + data_errors == len(results), \
+                    f'Inconsistent results for prompt {prompt["id"]}, pair {pair["id"]} in {results_file}'
+                stats.append(dict(
+                    label=label,
+                    outcome_counts=outcome_counts,
+                    execution_errors=execution_errors,
+                    data_errors=data_errors,
+                    n_tries=len(results),
+                ))
+            except:
+                print(f'Error in prompt {prompt["id"]}, pair {pair["id"]} in {results_file}')
+                raise
     return stats
 
 
