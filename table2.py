@@ -21,11 +21,11 @@ def main():
 
     args = parser.parse_args()
 
-    one_run_accuracy = compute_one_run_accuracy(args.in_context_all_results_file, seed=args.seed)
-    voting_accuracy = aggregate_with_voting(compute_stats(args.in_context_all_results_file))
+    one_run_accuracy = compute_one_run_accuracy(args.in_context_all_results_file, seed=args.seed) * 100
+    voting_accuracy = aggregate_with_voting(compute_stats(args.in_context_all_results_file)) * 100
 
-    print(f'One run accuracy: {one_run_accuracy:.2f}')
-    print(f'Voting accuracy: {voting_accuracy:.2f}')
+    print(f'One run accuracy: {one_run_accuracy:.1f}')
+    print(f'Voting accuracy: {voting_accuracy:.1f}')
 
 
 if __name__ == '__main__':
