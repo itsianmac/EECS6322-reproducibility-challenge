@@ -49,7 +49,7 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
 def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
     average_accuracies: List[float] = [stat['outcome_counts'][stat['label']] / (stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None])
                                        if stat['n_tries'] - stat['data_errors'] - stat['outcome_counts'][None] > 0
-                                       else 0
+                                       else 0.5
                                        for stat in stats if stat['n_tries'] > stat['data_errors']]
     print(f'w/o voting', len(average_accuracies))
     if len(average_accuracies) == 0:        # TODO: we don't need this line
