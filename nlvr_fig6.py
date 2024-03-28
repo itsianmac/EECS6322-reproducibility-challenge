@@ -49,9 +49,12 @@ def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
 
 
 def aggregate_with_voting(stats: List[Dict[str, Any]]) -> float:
-    majority_correct = [max(stat['outcome_counts'].items(), key=lambda x: x[1])[0] == stat['label']
-                         if len(stat['outcome_counts']) > 0 else False
-                         for stat in stats if stat['n_tries'] > stat['data_errors']]
+    none_null_outcome_counts = [{k: v for k, v in stat['outcome_counts'].items() if k is not None}
+                                for stat in stats]
+    majority_correct = [max(outcome_counts.items(), key=lambda x: x[1])[0] == stat['label']
+                        if len(outcome_counts) > 0 else False
+                        for stat, outcome_counts in zip(stats, none_null_outcome_counts)
+                        if stat['n_tries'] > stat['data_errors']]
     accuracy_mean = np.mean(majority_correct)
     return accuracy_mean
 
