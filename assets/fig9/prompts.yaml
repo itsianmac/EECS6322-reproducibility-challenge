@@ -1,0 +1,26 @@
+- "id": !!int |-
+    1
+  "image": |-
+    ikea.jpeg
+  "prompt":
+    "instruction": |-
+      Replace the coffee table with a glass-top modern coffee table
+  "programs":
+  - |-
+    OBJ0=SEG(image=IMAGE)
+    OBJ1=SELECT(image=IMAGE,object=OBJ0,query='coffee table',category=None)
+    IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='glass-top modern coffee table')
+    FINAL_RESULT=RESULT(var=IMAGE0)
+- "id": !!int |-
+    2
+  "image": |-
+    ikea.jpeg
+  "prompt":
+    "instruction": |-
+      Replace the coffee table (table-merged) with a glass-top modern coffee table
+  "programs":
+  - |-
+    OBJ0=SEG(image=IMAGE)
+    OBJ1=SELECT(image=IMAGE,object=OBJ0,query='coffee table',category='table-merged')
+    IMAGE0=REPLACE(image=IMAGE,object=OBJ1,prompt='glass-top modern coffee table')
+    FINAL_RESULT=RESULT(var=IMAGE0)
