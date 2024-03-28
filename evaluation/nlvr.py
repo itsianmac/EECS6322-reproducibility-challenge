@@ -55,7 +55,8 @@ def compute_one_run_accuracy(results_file: str, seed: int) -> float:
             try:
                 execution_results = [program_object['results'][pair['id']]
                                      for program_object in prompt['programs']
-                                     if isinstance(program_object, dict)  # TODO: remove this
+                                     if isinstance(program_object, dict)            # TODO: remove this
+                                     and pair['id'] in program_object['results']    # TODO: remove this
                                      and program_object['results'][pair['id']]['prediction'] is not None]
                 result = rng.choice(execution_results or [None])
                 if result is None:
