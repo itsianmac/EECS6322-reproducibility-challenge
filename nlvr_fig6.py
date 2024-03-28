@@ -21,10 +21,12 @@ def compute_stats(results_file: str) -> List[Dict[str, Any]]:
                 if len(results) < 5:
                     continue
                 label = pair['label']
-                outcome_counts = defaultdict(lambda: 0, Counter(result['prediction'] for result in results
+                outcome_counts = defaultdict(lambda: 0, Counter(result['prediction']
+                                                                if isinstance(result['prediction'], Hashable)
+                                                                else None   # for unhashable results like dictionaries which are program errors
+                                                                for result in results
                                                                 if result['execution_error'] is None
-                                                                and result['data_error'] is None
-                                                                and isinstance(result['prediction'], Hashable)))  # for dictionary results which are program errors
+                                                                and result['data_error'] is None))
                 execution_errors = len([result['execution_error'] for result in results
                                         if result['execution_error'] is not None])
                 data_errors = len([result['data_error'] for result in results
