@@ -1,6 +1,10 @@
 import json
+import os
 import random
 from typing import Dict, List, Tuple
+
+import pudb
+import yaml
 
 
 class GQA_Sampler:
@@ -41,6 +45,7 @@ class GQA_Sampler:
         for key in keys:
 
             data = questions[key]
+
             group = data["groups"][group_type]
 
             question_data = {}
@@ -143,3 +148,42 @@ if __name__ == "__main__":
     # Print out the testdev samples
     print(f"Testdev Sample: {testdev_samples}")
     print(f"Number of Testdev Samples: {len(testdev_samples)}")
+
+    # Write out samples to yaml, similar to extract_nlvr.py
+    asset_GQA_pth = "../assets/GQA/"
+    val_gqa_pth = os.path.join(asset_GQA_pth, "val_gqa_samples.yaml")
+    testdev_gqa_pth = os.path.join(asset_GQA_pth, "testdev_gqa_samples.yaml")
+
+    # Wrap each sample in a prompt object
+    val_samples = [
+        {
+            "id": sample["imageId"],
+            "prompt": sample["question"],
+            "answers": {"answer": sample["answer"], "fullAnswer": sample["fullAnswer"]},
+            "groups": sample["groups"],
+            "image": sample["imageId"] + ".jpg",  # add image extension
+        }
+        for sample in val_samples
+    ]
+
+    # And the same for the testdev set
+    testdev_samples = [
+        {
+            "id": sample["imageId"],
+            "prompt": sample["question"],
+            "answers": {"answer": sample["answer"], "fullAnswer": sample["fullAnswer"]},
+            "groups": sample["groups"],
+            "image": sample["imageId"] + ".jpg",  # add image extension
+        }
+        for sample in testdev_samples
+    ]
+
+    if not os.path.exists(asset_GQA_pth):
+        os.makedirs(asset_GQA_pth, exist_ok=True)
+
+    # Write out dictionaries in yaml format, not json
+    with open(val_gqa_pth, "w") as f:
+        yaml.dump(val_samples, f, sort_keys=False)
+
+    with open(testdev_gqa_pth, "w") as f:
+        yaml.dump(testdev_samples, f, sort_keys=False)
