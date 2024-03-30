@@ -1,9 +1,9 @@
 import argparse
 import importlib
 import os
+import random
 import re
 import time
-import random
 
 import yaml
 from selenium.common import TimeoutException
