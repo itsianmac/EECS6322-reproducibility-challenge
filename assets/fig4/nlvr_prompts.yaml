@@ -1,0 +1,30 @@
+- "id": !!int |-
+    1
+  "prompt":
+    "statement": |-
+      At least three animals are in a flowered field
+  "pairs":
+  - "id": !!int |-
+      1
+    "left_image": |-
+      puppy.webp
+    "right_image": |-
+      dog.jpeg
+    "label": !!bool |-
+      true
+  "programs":
+  - |-
+    ANSWER0=VQA(image=LEFT, question='How many animals are in the flowered field?')
+    ANSWER1=VQA(image=RIGHT, question='How many animals are in the flowered field?')
+    ANSWER2=EVAL(expr='{ANSWER0} + {ANSWER1} >= 3')
+    FINAL_ANSWER=RESULT(var=ANSWER2)
+  - |-
+    ANSWER0=VQA(image=LEFT,question='How many animals are in the image?')
+    ANSWER1=VQA(image=RIGHT,question='How many animals are in the image?')
+    ANSWER2=EVAL(expr='{ANSWER0} + {ANSWER1} >= 3')
+    FINAL_ANSWER=RESULT(var=ANSWER2)
+  - |-
+    ANSWER0=VQA(image=LEFT,question='How many animals are in the flowered field?')
+    ANSWER1=VQA(image=RIGHT,question='How many animals are in the flowered field?')
+    ANSWER2=EVAL(expr='{ANSWER0} >= 3 or {ANSWER1} >= 3')
+    FINAL_ANSWER=RESULT(var=ANSWER2)

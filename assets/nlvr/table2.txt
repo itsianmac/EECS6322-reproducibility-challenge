@@ -1,0 +1,3 @@
+w/ voting 3159
+One run accuracy: 61.3
+Voting accuracy: 63.8

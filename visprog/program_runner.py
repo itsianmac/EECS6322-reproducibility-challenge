@@ -1,10 +1,9 @@
 import re
-import warnings
 
 from dataclasses import dataclass
 from typing import List, Dict, Any, Tuple, Optional
 
-from modules import VisProgModule
+from modules import VisProgModule, ExecutionError
 
 
 @dataclass
@@ -35,15 +34,22 @@ class ProgramRunner:
         step_details = []
         output = None
         executed_steps = []
-        for i, step in enumerate(steps):
-            matched: Tuple[VisProgModule, Optional[re.Match]] = self.match_step(step)
-            if matched is None:
-                warnings.warn(f"No module matched step {i}: {step}. Skipping."
-                              f" This may be a bug in the program generation.")
-                continue
-            module, match = matched
-            output, details = module.execute(step, state, match=match)
-            executed_steps.append(step)
-            step_details.append(details)
+        try:
+            for i, step in enumerate(steps):
+                try:
+                    matched: Tuple[VisProgModule, Optional[re.Match]] = self.match_step(step)
+                    if matched is None:
+                        continue
+                    module, match = matched
+                    output, details = module.execute(step, state, match=match)
+                    executed_steps.append(step)
+                    step_details.append(details)
+                except ExecutionError as e:
+                    raise
+                except Exception as e:
+                    print(f"Error in executing step {i}: {step}, {e}")
+                    raise
+        except ExecutionError as e:
+            raise ExecutionError(e.step, e.error, previous_step_details=step_details)
 
         return executed_steps, ProgramResult(state, output, step_details)

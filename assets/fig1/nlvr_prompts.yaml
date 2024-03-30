@@ -1,0 +1,24 @@
+- "id": !!int |-
+    1
+  "prompt":
+    "statement": |-
+      The left and right image contains a total of six people and two boats
+  "pairs":
+  - "id": !!int |-
+      1
+    "left_image": |-
+      boat1.jpeg
+    "right_image": |-
+      boat2.webp
+    "label": !!bool |-
+      false
+  "programs":
+  - |-
+    ANSWER0=VQA(image=LEFT,question='How many people are in the image?')
+    ANSWER1=VQA(image=RIGHT,question='How many people are in the image?')
+    ANSWER2=VQA(image=LEFT,question='How many boats are in the image?')
+    ANSWER3=VQA(image=RIGHT,question='How many boats are in the image?')
+    ANSWER4=EVAL(expr='{ANSWER0} + {ANSWER1} == 6')
+    ANSWER5=EVAL(expr='{ANSWER2} + {ANSWER3} == 2')
+    ANSWER6=EVAL(expr='{ANSWER4} and {ANSWER5}')
+    FINAL_ANSWER=RESULT(var=ANSWER6)

@@ -12,3 +12,5 @@ diffusers
 scipy
 accelerate
 PyYAML
+tqdm
+matplotlib

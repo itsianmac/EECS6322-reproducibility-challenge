@@ -1,26 +1,27 @@
 import re
-from typing import Any, Dict, Tuple, Optional
+from typing import Any, Dict, Optional, Tuple
 
-import numpy as np
-from PIL import Image, ImageDraw
-import PIL
-import torch
+from PIL import Image
 from transformers import ViltProcessor, ViltForQuestionAnswering
 
-from modules.visprog_module import VisProgModule, ParsedStep
+from modules.visprog_module import VisProgModule, ParsedStep, ExecutionError
 
 
 class VQA(VisProgModule):
     pattern = re.compile(r"(?P<output>\S*)\s*=\s*VQA\s*"
                          r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
                          r",\s*question\s*=\s*'(?P<question>.*)'\s*\)")
+    int_pattern = re.compile(r'^\d+$')
+    true_pattern = re.compile(r'(yes|true)', re.IGNORECASE)
+    false_pattern = re.compile(r'(no|false)', re.IGNORECASE)
 
-    def __init__(self, device: str = "cpu"):
+    def __init__(self, device: str = "cpu", cast_from_string: bool = False):
         super().__init__()
         self.processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.model = ViltForQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
         self.model = self.model.to(device)
         self.device = device
+        self.cast_from_string = cast_from_string
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
         """ Parse step and return list of input values/variable names
@@ -67,7 +68,21 @@ class VQA(VisProgModule):
         outputs = self.model(**encoding)
         logits = outputs.logits
         idx = logits.argmax(-1).item()
-        return self.model.config.id2label[idx]
+        label = self.model.config.id2label[idx]
+        if self.cast_from_string:
+            if self.true_pattern.match(label):
+                return True
+            if self.false_pattern.match(label):
+                return False
+            if self.int_pattern.match(label):
+                return int(label)
+        return label
+
+    def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, Dict[str, Any]]:
+        try:
+            return super().execute(step, state, match)
+        except RuntimeError as e:
+            raise ExecutionError(step, f'Runtime error: {e}')
 
     def html(self, output: str, image: Image.Image, question: str) -> Dict[str, Any]:
         """ Generate HTML to display the output
