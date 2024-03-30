@@ -158,9 +158,8 @@ if __name__ == "__main__":
     val_samples = [
         {
             "id": sample["imageId"],
-            "prompt": sample["question"],
+            "prompt": {"question": sample["question"]},
             "answers": {"answer": sample["answer"], "fullAnswer": sample["fullAnswer"]},
-            "groups": sample["groups"],
             "image": sample["imageId"] + ".jpg",  # add image extension
         }
         for sample in val_samples
@@ -170,9 +169,8 @@ if __name__ == "__main__":
     testdev_samples = [
         {
             "id": sample["imageId"],
-            "prompt": sample["question"],
+            "prompt": {"question": sample["question"]},
             "answers": {"answer": sample["answer"], "fullAnswer": sample["fullAnswer"]},
-            "groups": sample["groups"],
             "image": sample["imageId"] + ".jpg",  # add image extension
         }
         for sample in testdev_samples
