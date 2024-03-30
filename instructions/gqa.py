@@ -1,9 +1,9 @@
 from typing import Literal
 
-from instructions.prompt_factory import PromptFactory
+from instructions.prompt_factory import BulkPromptFactory, PromptFactory
 
 GQA_EXAMPLES = [
-"""Question: Is the vehicle in the top of the image?
+    """Question: Is the vehicle in the top of the image?
 Program:
 BOX0=LOC(image=IMAGE,object='TOP')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -12,7 +12,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Are there trains or fences in this scene?
+    """Question: Are there trains or fences in this scene?
 Program:
 BOX0=LOC(image=IMAGE,object='train')
 BOX1=LOC(image=IMAGE,object='fence')
@@ -21,26 +21,26 @@ ANSWER1=COUNT(box=BOX1)
 ANSWER2=EVAL(expr="'yes' if {ANSWER0} + {ANSWER1} > 0 else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER)
 """,
-"""Question: Who is carrying the umbrella?
+    """Question: Who is carrying the umbrella?
 Program:
 BOX0=LOC(image=IMAGE,object='umbrella')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
 ANSWER0=VQA(image=IMAGE0,question='Who is carrying the umbrella?')
 FINAL_RESULT=RESULT(var=ANSWER0)
 """,
-"""Question: Which place is it?
+    """Question: Which place is it?
 Program:
 ANSWER0=VQA(image=IMAGE,question='Which place is it?')
 FINAL_RESULT=RESULT(var=ANSWER0)
 """,
-"""Question: What color is the curtain that is to the right of the mirror?
+    """Question: What color is the curtain that is to the right of the mirror?
 Program:
 BOX0=LOC(image=IMAGE,object='mirror')
 IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
 ANSWER0=VQA(image=IMAGE0,question='What color is the curtain?')
 FINAL_RESULT=RESULT(var=ANSWER0)
 """,
-"""Question: Is the pillow in the top part or in the bottom of the picture?
+    """Question: Is the pillow in the top part or in the bottom of the picture?
 Program:
 BOX0=LOC(image=IMAGE,object='TOP')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -49,7 +49,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'top' if {ANSWER0} > 0 else 'bottom'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Question: Do you see bottles to the right of the wine on the left of the picture?
+    """Question: Question: Do you see bottles to the right of the wine on the left of the picture?
 Program:
 BOX0=LOC(image=IMAGE,object='LEFT')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -60,7 +60,7 @@ ANSWER0=COUNT(box=BOX2)
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Which side is the food on?
+    """Question: Which side is the food on?
 Program:
 BOX0=LOC(image=IMAGE,object='RIGHT')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -69,12 +69,12 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'right' if {ANSWER0} > 0 else 'left'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: What do the wetsuit and the sky have in common?
+    """Question: What do the wetsuit and the sky have in common?
 Program:
 ANSWER0=VQA(image=IMAGE,question='What do the wetsuit and the sky have in common?')
 FINAL_RESULT=RESULT(var=ANSWER0)
 """,
-"""Question: Do the post and the sign have a different colors?
+    """Question: Do the post and the sign have a different colors?
 Program:
 BOX0=LOC(image=IMAGE,object='post')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -85,7 +85,7 @@ ANSWER1=VQA(image=IMAGE1,question='What color is the sign?')
 ANSWER2=EVAL(expr="'yes' if {ANSWER0} != {ANSWER1} else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER2)
 """,
-"""Question: Does the traffic cone have white color?
+    """Question: Does the traffic cone have white color?
 Program:
 BOX0=LOC(image=IMAGE,object='traffic cone')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -93,12 +93,12 @@ ANSWER0=VQA(image=IMAGE0,question='What color is the traffic cone?')
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} == 'white' else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Are these animals of different species?
+    """Question: Are these animals of different species?
 Program:
 ANSWER0=VQA(image=IMAGE,question='Are these animals of different species?')
 FINAL_RESULT=RESULT(var=ANSWER0)
 """,
-"""Question: Which side of the image is the chair on?
+    """Question: Which side of the image is the chair on?
 Program:
 BOX0=LOC(image=IMAGE,object='RIGHT')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -107,7 +107,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'right' if {ANSWER0} > 0 else 'left'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Do you see any drawers to the left of the plate?
+    """Question: Do you see any drawers to the left of the plate?
 Program:
 BOX0=LOC(image=IMAGE,object='plate')
 IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
@@ -116,7 +116,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Does the mat have the same color as the sky?
+    """Question: Does the mat have the same color as the sky?
 Program:
 BOX0=LOC(image=IMAGE,object='sky')
 IMAGE0=CROP(image=IMAGE,box=BOX0)
@@ -127,7 +127,7 @@ ANSWER1=VQA(image=IMAGE1,question='What color is the mat?')
 ANSWER2=EVAL(expr="'yes' if {ANSWER0} == {ANSWER1} else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER2)
 """,
-"""Question: Is a cat above the mat?
+    """Question: Is a cat above the mat?
 Program:
 BOX0=LOC(image=IMAGE,object='mat')
 IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
@@ -136,7 +136,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """
-"""Question: Is the cat above a mat?
+    """Question: Is the cat above a mat?
 Program:
 BOX0=LOC(image=IMAGE,object='cat')
 IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
@@ -145,7 +145,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 and else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Is the mat below a cat?
+    """Question: Is the mat below a cat?
 Program:
 BOX0=LOC(image=IMAGE,object='mat')
 IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
@@ -154,7 +154,7 @@ ANSWER0=COUNT(box=BOX1)
 ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
 FINAL_RESULT=RESULT(var=ANSWER1)
 """,
-"""Question: Is a mat below the cat?
+    """Question: Is a mat below the cat?
 Program:
 BOX0=LOC(image=IMAGE,object='cat')
 IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
@@ -166,14 +166,27 @@ FINAL_RESULT=RESULT(var=ANSWER1)
 ]
 
 
-def get_prompt_factory(method: Literal['all', 'random'] = 'random', num_prompts: int = 8) -> PromptFactory:
+def get_prompt_factory(
+    method: Literal["all", "random"] = "random", num_prompts: int = 8
+) -> PromptFactory:
     prefix = "Think step by step to answer the question."
     format_ = """
 Question: {question}
 Program:
 """
-    return PromptFactory(prefix,
-                         GQA_EXAMPLES,
-                         format_,
-                         method=method,
-                         num_prompts=num_prompts)
+    return PromptFactory(
+        prefix, GQA_EXAMPLES, format_, method=method, num_prompts=num_prompts
+    )
+
+
+def get_bulk_prompt_factory(
+    method: Literal["all", "random"] = "random", num_prompts: int = 8
+) -> BulkPromptFactory:
+    prefix = "Think step by step to answer the question."
+    format_ = """
+Question: {question}
+Program:
+    """
+    return BulkPromptFactory(
+        prefix, GQA_EXAMPLES, format_, method=method, num_prompts=num_prompts
+    )
