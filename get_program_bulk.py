@@ -68,9 +68,15 @@ def main():
         default=False,
     )
     parser.add_argument(
+        '-wt', '--wait_time',
+        type=int,
+        default=5,
+    )
+    parser.add_argument(
         'prompts_file',
         type=str,
     )
+    
     parser.add_argument(
         'output_file',
         type=str,
@@ -139,8 +145,8 @@ def main():
                         print('TimeoutException')
                 finally:
                     gpt.new_chat()
-                    print('waiting 5 seconds')
-                    time.sleep(5)
+                    print(f'waiting {args.wait_time} seconds')
+                    time.sleep(args.wait_time)
                 print('---------')
     finally:
         gpt.quit()
