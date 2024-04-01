@@ -1,0 +1,6892 @@
+- "id": |-
+    2325189
+  "prompt":
+    "question": |-
+      What do you think is riding a motorcycle?
+  "answers":
+    "answer": |-
+      figure
+    "fullAnswer": |-
+      The figure is riding a motorcycle.
+  "image": |-
+    2325189.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='motorcycle')
+    ANSWER0 = VQA(image=IMAGE, question='What is riding the motorcycle?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2405536
+  "prompt":
+    "question": |-
+      What is the girl holding?
+  "answers":
+    "answer": |-
+      bat
+    "fullAnswer": |-
+      The girl is holding the bat.
+  "image": |-
+    2405536.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='girl')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is the girl holding?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2340446
+  "prompt":
+    "question": |-
+      What is in the meat?
+  "answers":
+    "answer": |-
+      bone
+    "fullAnswer": |-
+      The bone is in the meat.
+  "image": |-
+    2340446.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='meat')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is in the meat?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2328982
+  "prompt":
+    "question": |-
+      What is on the appliance to the right of the man?
+  "answers":
+    "answer": |-
+      magnets
+    "fullAnswer": |-
+      The magnets are on the refrigerator.
+  "image": |-
+    2328982.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='man')
+    IMAGE0 = CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is on the appliance?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2379897
+  "prompt":
+    "question": |-
+      What is on the door of the microwave?
+  "answers":
+    "answer": |-
+      magnet
+    "fullAnswer": |-
+      The magnet is on the door.
+  "image": |-
+    2379897.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='microwave')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is on the door of the microwave?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2356983
+  "prompt":
+    "question": |-
+      What length does the brown hair have?
+  "answers":
+    "answer": |-
+      short
+    "fullAnswer": |-
+      The hair has short length.
+  "image": |-
+    2356983.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='brown hair')
+    ANSWER0 = LENGTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2405260
+  "prompt":
+    "question": |-
+      What length is the hair?
+  "answers":
+    "answer": |-
+      long
+    "fullAnswer": |-
+      The hair is long.
+  "image": |-
+    2405260.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='hair')
+    ANSWER0 = LENGTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2369728
+  "prompt":
+    "question": |-
+      How long do you think are the giraffes?
+  "answers":
+    "answer": |-
+      long
+    "fullAnswer": |-
+      The giraffes are long.
+  "image": |-
+    2369728.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='giraffes')
+    ANSWER0 = LENGTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2390938
+  "prompt":
+    "question": |-
+      How long is the cooking utensil above the receipt?
+  "answers":
+    "answer": |-
+      long
+    "fullAnswer": |-
+      The tea pot is long.
+  "image": |-
+    2390938.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='cooking utensil')
+    IMAGE0 = CROP_ABOVE(image=IMAGE, box=BOX0)
+    ANSWER0 = LENGTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+- "id": |-
+    2355894
+  "prompt":
+    "question": |-
+      Is the hair short or long?
+  "answers":
+    "answer": |-
+      long
+    "fullAnswer": |-
+      The hair is long.
+  "image": |-
+    2355894.jpg
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='hair')
+    ANSWER0 = LENGTH(box=BOX0)
+    ANSWER1 = EVAL(expr="'long' if {ANSWER0} > threshold else 'short'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+- "id": |-
+    2383239
+  "prompt":
+    "question": |-
+      Is the umbrella to the left of the cart closed or open?
+  "answers":
+    "answer": |-
+      closed
+    "fullAnswer": |-
+      The umbrella is closed.
+  "image": |-
+    2383239.jpg
+  "programs":
+  - |-
+    BOX_UMBRELLA = LOC(image=IMAGE, object='umbrella')
+    BOX_CART = LOC(image=IMAGE, object='cart')
+    IMAGE_UMBRELLA = CROP_LEFTOF(image=IMAGE, box=BOX_CART)
+    ANSWER_UMBRELLA = VQA(image=IMAGE_UMBRELLA, question='Is the umbrella open or closed?')
+    FINAL_RESULT = RESULT(var=ANSWER_UMBRELLA)
+- "id": |-
+    2334060
+  "prompt":
+    "question": |-
+      Does the door made of metal seem to be closed or open?
+  "answers":
+    "answer": |-
+      closed
+    "fullAnswer": |-
+      The door is closed.
+  "image": |-
+    2334060.jpg
+  "programs":
+  - |-
+    BOX_DOOR_METAL = LOC(image=IMAGE, object='door', material='metal')
+    ANSWER_DOOR_METAL = VQA(image=IMAGE, question='Does the metal door appear to be open or closed?')
+    FINAL_RESULT = RESULT(var=ANSWER_DOOR_METAL)
+- "id": |-
+    2397470
+  "prompt":
+    "question": |-
+      Does that toilet seat look open or closed?
+  "answers":
+    "answer": |-
+      open
+    "fullAnswer": |-
+      The toilet seat is open.
+  "image": |-
+    2397470.jpg
+  "programs":
+  - |-
+    BOX_TOILET_SEAT = LOC(image=IMAGE, object='toilet seat')
+    ANSWER_TOILET_SEAT = VQA(image=IMAGE, question='Does the toilet seat look open or closed?')
+    FINAL_RESULT = RESULT(var=ANSWER_TOILET_SEAT)
+- "id": |-
+    2343358
+  "prompt":
+    "question": |-
+      Is the door of the building open or closed?
+  "answers":
+    "answer": |-
+      open
+    "fullAnswer": |-
+      The door is open.
+  "image": |-
+    2343358.jpg
+  "programs":
+  - |-
+    BOX_DOOR_BUILDING = LOC(image=IMAGE, object='door', type='building')
+    ANSWER_DOOR_BUILDING = VQA(image=IMAGE, question='Is the building door open or closed?')
+    FINAL_RESULT = RESULT(var=ANSWER_DOOR_BUILDING)
+- "id": |-
+    2391275
+  "prompt":
+    "question": |-
+      Is the lid that is not up open or closed?
+  "answers":
+    "answer": |-
+      closed
+    "fullAnswer": |-
+      The lid is closed.
+  "image": |-
+    2391275.jpg
+  "programs":
+  - |-
+    BOX_LID_DOWN = LOC(image=IMAGE, object='lid', position='down')
+    ANSWER_LID = EVAL(expr="'open' if {BOX_LID_DOWN} == 0 else 'closed'")
+    FINAL_RESULT = RESULT(var=ANSWER_LID)
+- "id": |-
+    2352059
+  "prompt":
+    "question": |-
+      Which is healthier, the cheese or the pizza?
+  "answers":
+    "answer": |-
+      cheese
+    "fullAnswer": |-
+      The cheese is healthier than the pizza.
+  "image": |-
+    2352059.jpg
+  "programs":
+  - |-
+    ANSWER_HEALTHIER = EVAL(expr="'cheese' if HEALTHINESS('cheese') > HEALTHINESS('pizza') else 'pizza'")
+    FINAL_RESULT = RESULT(var=ANSWER_HEALTHIER)
+- "id": |-
+    2354399
+  "prompt":
+    "question": |-
+      What is inside the cardboard container?
+  "answers":
+    "answer": |-
+      chocolate
+    "fullAnswer": |-
+      The chocolate is inside the box.
+  "image": |-
+    2354399.jpg
+  "programs":
+  - |-
+    BOX_CONTAINER = LOC(image=IMAGE, object='cardboard container')
+    CONTENTS = OBJECTS_INSIDE(box=BOX_CONTAINER)
+    FINAL_RESULT = RESULT(var=CONTENTS)
+- "id": |-
+    2339979
+  "prompt":
+    "question": |-
+      What is the fruit to the left of the food in the middle?
+  "answers":
+    "answer": |-
+      strawberry
+    "fullAnswer": |-
+      The fruit is a strawberry.
+  "image": |-
+    2339979.jpg
+  "programs":
+  - |-
+    BOX_FRUIT_LEFT_MIDDLE = LOC_LEFTOF(image=IMAGE, object='fruit', reference_object='food', position='middle')
+    FRUIT_TYPE = OBJECT_TYPE(box=BOX_FRUIT_LEFT_MIDDLE)
+    FINAL_RESULT = RESULT(var=FRUIT_TYPE)
+- "id": |-
+    2396355
+  "prompt":
+    "question": |-
+      Which kind of food is inside the coffee cup?
+  "answers":
+    "answer": |-
+      chocolate
+    "fullAnswer": |-
+      The food is chocolate.
+  "image": |-
+    2396355.jpg
+  "programs":
+  - |-
+    BOX_COFFEE_CUP = LOC(image=IMAGE, object='coffee cup')
+    CONTENTS_COFFEE_CUP = OBJECTS_INSIDE(box=BOX_COFFEE_CUP)
+    FOOD_TYPE = FILTER_BY_TYPE(objects=CONTENTS_COFFEE_CUP, type='food')
+    FINAL_RESULT = RESULT(var=FOOD_TYPE)
+- "id": |-
+    2404539
+  "prompt":
+    "question": |-
+      What is the food to the left of the hot dog?
+  "answers":
+    "answer": |-
+      cheese
+    "fullAnswer": |-
+      The food is cheese.
+  "image": |-
+    2404539.jpg
+  "programs":
+  - |-
+    BOX_FOOD_LEFT_HOTDOG = LOC_LEFTOF(image=IMAGE, object='food', reference_object='hot dog')
+    FOOD_TYPE = OBJECT_TYPE(box=BOX_FOOD_LEFT_HOTDOG)
+    FINAL_RESULT = RESULT(var=FOOD_TYPE)
+- "id": |-
+    2409205
+  "prompt":
+    "question": |-
+      What is in the glass of milk?
+  "answers":
+    "answer": |-
+      milk
+    "fullAnswer": |-
+      The milk is in the glass.
+  "image": |-
+    2409205.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='glass of milk')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is in the glass?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2346849
+  "prompt":
+    "question": |-
+      What does the glass contain, wine or milk?
+  "answers":
+    "answer": |-
+      milk
+    "fullAnswer": |-
+      The glass contains milk.
+  "image": |-
+    2346849.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='glass')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What does the glass contain, wine or milk?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2407124
+  "prompt":
+    "question": |-
+      What drink is in the glass?
+  "answers":
+    "answer": |-
+      smoothie
+    "fullAnswer": |-
+      The drink is a smoothie.
+  "image": |-
+    2407124.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='glass')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What drink is in the glass?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2329566
+  "prompt":
+    "question": |-
+      What is the woman looking at?
+  "answers":
+    "answer": |-
+      wine bottle
+    "fullAnswer": |-
+      The woman is looking at the wine bottle.
+  "image": |-
+    2329566.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='woman')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the woman looking at?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2410853
+  "prompt":
+    "question": |-
+      What is in the white cup?
+  "answers":
+    "answer": |-
+      beverage
+    "fullAnswer": |-
+      The beverage is in the cup.
+  "image": |-
+    2410853.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='white cup')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is in the cup?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2373283
+  "prompt":
+    "question": |-
+      What's the batter playing?
+  "answers":
+    "answer": |-
+      baseball
+    "fullAnswer": |-
+      The batter is playing baseball.
+  "image": |-
+    2373283.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='batter')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the batter playing?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2358945
+  "prompt":
+    "question": |-
+      What is the person to the right of the bench holding?
+  "answers":
+    "answer": |-
+      baseball
+    "fullAnswer": |-
+      The boy is holding the baseball.
+  "image": |-
+    2358945.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='bench')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='person')
+    IMAGE1=CROP(image=IMAGE0, box=BOX1)
+    ANSWER0=VQA(image=IMAGE1, question='What is the person holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2370242
+  "prompt":
+    "question": |-
+      What is sitting on the snow?
+  "answers":
+    "answer": |-
+      ski
+    "fullAnswer": |-
+      The ski is sitting on the snow.
+  "image": |-
+    2370242.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='snow')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is sitting on the snow?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2358081
+  "prompt":
+    "question": |-
+      What is the man playing?
+  "answers":
+    "answer": |-
+      tennis
+    "fullAnswer": |-
+      The man is playing tennis.
+  "image": |-
+    2358081.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='man')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the man playing?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2388067
+  "prompt":
+    "question": |-
+      Is that a tennis or baseball game?
+  "answers":
+    "answer": |-
+      tennis
+    "fullAnswer": |-
+      That is a tennis game.
+  "image": |-
+    2388067.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='tennis')
+    BOX1=LOC(image=IMAGE, object='baseball')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=COUNT(box=BOX1)
+    ANSWER2=EVAL(expr="'tennis' if {ANSWER0} > 0 else 'baseball' if {ANSWER1} > 0 else 'neither'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+- "id": |-
+    2338035
+  "prompt":
+    "question": |-
+      Are the oranges to the left of the other oranges bright or dull?
+  "answers":
+    "answer": |-
+      dull
+    "fullAnswer": |-
+      The oranges are dull.
+  "image": |-
+    2338035.jpg
+- "id": |-
+    107961
+  "prompt":
+    "question": |-
+      Is the blue helmet dull or bright?
+  "answers":
+    "answer": |-
+      dull
+    "fullAnswer": |-
+      The helmet is dull.
+  "image": |-
+    107961.jpg
+- "id": |-
+    107961
+  "prompt":
+    "question": |-
+      Is the blue helmet dull or bright?
+  "answers":
+    "answer": |-
+      dull
+    "fullAnswer": |-
+      The helmet is dull.
+  "image": |-
+    107961.jpg
+- "id": |-
+    107961
+  "prompt":
+    "question": |-
+      Is the blue helmet dull or bright?
+  "answers":
+    "answer": |-
+      dull
+    "fullAnswer": |-
+      The helmet is dull.
+  "image": |-
+    107961.jpg
+- "id": |-
+    2338035
+  "prompt":
+    "question": |-
+      Are the oranges to the left of the other oranges bright or dull?
+  "answers":
+    "answer": |-
+      dull
+    "fullAnswer": |-
+      The oranges are dull.
+  "image": |-
+    2338035.jpg
+- "id": |-
+    2390146
+  "prompt":
+    "question": |-
+      What is the dome on?
+  "answers":
+    "answer": |-
+      clock tower
+    "fullAnswer": |-
+      The dome is on the clock tower.
+  "image": |-
+    2390146.jpg
+- "id": |-
+    2393134
+  "prompt":
+    "question": |-
+      What is the tower before?
+  "answers":
+    "answer": |-
+      building
+    "fullAnswer": |-
+      The tower is in front of the building.
+  "image": |-
+    2393134.jpg
+- "id": |-
+    2385589
+  "prompt":
+    "question": |-
+      What is the fence around of?
+  "answers":
+    "answer": |-
+      house
+    "fullAnswer": |-
+      The fence is around the house.
+  "image": |-
+    2385589.jpg
+- "id": |-
+    2390146
+  "prompt":
+    "question": |-
+      What is the dome on?
+  "answers":
+    "answer": |-
+      clock tower
+    "fullAnswer": |-
+      The dome is on the clock tower.
+  "image": |-
+    2390146.jpg
+- "id": |-
+    2391049
+  "prompt":
+    "question": |-
+      What is in front of the large building?
+  "answers":
+    "answer": |-
+      clock tower
+    "fullAnswer": |-
+      The clock tower is in front of the building.
+  "image": |-
+    2391049.jpg
+- "id": |-
+    2386043
+  "prompt":
+    "question": |-
+      How old is this bear?
+  "answers":
+    "answer": |-
+      old
+    "fullAnswer": |-
+      The bear is old.
+  "image": |-
+    2386043.jpg
+- "id": |-
+    2398893
+  "prompt":
+    "question": |-
+      Is the bike that is blue and silver old or new?
+  "answers":
+    "answer": |-
+      new
+    "fullAnswer": |-
+      The bike is new.
+  "image": |-
+    2398893.jpg
+- "id": |-
+    2376775
+  "prompt":
+    "question": |-
+      Is the shop new or old?
+  "answers":
+    "answer": |-
+      new
+    "fullAnswer": |-
+      The shop is new.
+  "image": |-
+    2376775.jpg
+- "id": |-
+    2401556
+  "prompt":
+    "question": |-
+      Is the white toilet old or new?
+  "answers":
+    "answer": |-
+      old
+    "fullAnswer": |-
+      The toilet is old.
+  "image": |-
+    2401556.jpg
+- "id": |-
+    2385697
+  "prompt":
+    "question": |-
+      Is the car made of wood old or new?
+  "answers":
+    "answer": |-
+      old
+    "fullAnswer": |-
+      The car is old.
+  "image": |-
+    2385697.jpg
+- "id": |-
+    2333517
+  "prompt":
+    "question": |-
+      What is the man doing?
+  "answers":
+    "answer": |-
+      surfing
+    "fullAnswer": |-
+      The man is surfing.
+  "image": |-
+    2333517.jpg
+- "id": |-
+    2390097
+  "prompt":
+    "question": |-
+      What is he doing, skateboarding or snowboarding?
+  "answers":
+    "answer": |-
+      skateboarding
+    "fullAnswer": |-
+      The man is skateboarding.
+  "image": |-
+    2390097.jpg
+- "id": |-
+    2327683
+  "prompt":
+    "question": |-
+      What is the man doing?
+  "answers":
+    "answer": |-
+      riding
+    "fullAnswer": |-
+      The man is riding.
+  "image": |-
+    2327683.jpg
+- "id": |-
+    2384063
+  "prompt":
+    "question": |-
+      What is the man doing?
+  "answers":
+    "answer": |-
+      skiing
+    "fullAnswer": |-
+      The man is skiing.
+  "image": |-
+    2384063.jpg
+- "id": |-
+    2407938
+  "prompt":
+    "question": |-
+      How does the boy to the left of the bicycle appear to be like, skiing or riding?
+  "answers":
+    "answer": |-
+      riding
+    "fullAnswer": |-
+      The boy is riding.
+  "image": |-
+    2407938.jpg
+- "id": |-
+    2341053
+  "prompt":
+    "question": |-
+      Is there a towel in this scene?
+  "answers":
+    "answer": |-
+      no
+    "fullAnswer": |-
+      No, there are no towels.
+  "image": |-
+    2341053.jpg
+- "id": |-
+    2346497
+  "prompt":
+    "question": |-
+      On which side is the speaker?
+  "answers":
+    "answer": |-
+      left
+    "fullAnswer": |-
+      The speaker is on the left of the image.
+  "image": |-
+    2346497.jpg
+- "id": |-
+    2374983
+  "prompt":
+    "question": |-
+      Is the car on the left?
+  "answers":
+    "answer": |-
+      yes
+    "fullAnswer": |-
+      Yes, the car is on the left of the image.
+  "image": |-
+    2374983.jpg
+- "id": |-
+    2334271
+  "prompt":
+    "question": |-
+      Is the black helmet in the top or in the bottom of the picture?
+  "answers":
+    "answer": |-
+      top
+    "fullAnswer": |-
+      The helmet is in the top of the image.
+  "image": |-
+    2334271.jpg
+- "id": |-
+    2315880
+  "prompt":
+    "question": |-
+      Is the man to the left of the kid holding a baseball bat?
+  "answers":
+    "answer": |-
+      yes
+    "fullAnswer": |-
+      Yes, the man is holding a baseball bat.
+  "image": |-
+    2315880.jpg
+- "id": |-
+    2413087
+  "prompt":
+    "question": |-
+      Which pattern does the tie that looks dark have?
+  "answers":
+    "answer": |-
+      dotted
+    "fullAnswer": |-
+      The necktie has dotted pattern.
+  "image": |-
+    2413087.jpg
+- "id": |-
+    2398503
+  "prompt":
+    "question": |-
+      What is the pattern of the shirt?
+  "answers":
+    "answer": |-
+      striped
+    "fullAnswer": |-
+      The shirt is striped.
+  "image": |-
+    2398503.jpg
+- "id": |-
+    2362947
+  "prompt":
+    "question": |-
+      Which pattern is the bed sheet?
+  "answers":
+    "answer": |-
+      checkered
+    "fullAnswer": |-
+      The bed sheet is checkered.
+  "image": |-
+    2362947.jpg
+- "id": |-
+    2352604
+  "prompt":
+    "question": |-
+      Which pattern is the small rug?
+  "answers":
+    "answer": |-
+      dotted
+    "fullAnswer": |-
+      The rug is dotted.
+  "image": |-
+    2352604.jpg
+- "id": |-
+    2352226
+  "prompt":
+    "question": |-
+      Is the blue towel striped or checkered?
+  "answers":
+    "answer": |-
+      checkered
+    "fullAnswer": |-
+      The towel is checkered.
+  "image": |-
+    2352226.jpg
+- "id": |-
+    2403093
+  "prompt":
+    "question": |-
+      What is in the oven that is not clean?
+  "answers":
+    "answer": |-
+      dough
+    "fullAnswer": |-
+      The dough is in the oven.
+  "image": |-
+    2403093.jpg
+- "id": |-
+    2403093
+  "prompt":
+    "question": |-
+      What is on the platter?
+  "answers":
+    "answer": |-
+      dough
+    "fullAnswer": |-
+      The dough is on the platter.
+  "image": |-
+    2403093.jpg
+- "id": |-
+    2337344
+  "prompt":
+    "question": |-
+      The container that to the left of the napkin holds what?
+  "answers":
+    "answer": |-
+      spices
+    "fullAnswer": |-
+      The container holds the seasonings.
+  "image": |-
+    2337344.jpg
+- "id": |-
+    2410733
+  "prompt":
+    "question": |-
+      What is in the jar?
+  "answers":
+    "answer": |-
+      oil
+    "fullAnswer": |-
+      The oil is in the jar.
+  "image": |-
+    2410733.jpg
+- "id": |-
+    2403093
+  "prompt":
+    "question": |-
+      What is in the oven?
+  "answers":
+    "answer": |-
+      dough
+    "fullAnswer": |-
+      The dough is in the oven.
+  "image": |-
+    2403093.jpg
+- "id": |-
+    286084
+  "prompt":
+    "question": |-
+      How is the weather?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      It is clear.
+  "image": |-
+    286084.jpg
+- "id": |-
+    2398008
+  "prompt":
+    "question": |-
+      How is the weather?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      It is clear.
+  "image": |-
+    2398008.jpg
+- "id": |-
+    1242
+  "prompt":
+    "question": |-
+      Is the blue sky clear or cloudy?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      The sky is clear.
+  "image": |-
+    1242.jpg
+- "id": |-
+    1242
+  "prompt":
+    "question": |-
+      Is the blue sky clear or cloudy?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      The sky is clear.
+  "image": |-
+    1242.jpg
+- "id": |-
+    2355866
+  "prompt":
+    "question": |-
+      Is the water clear or murky?
+  "answers":
+    "answer": |-
+      murky
+    "fullAnswer": |-
+      The water is murky.
+  "image": |-
+    2355866.jpg
+- "id": |-
+    2416156
+  "prompt":
+    "question": |-
+      What is on the wall?
+  "answers":
+    "answer": |-
+      flowers
+    "fullAnswer": |-
+      The flowers are on the wall.
+  "image": |-
+    2416156.jpg
+- "id": |-
+    2416156
+  "prompt":
+    "question": |-
+      What is on the wall?
+  "answers":
+    "answer": |-
+      flowers
+    "fullAnswer": |-
+      The flowers are on the wall.
+  "image": |-
+    2416156.jpg
+- "id": |-
+    2385600
+  "prompt":
+    "question": |-
+      What is on the vase on the right?
+  "answers":
+    "answer": |-
+      flowers
+    "fullAnswer": |-
+      The flowers are on the vase.
+  "image": |-
+    2385600.jpg
+- "id": |-
+    2329521
+  "prompt":
+    "question": |-
+      What is sitting on the floor?
+  "answers":
+    "answer": |-
+      plant
+    "fullAnswer": |-
+      The plant is sitting on the floor.
+  "image": |-
+    2329521.jpg
+- "id": |-
+    2411509
+  "prompt":
+    "question": |-
+      What is the bird walking on?
+  "answers":
+    "answer": |-
+      grass
+    "fullAnswer": |-
+      The bird is walking on the grass.
+  "image": |-
+    2411509.jpg
+- "id": |-
+    2345745
+  "prompt":
+    "question": |-
+      How clean is the plate the fork is on?
+  "answers":
+    "answer": |-
+      dirty
+    "fullAnswer": |-
+      The plate is dirty.
+  "image": |-
+    2345745.jpg
+- "id": |-
+    2408981
+  "prompt":
+    "question": |-
+      How clean is the toilet?
+  "answers":
+    "answer": |-
+      dirty
+    "fullAnswer": |-
+      The toilet is dirty.
+  "image": |-
+    2408981.jpg
+- "id": |-
+    2389327
+  "prompt":
+    "question": |-
+      How clean is the bowl?
+  "answers":
+    "answer": |-
+      dirty
+    "fullAnswer": |-
+      The bowl is dirty.
+  "image": |-
+    2389327.jpg
+- "id": |-
+    2378355
+  "prompt":
+    "question": |-
+      How clean are the sheets the pillow is to the right of?
+  "answers":
+    "answer": |-
+      clean
+    "fullAnswer": |-
+      The sheets are clean.
+  "image": |-
+    2378355.jpg
+- "id": |-
+    2347977
+  "prompt":
+    "question": |-
+      Is the porcelain toilet stained or clean?
+  "answers":
+    "answer": |-
+      clean
+    "fullAnswer": |-
+      The toilet is clean.
+  "image": |-
+    2347977.jpg
+- "id": |-
+    2382109
+  "prompt":
+    "question": |-
+      Are the trees behind the skier bare or covered?
+  "answers":
+    "answer": |-
+      covered
+    "fullAnswer": |-
+      The trees are covered.
+  "image": |-
+    2382109.jpg
+- "id": |-
+    2370737
+  "prompt":
+    "question": |-
+      Are the trees bare or leafy?
+  "answers":
+    "answer": |-
+      leafy
+    "fullAnswer": |-
+      The trees are leafy.
+  "image": |-
+    2370737.jpg
+- "id": |-
+    2382557
+  "prompt":
+    "question": |-
+      Are the trees by the train lush or leafless?
+  "answers":
+    "answer": |-
+      lush
+    "fullAnswer": |-
+      The trees are lush.
+  "image": |-
+    2382557.jpg
+- "id": |-
+    2416730
+  "prompt":
+    "question": |-
+      Is the ground bare or covered?
+  "answers":
+    "answer": |-
+      covered
+    "fullAnswer": |-
+      The ground is covered.
+  "image": |-
+    2416730.jpg
+- "id": |-
+    2323515
+  "prompt":
+    "question": |-
+      Do the trees in the field look covered or leafless?
+  "answers":
+    "answer": |-
+      leafless
+    "fullAnswer": |-
+      The trees are leafless.
+  "image": |-
+    2323515.jpg
+- "id": |-
+    2378861
+  "prompt":
+    "question": |-
+      What place was the picture taken at?
+  "answers":
+    "answer": |-
+      walkway
+    "fullAnswer": |-
+      It was taken at the walkway.
+  "image": |-
+    2378861.jpg
+- "id": |-
+    2370484
+  "prompt":
+    "question": |-
+      Which place is shown?
+  "answers":
+    "answer": |-
+      path
+    "fullAnswer": |-
+      It is a path.
+  "image": |-
+    2370484.jpg
+- "id": |-
+    2326324
+  "prompt":
+    "question": |-
+      Where is the man?
+  "answers":
+    "answer": |-
+      walkway
+    "fullAnswer": |-
+      The man is on the walkway.
+  "image": |-
+    2326324.jpg
+- "id": |-
+    2407480
+  "prompt":
+    "question": |-
+      Where is the marker?
+  "answers":
+    "answer": |-
+      sidewalk
+    "fullAnswer": |-
+      The marker is on the side walk.
+  "image": |-
+    2407480.jpg
+- "id": |-
+    2396300
+  "prompt":
+    "question": |-
+      What kind of place is pictured?
+  "answers":
+    "answer": |-
+      road
+    "fullAnswer": |-
+      It is a road.
+  "image": |-
+    2396300.jpg
+- "id": |-
+    2409707
+  "prompt":
+    "question": |-
+      Is the cup that is made of Styrofoam down or up?
+  "answers":
+    "answer": |-
+      down
+    "fullAnswer": |-
+      The cup is down.
+  "image": |-
+    2409707.jpg
+- "id": |-
+    2404396
+  "prompt":
+    "question": |-
+      Where is the dog in the grass looking at?
+  "answers":
+    "answer": |-
+      up
+    "fullAnswer": |-
+      The dog is looking up.
+  "image": |-
+    2404396.jpg
+- "id": |-
+    2364895
+  "prompt":
+    "question": |-
+      Which direction is the man looking at?
+  "answers":
+    "answer": |-
+      down
+    "fullAnswer": |-
+      The man is looking down.
+  "image": |-
+    2364895.jpg
+- "id": |-
+    2409707
+  "prompt":
+    "question": |-
+      Is the cup that is made of Styrofoam down or up?
+  "answers":
+    "answer": |-
+      down
+    "fullAnswer": |-
+      The cup is down.
+  "image": |-
+    2409707.jpg
+- "id": |-
+    2413428
+  "prompt":
+    "question": |-
+      Is the toilet seat down or up?
+  "answers":
+    "answer": |-
+      down
+    "fullAnswer": |-
+      The toilet seat is down.
+  "image": |-
+    2413428.jpg
+- "id": |-
+    2327080
+  "prompt":
+    "question": |-
+      How wide are the leaves?
+  "answers":
+    "answer": |-
+      narrow
+    "fullAnswer": |-
+      The leaves are narrow.
+  "image": |-
+    2327080.jpg
+- "id": |-
+    2411225
+  "prompt":
+    "question": |-
+      How wide is the suitcase?
+  "answers":
+    "answer": |-
+      wide
+    "fullAnswer": |-
+      The suitcase is wide.
+  "image": |-
+    2411225.jpg
+- "id": |-
+    2354394
+  "prompt":
+    "question": |-
+      Is the cheese to the left of the banana wide or narrow?
+  "answers":
+    "answer": |-
+      narrow
+    "fullAnswer": |-
+      The cheese is narrow.
+  "image": |-
+    2354394.jpg
+- "id": |-
+    2338191
+  "prompt":
+    "question": |-
+      How do the long leaves look like, narrow or wide?
+  "answers":
+    "answer": |-
+      narrow
+    "fullAnswer": |-
+      The leaves are narrow.
+  "image": |-
+    2338191.jpg
+- "id": |-
+    2387077
+  "prompt":
+    "question": |-
+      Is the side walk wide or narrow?
+  "answers":
+    "answer": |-
+      wide
+    "fullAnswer": |-
+      The side walk is wide.
+  "image": |-
+    2387077.jpg
+- "id": |-
+    2331414
+  "prompt":
+    "question": |-
+      What is on the foil?
+  "answers":
+    "answer": |-
+      lunch
+    "fullAnswer": |-
+      The lunch is on the foil.
+  "image": |-
+    2331414.jpg
+- "id": |-
+    2340398
+  "prompt":
+    "question": |-
+      What is on the plate that is on the table?
+  "answers":
+    "answer": |-
+      breakfast
+    "fullAnswer": |-
+      The breakfast is on the plate.
+  "image": |-
+    2340398.jpg
+- "id": |-
+    2340398
+  "prompt":
+    "question": |-
+      What is on the plate that is on the table?
+  "answers":
+    "answer": |-
+      breakfast
+    "fullAnswer": |-
+      The breakfast is on the plate.
+  "image": |-
+    2340398.jpg
+- "id": |-
+    2331414
+  "prompt":
+    "question": |-
+      What is on the foil?
+  "answers":
+    "answer": |-
+      lunch
+    "fullAnswer": |-
+      The lunch is on the foil.
+  "image": |-
+    2331414.jpg
+- "id": |-
+    2409205
+  "prompt":
+    "question": |-
+      What is in front of the woman that is holding the dog?
+  "answers":
+    "answer": |-
+      meal
+    "fullAnswer": |-
+      The meal is in front of the woman.
+  "image": |-
+    2409205.jpg
+- "id": |-
+    2400985
+  "prompt":
+    "question": |-
+      What is the snow inside of?
+  "answers":
+    "answer": |-
+      container
+    "fullAnswer": |-
+      The snow is inside the container.
+  "image": |-
+    2400985.jpg
+- "id": |-
+    2368559
+  "prompt":
+    "question": |-
+      The cupcake is in what?
+  "answers":
+    "answer": |-
+      container
+    "fullAnswer": |-
+      The cupcake is in the container.
+  "image": |-
+    2368559.jpg
+- "id": |-
+    2388018
+  "prompt":
+    "question": |-
+      What is sitting on the counter top?
+  "answers":
+    "answer": |-
+      jar
+    "fullAnswer": |-
+      The jar is sitting on the counter top.
+  "image": |-
+    2388018.jpg
+- "id": |-
+    2354664
+  "prompt":
+    "question": |-
+      What is the girl in front of?
+  "answers":
+    "answer": |-
+      containers
+    "fullAnswer": |-
+      The girl is in front of the containers.
+  "image": |-
+    2354664.jpg
+- "id": |-
+    2387727
+  "prompt":
+    "question": |-
+      What is the paper inside of?
+  "answers":
+    "answer": |-
+      box
+    "fullAnswer": |-
+      The paper is inside the box.
+  "image": |-
+    2387727.jpg
+- "id": |-
+    2388923
+  "prompt":
+    "question": |-
+      Where is the man?
+  "answers":
+    "answer": |-
+      sand
+    "fullAnswer": |-
+      The man is on the sand.
+  "image": |-
+    2388923.jpg
+- "id": |-
+    2413202
+  "prompt":
+    "question": |-
+      What is the dog on?
+  "answers":
+    "answer": |-
+      deck
+    "fullAnswer": |-
+      The dog is on the deck.
+  "image": |-
+    2413202.jpg
+- "id": |-
+    652
+  "prompt":
+    "question": |-
+      What is the man sitting by?
+  "answers":
+    "answer": |-
+      rocks
+    "fullAnswer": |-
+      The man is sitting by the rocks.
+  "image": |-
+    652.jpg
+- "id": |-
+    2391205
+  "prompt":
+    "question": |-
+      Where is the woman?
+  "answers":
+    "answer": |-
+      sand
+    "fullAnswer": |-
+      The woman is on the sand.
+  "image": |-
+    2391205.jpg
+- "id": |-
+    2402502
+  "prompt":
+    "question": |-
+      The letters are on what?
+  "answers":
+    "answer": |-
+      heart
+    "fullAnswer": |-
+      The letters are on the heart.
+  "image": |-
+    2402502.jpg
+- "id": |-
+    2380573
+  "prompt":
+    "question": |-
+      Is the window new or old?
+  "answers":
+    "answer": |-
+      old
+    "fullAnswer": |-
+      The window is old.
+  "image": |-
+    2380573.jpg
+- "id": |-
+    2369640
+  "prompt":
+    "question": |-
+      How old is the man that is carrying a beverage?
+  "answers":
+    "answer": |-
+      old
+    "fullAnswer": |-
+      The man is old.
+  "image": |-
+    2369640.jpg
+- "id": |-
+    2410056
+  "prompt":
+    "question": |-
+      How old is the girl that is not short?
+  "answers":
+    "answer": |-
+      young
+    "fullAnswer": |-
+      The girl is young.
+  "image": |-
+    2410056.jpg
+- "id": |-
+    2345454
+  "prompt":
+    "question": |-
+      How old is the boy on the left?
+  "answers":
+    "answer": |-
+      little
+    "fullAnswer": |-
+      The boy is little.
+  "image": |-
+    2345454.jpg
+- "id": |-
+    2401039
+  "prompt":
+    "question": |-
+      How old is the kid who is wearing a crown?
+  "answers":
+    "answer": |-
+      little
+    "fullAnswer": |-
+      The child is little.
+  "image": |-
+    2401039.jpg
+- "id": |-
+    2325537
+  "prompt":
+    "question": |-
+      What pieces of furniture are to the left of the coffee table?
+  "answers":
+    "answer": |-
+      couches
+    "fullAnswer": |-
+      The pieces of furniture are couches.
+  "image": |-
+    2325537.jpg
+- "id": |-
+    2400094
+  "prompt":
+    "question": |-
+      What type of furniture do you think is to the left of the girl?
+  "answers":
+    "answer": |-
+      sofa
+    "fullAnswer": |-
+      The piece of furniture is a sofa.
+  "image": |-
+    2400094.jpg
+- "id": |-
+    2379737
+  "prompt":
+    "question": |-
+      What item of furniture is the same color as the cup made of plastic?
+  "answers":
+    "answer": |-
+      couch
+    "fullAnswer": |-
+      The couch is the same color as the cup.
+  "image": |-
+    2379737.jpg
+- "id": |-
+    2332116
+  "prompt":
+    "question": |-
+      What item of furniture is right of the dresser?
+  "answers":
+    "answer": |-
+      chair
+    "fullAnswer": |-
+      The piece of furniture is a chair.
+  "image": |-
+    2332116.jpg
+- "id": |-
+    2377485
+  "prompt":
+    "question": |-
+      What are the items of furniture that the man is standing beside of called?
+  "answers":
+    "answer": |-
+      chairs
+    "fullAnswer": |-
+      The pieces of furniture are chairs.
+  "image": |-
+    2377485.jpg
+- "id": |-
+    2361827
+  "prompt":
+    "question": |-
+      How hard is the book underneath the pen?
+  "answers":
+    "answer": |-
+      hard
+    "fullAnswer": |-
+      The book is hard.
+  "image": |-
+    2361827.jpg
+- "id": |-
+    2378689
+  "prompt":
+    "question": |-
+      How hard is the black hat?
+  "answers":
+    "answer": |-
+      hard
+    "fullAnswer": |-
+      The hat is hard.
+  "image": |-
+    2378689.jpg
+- "id": |-
+    2378689
+  "prompt":
+    "question": |-
+      How hard is the black hat?
+  "answers":
+    "answer": |-
+      hard
+    "fullAnswer": |-
+      The hat is hard.
+  "image": |-
+    2378689.jpg
+- "id": |-
+    2385903
+  "prompt":
+    "question": |-
+      How hard is the food with the cheese?
+  "answers":
+    "answer": |-
+      soft
+    "fullAnswer": |-
+      The pizza is soft.
+  "image": |-
+    2385903.jpg
+- "id": |-
+    2346389
+  "prompt":
+    "question": |-
+      How hard is the white snow?
+  "answers":
+    "answer": |-
+      soft
+    "fullAnswer": |-
+      The snow is soft.
+  "image": |-
+    2346389.jpg
+- "id": |-
+    2371761
+  "prompt":
+    "question": |-
+      Does the road look curved or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The road is straight.
+  "image": |-
+    2371761.jpg
+- "id": |-
+    2371761
+  "prompt":
+    "question": |-
+      Does the road look curved or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The road is straight.
+  "image": |-
+    2371761.jpg
+- "id": |-
+    2371761
+  "prompt":
+    "question": |-
+      Does the road look curved or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The road is straight.
+  "image": |-
+    2371761.jpg
+- "id": |-
+    2371761
+  "prompt":
+    "question": |-
+      Does the road look curved or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The road is straight.
+  "image": |-
+    2371761.jpg
+- "id": |-
+    2371761
+  "prompt":
+    "question": |-
+      Does the road look curved or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The road is straight.
+  "image": |-
+    2371761.jpg
+- "id": |-
+    2398754
+  "prompt":
+    "question": |-
+      Is it an indoors or outdoors picture?
+  "answers":
+    "answer": |-
+      outdoors
+    "fullAnswer": |-
+      It is outdoors.
+  "image": |-
+    2398754.jpg
+- "id": |-
+    2375371
+  "prompt":
+    "question": |-
+      Is it indoors or outdoors?
+  "answers":
+    "answer": |-
+      indoors
+    "fullAnswer": |-
+      It is indoors.
+  "image": |-
+    2375371.jpg
+- "id": |-
+    2338591
+  "prompt":
+    "question": |-
+      Is it indoors or outdoors?
+  "answers":
+    "answer": |-
+      indoors
+    "fullAnswer": |-
+      It is indoors.
+  "image": |-
+    2338591.jpg
+- "id": |-
+    2360487
+  "prompt":
+    "question": |-
+      Is it an outdoors or indoors scene?
+  "answers":
+    "answer": |-
+      indoors
+    "fullAnswer": |-
+      It is indoors.
+  "image": |-
+    2360487.jpg
+- "id": |-
+    2347431
+  "prompt":
+    "question": |-
+      Is it indoors or outdoors?
+  "answers":
+    "answer": |-
+      indoors
+    "fullAnswer": |-
+      It is indoors.
+  "image": |-
+    2347431.jpg
+- "id": |-
+    2407655
+  "prompt":
+    "question": |-
+      Does the male person appear to be waiting or playing?
+  "answers":
+    "answer": |-
+      playing
+    "fullAnswer": |-
+      The person is playing.
+  "image": |-
+    2407655.jpg
+- "id": |-
+    2412204
+  "prompt":
+    "question": |-
+      What is the boy doing?
+  "answers":
+    "answer": |-
+      eating
+    "fullAnswer": |-
+      The boy is eating.
+  "image": |-
+    2412204.jpg
+- "id": |-
+    2405174
+  "prompt":
+    "question": |-
+      What are the people behind the motorbike doing?
+  "answers":
+    "answer": |-
+      talking
+    "fullAnswer": |-
+      The people are talking.
+  "image": |-
+    2405174.jpg
+- "id": |-
+    2375242
+  "prompt":
+    "question": |-
+      How does the giraffe near the log appear to be, drinking or staring?
+  "answers":
+    "answer": |-
+      drinking
+    "fullAnswer": |-
+      The giraffe is drinking.
+  "image": |-
+    2375242.jpg
+- "id": |-
+    2372614
+  "prompt":
+    "question": |-
+      What is the man in front of the sand doing?
+  "answers":
+    "answer": |-
+      eating
+    "fullAnswer": |-
+      The man is eating.
+  "image": |-
+    2372614.jpg
+- "id": |-
+    1057
+  "prompt":
+    "question": |-
+      What was used to make the bowl?
+  "answers":
+    "answer": |-
+      wood
+    "fullAnswer": |-
+      The bowl is made of wood.
+  "image": |-
+    1057.jpg
+- "id": |-
+    2408312
+  "prompt":
+    "question": |-
+      What is on the post?
+  "answers":
+    "answer": |-
+      wire
+    "fullAnswer": |-
+      The wire is on the post.
+  "image": |-
+    2408312.jpg
+- "id": |-
+    2357457
+  "prompt":
+    "question": |-
+      Which material is the fence to the right of the car made of?
+  "answers":
+    "answer": |-
+      brick
+    "fullAnswer": |-
+      The fence is made of brick.
+  "image": |-
+    2357457.jpg
+- "id": |-
+    2356515
+  "prompt":
+    "question": |-
+      What's the ground made of?
+  "answers":
+    "answer": |-
+      concrete
+    "fullAnswer": |-
+      The ground is made of concrete.
+  "image": |-
+    2356515.jpg
+- "id": |-
+    2371156
+  "prompt":
+    "question": |-
+      Which kind of material is used to make the door?
+  "answers":
+    "answer": |-
+      wood
+    "fullAnswer": |-
+      The door is made of wood.
+  "image": |-
+    2371156.jpg
+- "id": |-
+    2346720
+  "prompt":
+    "question": |-
+      Do the leaves look thick or thin?
+  "answers":
+    "answer": |-
+      thick
+    "fullAnswer": |-
+      The leaves are thick.
+  "image": |-
+    2346720.jpg
+- "id": |-
+    2383947
+  "prompt":
+    "question": |-
+      Is the carrot to the left of the vegetables thin or thick?
+  "answers":
+    "answer": |-
+      thin
+    "fullAnswer": |-
+      The carrot is thin.
+  "image": |-
+    2383947.jpg
+- "id": |-
+    2387251
+  "prompt":
+    "question": |-
+      How thick is the blue clock?
+  "answers":
+    "answer": |-
+      thick
+    "fullAnswer": |-
+      The clock is thick.
+  "image": |-
+    2387251.jpg
+- "id": |-
+    2346245
+  "prompt":
+    "question": |-
+      Is the mattress thin or thick?
+  "answers":
+    "answer": |-
+      thin
+    "fullAnswer": |-
+      The mattress is thin.
+  "image": |-
+    2346245.jpg
+- "id": |-
+    2631
+  "prompt":
+    "question": |-
+      Is the small animal thick or thin?
+  "answers":
+    "answer": |-
+      thick
+    "fullAnswer": |-
+      The alligator is thick.
+  "image": |-
+    2631.jpg
+- "id": |-
+    2376430
+  "prompt":
+    "question": |-
+      Are the rocks near the water rotten or fresh?
+  "answers":
+    "answer": |-
+      rotten
+    "fullAnswer": |-
+      The rocks are rotten.
+  "image": |-
+    2376430.jpg
+- "id": |-
+    2371480
+  "prompt":
+    "question": |-
+      Is the vegetable to the left of the napkin fresh or rotten?
+  "answers":
+    "answer": |-
+      fresh
+    "fullAnswer": |-
+      The broccoli is fresh.
+  "image": |-
+    2371480.jpg
+- "id": |-
+    2371480
+  "prompt":
+    "question": |-
+      Is the vegetable to the left of the napkin fresh or rotten?
+  "answers":
+    "answer": |-
+      fresh
+    "fullAnswer": |-
+      The broccoli is fresh.
+  "image": |-
+    2371480.jpg
+- "id": |-
+    2376430
+  "prompt":
+    "question": |-
+      Are the rocks near the water rotten or fresh?
+  "answers":
+    "answer": |-
+      rotten
+    "fullAnswer": |-
+      The rocks are rotten.
+  "image": |-
+    2376430.jpg
+- "id": |-
+    2376430
+  "prompt":
+    "question": |-
+      Are the rocks near the water rotten or fresh?
+  "answers":
+    "answer": |-
+      rotten
+    "fullAnswer": |-
+      The rocks are rotten.
+  "image": |-
+    2376430.jpg
+- "id": |-
+    2390727
+  "prompt":
+    "question": |-
+      How large is the fence that is next to the wall?
+  "answers":
+    "answer": |-
+      small
+    "fullAnswer": |-
+      The fence is small.
+  "image": |-
+    2390727.jpg
+- "id": |-
+    2366130
+  "prompt":
+    "question": |-
+      How large is the metal spoon?
+  "answers":
+    "answer": |-
+      large
+    "fullAnswer": |-
+      The spoon is large.
+  "image": |-
+    2366130.jpg
+- "id": |-
+    2401893
+  "prompt":
+    "question": |-
+      How big is the mirror?
+  "answers":
+    "answer": |-
+      large
+    "fullAnswer": |-
+      The mirror is large.
+  "image": |-
+    2401893.jpg
+- "id": |-
+    2376542
+  "prompt":
+    "question": |-
+      How big is the white plate?
+  "answers":
+    "answer": |-
+      large
+    "fullAnswer": |-
+      The plate is large.
+  "image": |-
+    2376542.jpg
+- "id": |-
+    2407481
+  "prompt":
+    "question": |-
+      How big is the red chair next to the wall?
+  "answers":
+    "answer": |-
+      small
+    "fullAnswer": |-
+      The chair is small.
+  "image": |-
+    2407481.jpg
+- "id": |-
+    2368660
+  "prompt":
+    "question": |-
+      What is on the shelves to the left of the cookies?
+  "answers":
+    "answer": |-
+      cupcakes
+    "fullAnswer": |-
+      The cupcakes are on the shelves.
+  "image": |-
+    2368660.jpg
+- "id": |-
+    2417604
+  "prompt":
+    "question": |-
+      What is the dessert that is on top of the cookie in the top of the picture?
+  "answers":
+    "answer": |-
+      cupcake
+    "fullAnswer": |-
+      The dessert is a cupcake.
+  "image": |-
+    2417604.jpg
+- "id": |-
+    2365562
+  "prompt":
+    "question": |-
+      Which kind of dessert is on the table?
+  "answers":
+    "answer": |-
+      cake
+    "fullAnswer": |-
+      The dessert is a cake.
+  "image": |-
+    2365562.jpg
+- "id": |-
+    2379241
+  "prompt":
+    "question": |-
+      What kind of dessert is on the cart?
+  "answers":
+    "answer": |-
+      cake
+    "fullAnswer": |-
+      The dessert is a cake.
+  "image": |-
+    2379241.jpg
+- "id": |-
+    2327921
+  "prompt":
+    "question": |-
+      What is the food that is on the plate?
+  "answers":
+    "answer": |-
+      dessert
+    "fullAnswer": |-
+      The food is a dessert.
+  "image": |-
+    2327921.jpg
+- "id": |-
+    2406643
+  "prompt":
+    "question": |-
+      What is the gender of the person who is wearing pants?
+  "answers":
+    "answer": |-
+      female
+    "fullAnswer": |-
+      The skateboarder is female.
+  "image": |-
+    2406643.jpg
+- "id": |-
+    2350907
+  "prompt":
+    "question": |-
+      What is the gender of the skier in the bottom of the picture?
+  "answers":
+    "answer": |-
+      female
+    "fullAnswer": |-
+      The skier is female.
+  "image": |-
+    2350907.jpg
+- "id": |-
+    2371222
+  "prompt":
+    "question": |-
+      Which gender is the person that holds the menu?
+  "answers":
+    "answer": |-
+      male
+    "fullAnswer": |-
+      The person is male.
+  "image": |-
+    2371222.jpg
+- "id": |-
+    2318090
+  "prompt":
+    "question": |-
+      What is the gender of the person that is wearing a sock?
+  "answers":
+    "answer": |-
+      male
+    "fullAnswer": |-
+      The player is male.
+  "image": |-
+    2318090.jpg
+- "id": |-
+    2318090
+  "prompt":
+    "question": |-
+      What is the gender of the person that is wearing a sock?
+  "answers":
+    "answer": |-
+      male
+    "fullAnswer": |-
+      The player is male.
+  "image": |-
+    2318090.jpg
+- "id": |-
+    2384504
+  "prompt":
+    "question": |-
+      Is the blue water choppy or calm?
+  "answers":
+    "answer": |-
+      calm
+    "fullAnswer": |-
+      The water is calm.
+  "image": |-
+    2384504.jpg
+- "id": |-
+    2361871
+  "prompt":
+    "question": |-
+      How is the water?
+  "answers":
+    "answer": |-
+      calm
+    "fullAnswer": |-
+      The water is calm.
+  "image": |-
+    2361871.jpg
+- "id": |-
+    2317229
+  "prompt":
+    "question": |-
+      How is the water today?
+  "answers":
+    "answer": |-
+      wavy
+    "fullAnswer": |-
+      The water is wavy.
+  "image": |-
+    2317229.jpg
+- "id": |-
+    2384504
+  "prompt":
+    "question": |-
+      Is the blue water choppy or calm?
+  "answers":
+    "answer": |-
+      calm
+    "fullAnswer": |-
+      The water is calm.
+  "image": |-
+    2384504.jpg
+- "id": |-
+    2398164
+  "prompt":
+    "question": |-
+      How is the water today?
+  "answers":
+    "answer": |-
+      choppy
+    "fullAnswer": |-
+      The water is choppy.
+  "image": |-
+    2398164.jpg
+- "id": |-
+    2403027
+  "prompt":
+    "question": |-
+      Is the plane high or low?
+  "answers":
+    "answer": |-
+      low
+    "fullAnswer": |-
+      The plane is low.
+  "image": |-
+    2403027.jpg
+- "id": |-
+    2405819
+  "prompt":
+    "question": |-
+      Does the long kite look low or high?
+  "answers":
+    "answer": |-
+      high
+    "fullAnswer": |-
+      The kite is high.
+  "image": |-
+    2405819.jpg
+- "id": |-
+    2405819
+  "prompt":
+    "question": |-
+      Does the long kite look low or high?
+  "answers":
+    "answer": |-
+      high
+    "fullAnswer": |-
+      The kite is high.
+  "image": |-
+    2405819.jpg
+- "id": |-
+    2379492
+  "prompt":
+    "question": |-
+      Is the fence made of metal low or high?
+  "answers":
+    "answer": |-
+      high
+    "fullAnswer": |-
+      The fence is high.
+  "image": |-
+    2379492.jpg
+- "id": |-
+    2403027
+  "prompt":
+    "question": |-
+      Is the plane high or low?
+  "answers":
+    "answer": |-
+      low
+    "fullAnswer": |-
+      The plane is low.
+  "image": |-
+    2403027.jpg
+- "id": |-
+    2390938
+  "prompt":
+    "question": |-
+      What is under the tea pot?
+  "answers":
+    "answer": |-
+      receipt
+    "fullAnswer": |-
+      The receipt is under the tea pot.
+  "image": |-
+    2390938.jpg
+- "id": |-
+    2351749
+  "prompt":
+    "question": |-
+      What is on the fruit that the bananas are to the left of?
+  "answers":
+    "answer": |-
+      price tag
+    "fullAnswer": |-
+      The price tag is on the fruit.
+  "image": |-
+    2351749.jpg
+- "id": |-
+    2411741
+  "prompt":
+    "question": |-
+      What is on the appliance behind the bike?
+  "answers":
+    "answer": |-
+      label
+    "fullAnswer": |-
+      The label is on the blender.
+  "image": |-
+    2411741.jpg
+- "id": |-
+    2343793
+  "prompt":
+    "question": |-
+      What is in front of the monitor on the right side?
+  "answers":
+    "answer": |-
+      tag
+    "fullAnswer": |-
+      The tag is in front of the monitor.
+  "image": |-
+    2343793.jpg
+- "id": |-
+    2411741
+  "prompt":
+    "question": |-
+      What is on the appliance behind the bike?
+  "answers":
+    "answer": |-
+      label
+    "fullAnswer": |-
+      The label is on the blender.
+  "image": |-
+    2411741.jpg
+- "id": |-
+    2324917
+  "prompt":
+    "question": |-
+      Is the box made of cardboard empty or full?
+  "answers":
+    "answer": |-
+      full
+    "fullAnswer": |-
+      The box is full.
+  "image": |-
+    2324917.jpg
+- "id": |-
+    2337344
+  "prompt":
+    "question": |-
+      Is the clear glass empty or full?
+  "answers":
+    "answer": |-
+      empty
+    "fullAnswer": |-
+      The glass is empty.
+  "image": |-
+    2337344.jpg
+- "id": |-
+    2340398
+  "prompt":
+    "question": |-
+      Is the cup of the beverage empty or full?
+  "answers":
+    "answer": |-
+      full
+    "fullAnswer": |-
+      The cup is full.
+  "image": |-
+    2340398.jpg
+- "id": |-
+    2363192
+  "prompt":
+    "question": |-
+      Is the closet empty or full?
+  "answers":
+    "answer": |-
+      full
+    "fullAnswer": |-
+      The closet is full.
+  "image": |-
+    2363192.jpg
+- "id": |-
+    2315613
+  "prompt":
+    "question": |-
+      Does the red tray look full or empty?
+  "answers":
+    "answer": |-
+      empty
+    "fullAnswer": |-
+      The tray is empty.
+  "image": |-
+    2315613.jpg
+- "id": |-
+    2324726
+  "prompt":
+    "question": |-
+      What is the instrument that the man to the left of the fence is playing?
+  "answers":
+    "answer": |-
+      trumpet
+    "fullAnswer": |-
+      The instrument is a trumpet.
+  "image": |-
+    2324726.jpg
+- "id": |-
+    2393352
+  "prompt":
+    "question": |-
+      Which kind of instrument is the boy holding?
+  "answers":
+    "answer": |-
+      trumpet
+    "fullAnswer": |-
+      The boy is holding the trumpet.
+  "image": |-
+    2393352.jpg
+- "id": |-
+    2324726
+  "prompt":
+    "question": |-
+      What is the man to the left of the fence playing?
+  "answers":
+    "answer": |-
+      trumpet
+    "fullAnswer": |-
+      The man is playing the trumpet.
+  "image": |-
+    2324726.jpg
+- "id": |-
+    2356833
+  "prompt":
+    "question": |-
+      Which kind of instrument is it?
+  "answers":
+    "answer": |-
+      guitar
+    "fullAnswer": |-
+      The instrument is a guitar.
+  "image": |-
+    2356833.jpg
+- "id": |-
+    2386490
+  "prompt":
+    "question": |-
+      What is the man that is to the left of the people holding?
+  "answers":
+    "answer": |-
+      guitar
+    "fullAnswer": |-
+      The man is holding the guitar.
+  "image": |-
+    2386490.jpg
+- "id": |-
+    2382095
+  "prompt":
+    "question": |-
+      Are the bananas that look little mature or immature?
+  "answers":
+    "answer": |-
+      immature
+    "fullAnswer": |-
+      The bananas are immature.
+  "image": |-
+    2382095.jpg
+- "id": |-
+    2382095
+  "prompt":
+    "question": |-
+      Are the bananas that look little mature or immature?
+  "answers":
+    "answer": |-
+      immature
+    "fullAnswer": |-
+      The bananas are immature.
+  "image": |-
+    2382095.jpg
+- "id": |-
+    2382095
+  "prompt":
+    "question": |-
+      Are the bananas that look little mature or immature?
+  "answers":
+    "answer": |-
+      immature
+    "fullAnswer": |-
+      The bananas are immature.
+  "image": |-
+    2382095.jpg
+- "id": |-
+    2382095
+  "prompt":
+    "question": |-
+      Are the bananas that look little mature or immature?
+  "answers":
+    "answer": |-
+      immature
+    "fullAnswer": |-
+      The bananas are immature.
+  "image": |-
+    2382095.jpg
+- "id": |-
+    2382095
+  "prompt":
+    "question": |-
+      Are the bananas that look little mature or immature?
+  "answers":
+    "answer": |-
+      immature
+    "fullAnswer": |-
+      The bananas are immature.
+  "image": |-
+    2382095.jpg
+- "id": |-
+    2364373
+  "prompt":
+    "question": |-
+      The bird is where?
+  "answers":
+    "answer": |-
+      ground
+    "fullAnswer": |-
+      The bird is on the ground.
+  "image": |-
+    2364373.jpg
+- "id": |-
+    2382162
+  "prompt":
+    "question": |-
+      Where is the bike?
+  "answers":
+    "answer": |-
+      sky
+    "fullAnswer": |-
+      The bike is in the sky.
+  "image": |-
+    2382162.jpg
+- "id": |-
+    2403803
+  "prompt":
+    "question": |-
+      What is in front of the water?
+  "answers":
+    "answer": |-
+      ground
+    "fullAnswer": |-
+      The ground is in front of the water.
+  "image": |-
+    2403803.jpg
+- "id": |-
+    2392698
+  "prompt":
+    "question": |-
+      What is the pond in front of?
+  "answers":
+    "answer": |-
+      ground
+    "fullAnswer": |-
+      The pond is in front of the ground.
+  "image": |-
+    2392698.jpg
+- "id": |-
+    2370684
+  "prompt":
+    "question": |-
+      What is covered with snow?
+  "answers":
+    "answer": |-
+      ground
+    "fullAnswer": |-
+      The ground is covered with snow.
+  "image": |-
+    2370684.jpg
+- "id": |-
+    2414605
+  "prompt":
+    "question": |-
+      Does the grass look healthy or unhealthy?
+  "answers":
+    "answer": |-
+      unhealthy
+    "fullAnswer": |-
+      The grass is unhealthy.
+  "image": |-
+    2414605.jpg
+- "id": |-
+    2361439
+  "prompt":
+    "question": |-
+      Is the palm tree unhealthy or healthy?
+  "answers":
+    "answer": |-
+      healthy
+    "fullAnswer": |-
+      The palm tree is healthy.
+  "image": |-
+    2361439.jpg
+- "id": |-
+    2361439
+  "prompt":
+    "question": |-
+      Is the palm tree unhealthy or healthy?
+  "answers":
+    "answer": |-
+      healthy
+    "fullAnswer": |-
+      The palm tree is healthy.
+  "image": |-
+    2361439.jpg
+- "id": |-
+    2414605
+  "prompt":
+    "question": |-
+      Does the grass look healthy or unhealthy?
+  "answers":
+    "answer": |-
+      unhealthy
+    "fullAnswer": |-
+      The grass is unhealthy.
+  "image": |-
+    2414605.jpg
+- "id": |-
+    2414605
+  "prompt":
+    "question": |-
+      Does the grass look healthy or unhealthy?
+  "answers":
+    "answer": |-
+      unhealthy
+    "fullAnswer": |-
+      The grass is unhealthy.
+  "image": |-
+    2414605.jpg
+- "id": |-
+    2385332
+  "prompt":
+    "question": |-
+      What vegetable is the man to the left of the stove holding, a lemon or a pepper?
+  "answers":
+    "answer": |-
+      pepper
+    "fullAnswer": |-
+      The man is holding a pepper.
+  "image": |-
+    2385332.jpg
+- "id": |-
+    2369766
+  "prompt":
+    "question": |-
+      What is the vegetable to the left of the vegetable that is on the plate?
+  "answers":
+    "answer": |-
+      carrot
+    "fullAnswer": |-
+      The vegetable is a carrot.
+  "image": |-
+    2369766.jpg
+- "id": |-
+    2325444
+  "prompt":
+    "question": |-
+      What is the vegetable that is to the left of the potato called?
+  "answers":
+    "answer": |-
+      cauliflower
+    "fullAnswer": |-
+      The vegetable is cauliflower.
+  "image": |-
+    2325444.jpg
+- "id": |-
+    2371504
+  "prompt":
+    "question": |-
+      Which vegetable is not black, the pepper or the tomato?
+  "answers":
+    "answer": |-
+      tomato
+    "fullAnswer": |-
+      The tomato is not black.
+  "image": |-
+    2371504.jpg
+- "id": |-
+    2320769
+  "prompt":
+    "question": |-
+      What is the vegetable that is to the left of the broccoli?
+  "answers":
+    "answer": |-
+      carrot
+    "fullAnswer": |-
+      The vegetable is a carrot.
+  "image": |-
+    2320769.jpg
+- "id": |-
+    2357448
+  "prompt":
+    "question": |-
+      Is the brown hair curly or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2357448.jpg
+- "id": |-
+    2357448
+  "prompt":
+    "question": |-
+      Is the brown hair curly or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2357448.jpg
+- "id": |-
+    2357448
+  "prompt":
+    "question": |-
+      Is the brown hair curly or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2357448.jpg
+- "id": |-
+    2357448
+  "prompt":
+    "question": |-
+      Is the brown hair curly or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2357448.jpg
+- "id": |-
+    2357448
+  "prompt":
+    "question": |-
+      Is the brown hair curly or straight?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2357448.jpg
+- "id": |-
+    3882
+  "prompt":
+    "question": |-
+      How is the vehicle to the left of the silver car called?
+  "answers":
+    "answer": |-
+      suv
+    "fullAnswer": |-
+      The vehicle is a SUV.
+  "image": |-
+    3882.jpg
+- "id": |-
+    2319875
+  "prompt":
+    "question": |-
+      What vehicle is it?
+  "answers":
+    "answer": |-
+      truck
+    "fullAnswer": |-
+      The vehicle is a truck.
+  "image": |-
+    2319875.jpg
+- "id": |-
+    2344393
+  "prompt":
+    "question": |-
+      What vehicle is to the right of the fence on the left side?
+  "answers":
+    "answer": |-
+      car
+    "fullAnswer": |-
+      The vehicle is a car.
+  "image": |-
+    2344393.jpg
+- "id": |-
+    2406978
+  "prompt":
+    "question": |-
+      What is the vehicle on the road in the picture?
+  "answers":
+    "answer": |-
+      bus
+    "fullAnswer": |-
+      The vehicle is a bus.
+  "image": |-
+    2406978.jpg
+- "id": |-
+    2385419
+  "prompt":
+    "question": |-
+      Which kind of vehicle is behind the motorcycle?
+  "answers":
+    "answer": |-
+      suv
+    "fullAnswer": |-
+      The vehicle is a SUV.
+  "image": |-
+    2385419.jpg
+- "id": |-
+    2316099
+  "prompt":
+    "question": |-
+      Who is holding the ball?
+  "answers":
+    "answer": |-
+      catcher
+    "fullAnswer": |-
+      The catcher is holding the ball.
+  "image": |-
+    2316099.jpg
+- "id": |-
+    2321034
+  "prompt":
+    "question": |-
+      Who is on the bed?
+  "answers":
+    "answer": |-
+      child
+    "fullAnswer": |-
+      The kid is on the bed.
+  "image": |-
+    2321034.jpg
+- "id": |-
+    2343543
+  "prompt":
+    "question": |-
+      Who holds the donut?
+  "answers":
+    "answer": |-
+      man
+    "fullAnswer": |-
+      The man holds the donut.
+  "image": |-
+    2343543.jpg
+- "id": |-
+    2412743
+  "prompt":
+    "question": |-
+      Who is wearing the clothes?
+  "answers":
+    "answer": |-
+      boy
+    "fullAnswer": |-
+      The boy is wearing clothes.
+  "image": |-
+    2412743.jpg
+- "id": |-
+    2377424
+  "prompt":
+    "question": |-
+      Who wears skis?
+  "answers":
+    "answer": |-
+      lady
+    "fullAnswer": |-
+      The lady wears skis.
+  "image": |-
+    2377424.jpg
+- "id": |-
+    2355225
+  "prompt":
+    "question": |-
+      What kind of toy is on the wall?
+  "answers":
+    "answer": |-
+      stuffed animals
+    "fullAnswer": |-
+      The toys are stuffed animals.
+  "image": |-
+    2355225.jpg
+- "id": |-
+    2327532
+  "prompt":
+    "question": |-
+      What kind of toy is to the left of the stuffed bear on the right side of the picture?
+  "answers":
+    "answer": |-
+      teddy bear
+    "fullAnswer": |-
+      The toy is a teddy bear.
+  "image": |-
+    2327532.jpg
+- "id": |-
+    2376660
+  "prompt":
+    "question": |-
+      What kind of toy is sitting on the bed?
+  "answers":
+    "answer": |-
+      stuffed animals
+    "fullAnswer": |-
+      The toys are stuffed animals.
+  "image": |-
+    2376660.jpg
+- "id": |-
+    2338827
+  "prompt":
+    "question": |-
+      How is the toy to the left of the bag on the right called?
+  "answers":
+    "answer": |-
+      stuffed animal
+    "fullAnswer": |-
+      The toy is a stuffed animal.
+  "image": |-
+    2338827.jpg
+- "id": |-
+    2400117
+  "prompt":
+    "question": |-
+      What is the toy that is tan?
+  "answers":
+    "answer": |-
+      stuffed bear
+    "fullAnswer": |-
+      The toy is a stuffed bear.
+  "image": |-
+    2400117.jpg
+- "id": |-
+    2396455
+  "prompt":
+    "question": |-
+      What is on the pot to the right of the person?
+  "answers":
+    "answer": |-
+      letters
+    "fullAnswer": |-
+      The letters are on the pot.
+  "image": |-
+    2396455.jpg
+- "id": |-
+    2396972
+  "prompt":
+    "question": |-
+      What is on the paint?
+  "answers":
+    "answer": |-
+      logo
+    "fullAnswer": |-
+      The logo is on the paint.
+  "image": |-
+    2396972.jpg
+- "id": |-
+    285631
+  "prompt":
+    "question": |-
+      What is on the bag that is to the left of the boy?
+  "answers":
+    "answer": |-
+      logo
+    "fullAnswer": |-
+      The logo is on the bag.
+  "image": |-
+    285631.jpg
+- "id": |-
+    2335787
+  "prompt":
+    "question": |-
+      What is hanging on the wall?
+  "answers":
+    "answer": |-
+      drawing
+    "fullAnswer": |-
+      The drawing is hanging on the wall.
+  "image": |-
+    2335787.jpg
+- "id": |-
+    2391802
+  "prompt":
+    "question": |-
+      What is on the horse the jockey is riding?
+  "answers":
+    "answer": |-
+      number
+    "fullAnswer": |-
+      The number is on the horse.
+  "image": |-
+    2391802.jpg
+- "id": |-
+    2373289
+  "prompt":
+    "question": |-
+      Is the screen to the left of the mouse dark or light?
+  "answers":
+    "answer": |-
+      light
+    "fullAnswer": |-
+      The screen is light.
+  "image": |-
+    2373289.jpg
+- "id": |-
+    2387719
+  "prompt":
+    "question": |-
+      What is the weight of the street?
+  "answers":
+    "answer": |-
+      heavy
+    "fullAnswer": |-
+      The street is heavy.
+  "image": |-
+    2387719.jpg
+- "id": |-
+    2377976
+  "prompt":
+    "question": |-
+      Is the wine in the glass light or dark?
+  "answers":
+    "answer": |-
+      light
+    "fullAnswer": |-
+      The wine is light.
+  "image": |-
+    2377976.jpg
+- "id": |-
+    2394519
+  "prompt":
+    "question": |-
+      What tone does the chair to the left of the other chair have?
+  "answers":
+    "answer": |-
+      light
+    "fullAnswer": |-
+      The chair has light tone.
+  "image": |-
+    2394519.jpg
+- "id": |-
+    2373289
+  "prompt":
+    "question": |-
+      Is the screen to the left of the mouse dark or light?
+  "answers":
+    "answer": |-
+      light
+    "fullAnswer": |-
+      The screen is light.
+  "image": |-
+    2373289.jpg
+- "id": |-
+    2392252
+  "prompt":
+    "question": |-
+      Is the shirt sleeveless or short sleeved?
+  "answers":
+    "answer": |-
+      short sleeved
+    "fullAnswer": |-
+      The shirt is short sleeved.
+  "image": |-
+    2392252.jpg
+- "id": |-
+    2387183
+  "prompt":
+    "question": |-
+      Is the blue shirt long sleeved or short sleeved?
+  "answers":
+    "answer": |-
+      long sleeved
+    "fullAnswer": |-
+      The shirt is long sleeved.
+  "image": |-
+    2387183.jpg
+- "id": |-
+    2346008
+  "prompt":
+    "question": |-
+      Is the shirt long sleeved or short sleeved?
+  "answers":
+    "answer": |-
+      short sleeved
+    "fullAnswer": |-
+      The shirt is short sleeved.
+  "image": |-
+    2346008.jpg
+- "id": |-
+    2338844
+  "prompt":
+    "question": |-
+      Is the shirt sleeveless or long sleeved?
+  "answers":
+    "answer": |-
+      long sleeved
+    "fullAnswer": |-
+      The shirt is long sleeved.
+  "image": |-
+    2338844.jpg
+- "id": |-
+    2326908
+  "prompt":
+    "question": |-
+      Is the shirt that looks red long sleeved or is it short sleeved?
+  "answers":
+    "answer": |-
+      short sleeved
+    "fullAnswer": |-
+      The shirt is short sleeved.
+  "image": |-
+    2326908.jpg
+- "id": |-
+    2345391
+  "prompt":
+    "question": |-
+      What's the cat lying on?
+  "answers":
+    "answer": |-
+      bag
+    "fullAnswer": |-
+      The cat is lying on the bag.
+  "image": |-
+    2345391.jpg
+- "id": |-
+    2345391
+  "prompt":
+    "question": |-
+      This cat is in what?
+  "answers":
+    "answer": |-
+      bag
+    "fullAnswer": |-
+      The cat is in the bag.
+  "image": |-
+    2345391.jpg
+- "id": |-
+    2385195
+  "prompt":
+    "question": |-
+      What is the bag that this bear is in?
+  "answers":
+    "answer": |-
+      trash bag
+    "fullAnswer": |-
+      The bag is a trash bag.
+  "image": |-
+    2385195.jpg
+- "id": |-
+    2373839
+  "prompt":
+    "question": |-
+      What's the logo on?
+  "answers":
+    "answer": |-
+      handbag
+    "fullAnswer": |-
+      The logo is on the handbag.
+  "image": |-
+    2373839.jpg
+- "id": |-
+    2373590
+  "prompt":
+    "question": |-
+      What is the name of the bag that has the same color as her umbrella?
+  "answers":
+    "answer": |-
+      backpack
+    "fullAnswer": |-
+      The bag is a backpack.
+  "image": |-
+    2373590.jpg
+- "id": |-
+    2328205
+  "prompt":
+    "question": |-
+      Is the grass dried or wet?
+  "answers":
+    "answer": |-
+      dried
+    "fullAnswer": |-
+      The grass is dried.
+  "image": |-
+    2328205.jpg
+- "id": |-
+    2404203
+  "prompt":
+    "question": |-
+      Is the ground wet or dry?
+  "answers":
+    "answer": |-
+      dry
+    "fullAnswer": |-
+      The ground is dry.
+  "image": |-
+    2404203.jpg
+- "id": |-
+    2338200
+  "prompt":
+    "question": |-
+      Are the trunks that are not little wet or dry?
+  "answers":
+    "answer": |-
+      wet
+    "fullAnswer": |-
+      The trunks are wet.
+  "image": |-
+    2338200.jpg
+- "id": |-
+    2382798
+  "prompt":
+    "question": |-
+      Is the large tree dry or wet?
+  "answers":
+    "answer": |-
+      dry
+    "fullAnswer": |-
+      The palm tree is dry.
+  "image": |-
+    2382798.jpg
+- "id": |-
+    2394264
+  "prompt":
+    "question": |-
+      Does the ground look dry or wet?
+  "answers":
+    "answer": |-
+      wet
+    "fullAnswer": |-
+      The ground is wet.
+  "image": |-
+    2394264.jpg
+- "id": |-
+    2361261
+  "prompt":
+    "question": |-
+      How is the weather?
+  "answers":
+    "answer": |-
+      overcast
+    "fullAnswer": |-
+      It is overcast.
+  "image": |-
+    2361261.jpg
+- "id": |-
+    2397829
+  "prompt":
+    "question": |-
+      How is the weather?
+  "answers":
+    "answer": |-
+      cloudy
+    "fullAnswer": |-
+      It is cloudy.
+  "image": |-
+    2397829.jpg
+- "id": |-
+    2365753
+  "prompt":
+    "question": |-
+      How's the weather?
+  "answers":
+    "answer": |-
+      partly cloudy
+    "fullAnswer": |-
+      It is partly cloudy.
+  "image": |-
+    2365753.jpg
+- "id": |-
+    2361038
+  "prompt":
+    "question": |-
+      Is the sky cloudless or cloudy?
+  "answers":
+    "answer": |-
+      cloudy
+    "fullAnswer": |-
+      The sky is cloudy.
+  "image": |-
+    2361038.jpg
+- "id": |-
+    2409694
+  "prompt":
+    "question": |-
+      Is the weather cloudy or sunny?
+  "answers":
+    "answer": |-
+      sunny
+    "fullAnswer": |-
+      It is sunny.
+  "image": |-
+    2409694.jpg
+- "id": |-
+    2357718
+  "prompt":
+    "question": |-
+      Which texture is the hair?
+  "answers":
+    "answer": |-
+      fine
+    "fullAnswer": |-
+      The hair is fine.
+  "image": |-
+    2357718.jpg
+- "id": |-
+    2357718
+  "prompt":
+    "question": |-
+      Which texture is the hair?
+  "answers":
+    "answer": |-
+      fine
+    "fullAnswer": |-
+      The hair is fine.
+  "image": |-
+    2357718.jpg
+- "id": |-
+    2357718
+  "prompt":
+    "question": |-
+      Which texture is the hair?
+  "answers":
+    "answer": |-
+      fine
+    "fullAnswer": |-
+      The hair is fine.
+  "image": |-
+    2357718.jpg
+- "id": |-
+    2395430
+  "prompt":
+    "question": |-
+      What texture is the sand that is not dry?
+  "answers":
+    "answer": |-
+      coarse
+    "fullAnswer": |-
+      The sand is coarse.
+  "image": |-
+    2395430.jpg
+- "id": |-
+    2357718
+  "prompt":
+    "question": |-
+      Which texture is the hair?
+  "answers":
+    "answer": |-
+      fine
+    "fullAnswer": |-
+      The hair is fine.
+  "image": |-
+    2357718.jpg
+- "id": |-
+    2373095
+  "prompt":
+    "question": |-
+      What drink is to the right of the plate?
+  "answers":
+    "answer": |-
+      beer
+    "fullAnswer": |-
+      The drink is beer.
+  "image": |-
+    2373095.jpg
+- "id": |-
+    2392318
+  "prompt":
+    "question": |-
+      What drink is to the right of the glasses?
+  "answers":
+    "answer": |-
+      soda
+    "fullAnswer": |-
+      The drink is soda.
+  "image": |-
+    2392318.jpg
+- "id": |-
+    2379778
+  "prompt":
+    "question": |-
+      What is the man to the left of the phone holding?
+  "answers":
+    "answer": |-
+      coffee
+    "fullAnswer": |-
+      The man is holding the coffee.
+  "image": |-
+    2379778.jpg
+- "id": |-
+    2349413
+  "prompt":
+    "question": |-
+      What is the drink to the right of the glasses of wine?
+  "answers":
+    "answer": |-
+      wine
+    "fullAnswer": |-
+      The drink is wine.
+  "image": |-
+    2349413.jpg
+- "id": |-
+    2408487
+  "prompt":
+    "question": |-
+      What is the animal that looks tan and light brown surrounded by?
+  "answers":
+    "answer": |-
+      water
+    "fullAnswer": |-
+      The dog is surrounded by the water.
+  "image": |-
+    2408487.jpg
+- "id": |-
+    2408730
+  "prompt":
+    "question": |-
+      What kind of watercraft is on the water?
+  "answers":
+    "answer": |-
+      boats
+    "fullAnswer": |-
+      The watercraft is boats.
+  "image": |-
+    2408730.jpg
+- "id": |-
+    2332065
+  "prompt":
+    "question": |-
+      What is in the water that is blue?
+  "answers":
+    "answer": |-
+      ship
+    "fullAnswer": |-
+      The ship is in the water.
+  "image": |-
+    2332065.jpg
+- "id": |-
+    2407938
+  "prompt":
+    "question": |-
+      What is the watercraft that is in the water called?
+  "answers":
+    "answer": |-
+      sailboats
+    "fullAnswer": |-
+      The watercraft is sailboats.
+  "image": |-
+    2407938.jpg
+- "id": |-
+    1159902
+  "prompt":
+    "question": |-
+      What is that man in?
+  "answers":
+    "answer": |-
+      canoe
+    "fullAnswer": |-
+      The man is in the canoe.
+  "image": |-
+    1159902.jpg
+- "id": |-
+    2350876
+  "prompt":
+    "question": |-
+      What is in front of the water?
+  "answers":
+    "answer": |-
+      boats
+    "fullAnswer": |-
+      The boats are in front of the water.
+  "image": |-
+    2350876.jpg
+- "id": |-
+    2338636
+  "prompt":
+    "question": |-
+      What color is the hair?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The hair is dark.
+  "image": |-
+    2338636.jpg
+- "id": |-
+    2032
+  "prompt":
+    "question": |-
+      Is that nightstand white or dark?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The nightstand is dark.
+  "image": |-
+    2032.jpg
+- "id": |-
+    2407116
+  "prompt":
+    "question": |-
+      Is the appliance that is not closed gray or dark?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The refrigerator is dark.
+  "image": |-
+    2407116.jpg
+- "id": |-
+    2412198
+  "prompt":
+    "question": |-
+      Of what color is the shirt?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The shirt is dark.
+  "image": |-
+    2412198.jpg
+- "id": |-
+    2338636
+  "prompt":
+    "question": |-
+      What color is the hair?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The hair is dark.
+  "image": |-
+    2338636.jpg
+- "id": |-
+    2355620
+  "prompt":
+    "question": |-
+      What's the depth of the bowl?
+  "answers":
+    "answer": |-
+      shallow
+    "fullAnswer": |-
+      The bowl is shallow.
+  "image": |-
+    2355620.jpg
+- "id": |-
+    2345501
+  "prompt":
+    "question": |-
+      What is the depth of the water?
+  "answers":
+    "answer": |-
+      shallow
+    "fullAnswer": |-
+      The water is shallow.
+  "image": |-
+    2345501.jpg
+- "id": |-
+    2408009
+  "prompt":
+    "question": |-
+      What is the depth of the water?
+  "answers":
+    "answer": |-
+      deep
+    "fullAnswer": |-
+      The water is deep.
+  "image": |-
+    2408009.jpg
+- "id": |-
+    2342451
+  "prompt":
+    "question": |-
+      Does the snow look deep or shallow?
+  "answers":
+    "answer": |-
+      deep
+    "fullAnswer": |-
+      The snow is deep.
+  "image": |-
+    2342451.jpg
+- "id": |-
+    2408009
+  "prompt":
+    "question": |-
+      What is the depth of the water?
+  "answers":
+    "answer": |-
+      deep
+    "fullAnswer": |-
+      The water is deep.
+  "image": |-
+    2408009.jpg
+- "id": |-
+    2403462
+  "prompt":
+    "question": |-
+      What is the wine in?
+  "answers":
+    "answer": |-
+      wine glass
+    "fullAnswer": |-
+      The wine is in the wine glass.
+  "image": |-
+    2403462.jpg
+- "id": |-
+    2391042
+  "prompt":
+    "question": |-
+      What's located on top of the table?
+  "answers":
+    "answer": |-
+      cups
+    "fullAnswer": |-
+      The cups are on top of the table.
+  "image": |-
+    2391042.jpg
+- "id": |-
+    2411855
+  "prompt":
+    "question": |-
+      What is the saucer higher than?
+  "answers":
+    "answer": |-
+      plate
+    "fullAnswer": |-
+      The saucer is higher than the plate.
+  "image": |-
+    2411855.jpg
+- "id": |-
+    2272
+  "prompt":
+    "question": |-
+      What's the woman holding?
+  "answers":
+    "answer": |-
+      cup
+    "fullAnswer": |-
+      The woman is holding the cup.
+  "image": |-
+    2272.jpg
+- "id": |-
+    2383270
+  "prompt":
+    "question": |-
+      What's the sauce on?
+  "answers":
+    "answer": |-
+      plate
+    "fullAnswer": |-
+      The sauce is on the plate.
+  "image": |-
+    2383270.jpg
+- "id": |-
+    2387720
+  "prompt":
+    "question": |-
+      What is in the cup?
+  "answers":
+    "answer": |-
+      sauce
+    "fullAnswer": |-
+      The sauce is in the cup.
+  "image": |-
+    2387720.jpg
+- "id": |-
+    2398788
+  "prompt":
+    "question": |-
+      What sauce is on the plate?
+  "answers":
+    "answer": |-
+      mustard
+    "fullAnswer": |-
+      The sauce is mustard.
+  "image": |-
+    2398788.jpg
+- "id": |-
+    2356126
+  "prompt":
+    "question": |-
+      What is located on top of the beef?
+  "answers":
+    "answer": |-
+      sauce
+    "fullAnswer": |-
+      The sauce is on top of the beef.
+  "image": |-
+    2356126.jpg
+- "id": |-
+    2408446
+  "prompt":
+    "question": |-
+      What sauce is on the table?
+  "answers":
+    "answer": |-
+      ketchup
+    "fullAnswer": |-
+      The sauce is ketchup.
+  "image": |-
+    2408446.jpg
+- "id": |-
+    2380135
+  "prompt":
+    "question": |-
+      What is sitting in the bowl?
+  "answers":
+    "answer": |-
+      sauce
+    "fullAnswer": |-
+      The sauce is sitting in the bowl.
+  "image": |-
+    2380135.jpg
+- "id": |-
+    2399683
+  "prompt":
+    "question": |-
+      Is the empty road straight or curved?
+  "answers":
+    "answer": |-
+      curved
+    "fullAnswer": |-
+      The road is curved.
+  "image": |-
+    2399683.jpg
+- "id": |-
+    2399683
+  "prompt":
+    "question": |-
+      Is the empty road straight or curved?
+  "answers":
+    "answer": |-
+      curved
+    "fullAnswer": |-
+      The road is curved.
+  "image": |-
+    2399683.jpg
+- "id": |-
+    2399683
+  "prompt":
+    "question": |-
+      Is the empty road straight or curved?
+  "answers":
+    "answer": |-
+      curved
+    "fullAnswer": |-
+      The road is curved.
+  "image": |-
+    2399683.jpg
+- "id": |-
+    2399683
+  "prompt":
+    "question": |-
+      Is the empty road straight or curved?
+  "answers":
+    "answer": |-
+      curved
+    "fullAnswer": |-
+      The road is curved.
+  "image": |-
+    2399683.jpg
+- "id": |-
+    2399683
+  "prompt":
+    "question": |-
+      Is the empty road straight or curved?
+  "answers":
+    "answer": |-
+      curved
+    "fullAnswer": |-
+      The road is curved.
+  "image": |-
+    2399683.jpg
+- "id": |-
+    2397231
+  "prompt":
+    "question": |-
+      What is sitting in the glass that sits on the table?
+  "answers":
+    "answer": |-
+      utensils
+    "fullAnswer": |-
+      The utensils are sitting in the glass.
+  "image": |-
+    2397231.jpg
+- "id": |-
+    2384518
+  "prompt":
+    "question": |-
+      What is under the fork?
+  "answers":
+    "answer": |-
+      knife
+    "fullAnswer": |-
+      The knife is under the fork.
+  "image": |-
+    2384518.jpg
+- "id": |-
+    2328812
+  "prompt":
+    "question": |-
+      What's on the dish?
+  "answers":
+    "answer": |-
+      fork
+    "fullAnswer": |-
+      The fork is on the dish.
+  "image": |-
+    2328812.jpg
+- "id": |-
+    2324920
+  "prompt":
+    "question": |-
+      What do you think is on the plate in the top of the picture?
+  "answers":
+    "answer": |-
+      fork
+    "fullAnswer": |-
+      The fork is on the plate.
+  "image": |-
+    2324920.jpg
+- "id": |-
+    2402467
+  "prompt":
+    "question": |-
+      What is under the napkin next to the plate?
+  "answers":
+    "answer": |-
+      fork
+    "fullAnswer": |-
+      The fork is under the napkin.
+  "image": |-
+    2402467.jpg
+- "id": |-
+    2381908
+  "prompt":
+    "question": |-
+      What type of fruit is to the right of the fruit that the basket is under of?
+  "answers":
+    "answer": |-
+      mango
+    "fullAnswer": |-
+      The fruit is a mango.
+  "image": |-
+    2381908.jpg
+- "id": |-
+    2405114
+  "prompt":
+    "question": |-
+      Which kind of fruit is in the glass?
+  "answers":
+    "answer": |-
+      oranges
+    "fullAnswer": |-
+      The fruits are oranges.
+  "image": |-
+    2405114.jpg
+- "id": |-
+    2394023
+  "prompt":
+    "question": |-
+      What are the fruits on top of the table called?
+  "answers":
+    "answer": |-
+      strawberries
+    "fullAnswer": |-
+      The fruits are strawberries.
+  "image": |-
+    2394023.jpg
+- "id": |-
+    2339457
+  "prompt":
+    "question": |-
+      What are the fruits to the left of the tent behind the fruit?
+  "answers":
+    "answer": |-
+      bananas
+    "fullAnswer": |-
+      The fruits are bananas.
+  "image": |-
+    2339457.jpg
+- "id": |-
+    2404639
+  "prompt":
+    "question": |-
+      What fruits are on the dessert on the left side of the photo?
+  "answers":
+    "answer": |-
+      blackberries
+    "fullAnswer": |-
+      The fruits are blackberries.
+  "image": |-
+    2404639.jpg
+- "id": |-
+    2417483
+  "prompt":
+    "question": |-
+      What shape is the table?
+  "answers":
+    "answer": |-
+      round
+    "fullAnswer": |-
+      The table is round.
+  "image": |-
+    2417483.jpg
+- "id": |-
+    2409793
+  "prompt":
+    "question": |-
+      What shape is the small nose?
+  "answers":
+    "answer": |-
+      round
+    "fullAnswer": |-
+      The nose is round.
+  "image": |-
+    2409793.jpg
+- "id": |-
+    2345950
+  "prompt":
+    "question": |-
+      The street sign is what shape?
+  "answers":
+    "answer": |-
+      square
+    "fullAnswer": |-
+      The street sign is square.
+  "image": |-
+    2345950.jpg
+- "id": |-
+    2321111
+  "prompt":
+    "question": |-
+      The carrot in the top is which shape?
+  "answers":
+    "answer": |-
+      square
+    "fullAnswer": |-
+      The carrot is square.
+  "image": |-
+    2321111.jpg
+- "id": |-
+    285806
+  "prompt":
+    "question": |-
+      What shape does the food plate have?
+  "answers":
+    "answer": |-
+      square
+    "fullAnswer": |-
+      The plate has square shape.
+  "image": |-
+    285806.jpg
+- "id": |-
+    2415396
+  "prompt":
+    "question": |-
+      Is the orange peeled or unpeeled?
+  "answers":
+    "answer": |-
+      peeled
+    "fullAnswer": |-
+      The orange is peeled.
+  "image": |-
+    2415396.jpg
+- "id": |-
+    2332286
+  "prompt":
+    "question": |-
+      Is the banana unpeeled or peeled?
+  "answers":
+    "answer": |-
+      peeled
+    "fullAnswer": |-
+      The banana is peeled.
+  "image": |-
+    2332286.jpg
+- "id": |-
+    2380448
+  "prompt":
+    "question": |-
+      Are the carrots on the table unpeeled or peeled?
+  "answers":
+    "answer": |-
+      unpeeled
+    "fullAnswer": |-
+      The carrots are unpeeled.
+  "image": |-
+    2380448.jpg
+- "id": |-
+    2415396
+  "prompt":
+    "question": |-
+      Is the orange peeled or unpeeled?
+  "answers":
+    "answer": |-
+      peeled
+    "fullAnswer": |-
+      The orange is peeled.
+  "image": |-
+    2415396.jpg
+- "id": |-
+    2380448
+  "prompt":
+    "question": |-
+      Are the carrots on the table unpeeled or peeled?
+  "answers":
+    "answer": |-
+      unpeeled
+    "fullAnswer": |-
+      The carrots are unpeeled.
+  "image": |-
+    2380448.jpg
+- "id": |-
+    2385163
+  "prompt":
+    "question": |-
+      Where is the woman standing?
+  "answers":
+    "answer": |-
+      living room
+    "fullAnswer": |-
+      The woman is standing in the living room.
+  "image": |-
+    2385163.jpg
+- "id": |-
+    2323573
+  "prompt":
+    "question": |-
+      Where is the man?
+  "answers":
+    "answer": |-
+      bedroom
+    "fullAnswer": |-
+      The man is in the bedroom.
+  "image": |-
+    2323573.jpg
+- "id": |-
+    2412014
+  "prompt":
+    "question": |-
+      Which room is it?
+  "answers":
+    "answer": |-
+      office
+    "fullAnswer": |-
+      It is an office.
+  "image": |-
+    2412014.jpg
+- "id": |-
+    2387991
+  "prompt":
+    "question": |-
+      Which room is it?
+  "answers":
+    "answer": |-
+      bedroom
+    "fullAnswer": |-
+      It is a bedroom.
+  "image": |-
+    2387991.jpg
+- "id": |-
+    2365064
+  "prompt":
+    "question": |-
+      Where is the pot?
+  "answers":
+    "answer": |-
+      kitchen
+    "fullAnswer": |-
+      The pot is in the kitchen.
+  "image": |-
+    2365064.jpg
+- "id": |-
+    2412071
+  "prompt":
+    "question": |-
+      What type of baked good is to the left of the cup?
+  "answers":
+    "answer": |-
+      bun
+    "fullAnswer": |-
+      The food is a bun.
+  "image": |-
+    2412071.jpg
+- "id": |-
+    2368202
+  "prompt":
+    "question": |-
+      What type of baked good is the butter on?
+  "answers":
+    "answer": |-
+      bread
+    "fullAnswer": |-
+      The butter is on the bread.
+  "image": |-
+    2368202.jpg
+- "id": |-
+    2364858
+  "prompt":
+    "question": |-
+      What kind of baked good is to the right of the tray on the left?
+  "answers":
+    "answer": |-
+      bread
+    "fullAnswer": |-
+      The food is a bread.
+  "image": |-
+    2364858.jpg
+- "id": |-
+    2397488
+  "prompt":
+    "question": |-
+      What are the sprinkles on?
+  "answers":
+    "answer": |-
+      donut
+    "fullAnswer": |-
+      The sprinkles are on the donut.
+  "image": |-
+    2397488.jpg
+- "id": |-
+    61557
+  "prompt":
+    "question": |-
+      Which kind of baked good are the letters on?
+  "answers":
+    "answer": |-
+      donut
+    "fullAnswer": |-
+      The letters are on the donut.
+  "image": |-
+    61557.jpg
+- "id": |-
+    2322741
+  "prompt":
+    "question": |-
+      What is the device that is to the right of the speaker on the left side of the picture called?
+  "answers":
+    "answer": |-
+      radio
+    "fullAnswer": |-
+      The device is a radio.
+  "image": |-
+    2322741.jpg
+- "id": |-
+    2363225
+  "prompt":
+    "question": |-
+      What kind of device is the man holding?
+  "answers":
+    "answer": |-
+      wii controller
+    "fullAnswer": |-
+      The man is holding the Wii remotes.
+  "image": |-
+    2363225.jpg
+- "id": |-
+    2402492
+  "prompt":
+    "question": |-
+      What device is that cat on?
+  "answers":
+    "answer": |-
+      laptop
+    "fullAnswer": |-
+      The cat is on the laptop.
+  "image": |-
+    2402492.jpg
+- "id": |-
+    2391692
+  "prompt":
+    "question": |-
+      What type of device is to the right of the keyboard?
+  "answers":
+    "answer": |-
+      laptop
+    "fullAnswer": |-
+      The device is a laptop.
+  "image": |-
+    2391692.jpg
+- "id": |-
+    2384946
+  "prompt":
+    "question": |-
+      What device is the girl holding?
+  "answers":
+    "answer": |-
+      phone
+    "fullAnswer": |-
+      The girl is holding the telephone.
+  "image": |-
+    2384946.jpg
+- "id": |-
+    2384711
+  "prompt":
+    "question": |-
+      What is the catcher doing?
+  "answers":
+    "answer": |-
+      running
+    "fullAnswer": |-
+      The catcher is running.
+  "image": |-
+    2384711.jpg
+- "id": |-
+    3288
+  "prompt":
+    "question": |-
+      What is the person doing?
+  "answers":
+    "answer": |-
+      sitting
+    "fullAnswer": |-
+      The person is sitting.
+  "image": |-
+    3288.jpg
+- "id": |-
+    2373981
+  "prompt":
+    "question": |-
+      What's the man doing?
+  "answers":
+    "answer": |-
+      bending
+    "fullAnswer": |-
+      The man is bending.
+  "image": |-
+    2373981.jpg
+- "id": |-
+    2385341
+  "prompt":
+    "question": |-
+      What is the brown animal doing?
+  "answers":
+    "answer": |-
+      jumping
+    "fullAnswer": |-
+      The dog is jumping.
+  "image": |-
+    2385341.jpg
+- "id": |-
+    2358947
+  "prompt":
+    "question": |-
+      What is the bull doing, running or lying?
+  "answers":
+    "answer": |-
+      lying
+    "fullAnswer": |-
+      The bull is lying.
+  "image": |-
+    2358947.jpg
+- "id": |-
+    2413202
+  "prompt":
+    "question": |-
+      Are the food on the meat cooked or raw?
+  "answers":
+    "answer": |-
+      raw
+    "fullAnswer": |-
+      The hot dogs are raw.
+  "image": |-
+    2413202.jpg
+- "id": |-
+    2402718
+  "prompt":
+    "question": |-
+      Is the broccoli steamed or raw?
+  "answers":
+    "answer": |-
+      steamed
+    "fullAnswer": |-
+      The broccoli is steamed.
+  "image": |-
+    2402718.jpg
+- "id": |-
+    2402718
+  "prompt":
+    "question": |-
+      Is the meat to the right of the parsley raw or roasted?
+  "answers":
+    "answer": |-
+      roasted
+    "fullAnswer": |-
+      The meat is roasted.
+  "image": |-
+    2402718.jpg
+- "id": |-
+    2373574
+  "prompt":
+    "question": |-
+      Does the fish look raw or grilled?
+  "answers":
+    "answer": |-
+      raw
+    "fullAnswer": |-
+      The fish is raw.
+  "image": |-
+    2373574.jpg
+- "id": |-
+    1592565
+  "prompt":
+    "question": |-
+      Is the food on the baking sheet uncooked or cooked?
+  "answers":
+    "answer": |-
+      uncooked
+    "fullAnswer": |-
+      The pizza is uncooked.
+  "image": |-
+    1592565.jpg
+- "id": |-
+    2362824
+  "prompt":
+    "question": |-
+      Is the policeman to the right of the person sad or happy?
+  "answers":
+    "answer": |-
+      happy
+    "fullAnswer": |-
+      The policeman is happy.
+  "image": |-
+    2362824.jpg
+- "id": |-
+    2406146
+  "prompt":
+    "question": |-
+      Is the orange sun sad or happy?
+  "answers":
+    "answer": |-
+      happy
+    "fullAnswer": |-
+      The sun is happy.
+  "image": |-
+    2406146.jpg
+- "id": |-
+    2386203
+  "prompt":
+    "question": |-
+      Are the shorts happy or maybe sad?
+  "answers":
+    "answer": |-
+      happy
+    "fullAnswer": |-
+      The shorts are happy.
+  "image": |-
+    2386203.jpg
+- "id": |-
+    2359058
+  "prompt":
+    "question": |-
+      Is the animal to the left of the papers sad or happy?
+  "answers":
+    "answer": |-
+      sad
+    "fullAnswer": |-
+      The bear is sad.
+  "image": |-
+    2359058.jpg
+- "id": |-
+    2386203
+  "prompt":
+    "question": |-
+      Are the shorts happy or maybe sad?
+  "answers":
+    "answer": |-
+      happy
+    "fullAnswer": |-
+      The shorts are happy.
+  "image": |-
+    2386203.jpg
+- "id": |-
+    2317127
+  "prompt":
+    "question": |-
+      Is the lamp antique or modern?
+  "answers":
+    "answer": |-
+      antique
+    "fullAnswer": |-
+      The lamp is antique.
+  "image": |-
+    2317127.jpg
+- "id": |-
+    2322704
+  "prompt":
+    "question": |-
+      Does this train look vintage or modern?
+  "answers":
+    "answer": |-
+      vintage
+    "fullAnswer": |-
+      The train is vintage.
+  "image": |-
+    2322704.jpg
+- "id": |-
+    2317127
+  "prompt":
+    "question": |-
+      Is the lamp antique or modern?
+  "answers":
+    "answer": |-
+      antique
+    "fullAnswer": |-
+      The lamp is antique.
+  "image": |-
+    2317127.jpg
+- "id": |-
+    2322704
+  "prompt":
+    "question": |-
+      Does this train look vintage or modern?
+  "answers":
+    "answer": |-
+      vintage
+    "fullAnswer": |-
+      The train is vintage.
+  "image": |-
+    2322704.jpg
+- "id": |-
+    2414415
+  "prompt":
+    "question": |-
+      Is the car modern or antique?
+  "answers":
+    "answer": |-
+      antique
+    "fullAnswer": |-
+      The car is antique.
+  "image": |-
+    2414415.jpg
+- "id": |-
+    2367303
+  "prompt":
+    "question": |-
+      Is the hair straight or curly?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2367303.jpg
+- "id": |-
+    2353322
+  "prompt":
+    "question": |-
+      Is the dark hair straight or curled?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2353322.jpg
+- "id": |-
+    2319598
+  "prompt":
+    "question": |-
+      Does the woman's hair look curly or straight?
+  "answers":
+    "answer": |-
+      curly
+    "fullAnswer": |-
+      The hair is curly.
+  "image": |-
+    2319598.jpg
+- "id": |-
+    2367303
+  "prompt":
+    "question": |-
+      Is the hair straight or curly?
+  "answers":
+    "answer": |-
+      straight
+    "fullAnswer": |-
+      The hair is straight.
+  "image": |-
+    2367303.jpg
+- "id": |-
+    2373271
+  "prompt":
+    "question": |-
+      Is that hair straight or curly?
+  "answers":
+    "answer": |-
+      curly
+    "fullAnswer": |-
+      The hair is curly.
+  "image": |-
+    2373271.jpg
+- "id": |-
+    2342741
+  "prompt":
+    "question": |-
+      What is in the appliance that is to the left of the table?
+  "answers":
+    "answer": |-
+      bottles
+    "fullAnswer": |-
+      The bottles are in the fridge.
+  "image": |-
+    2342741.jpg
+- "id": |-
+    2387206
+  "prompt":
+    "question": |-
+      What is located on top of the clock?
+  "answers":
+    "answer": |-
+      bottles
+    "fullAnswer": |-
+      The bottles are on top of the clock.
+  "image": |-
+    2387206.jpg
+- "id": |-
+    1189
+  "prompt":
+    "question": |-
+      What is on the shelf?
+  "answers":
+    "answer": |-
+      bottle
+    "fullAnswer": |-
+      The bottle is on the shelf.
+  "image": |-
+    1189.jpg
+- "id": |-
+    2402078
+  "prompt":
+    "question": |-
+      What are the scissors in?
+  "answers":
+    "answer": |-
+      bottle
+    "fullAnswer": |-
+      The scissors are in the bottle.
+  "image": |-
+    2402078.jpg
+- "id": |-
+    1592059
+  "prompt":
+    "question": |-
+      What is on the shelf in the top of the photo?
+  "answers":
+    "answer": |-
+      bottle
+    "fullAnswer": |-
+      The bottle is on the shelf.
+  "image": |-
+    1592059.jpg
+- "id": |-
+    2327830
+  "prompt":
+    "question": |-
+      Which kind of animal is it?
+  "answers":
+    "answer": |-
+      cat
+    "fullAnswer": |-
+      The animal is a cat.
+  "image": |-
+    2327830.jpg
+- "id": |-
+    2400789
+  "prompt":
+    "question": |-
+      What animal is in front of the vehicle that the cards are in?
+  "answers":
+    "answer": |-
+      goat
+    "fullAnswer": |-
+      The animal is a goat.
+  "image": |-
+    2400789.jpg
+- "id": |-
+    2348453
+  "prompt":
+    "question": |-
+      What is the name of this animal?
+  "answers":
+    "answer": |-
+      lamb
+    "fullAnswer": |-
+      This is a lamb.
+  "image": |-
+    2348453.jpg
+- "id": |-
+    2328939
+  "prompt":
+    "question": |-
+      What animal is jumping over the hurdle that is white and blue?
+  "answers":
+    "answer": |-
+      horse
+    "fullAnswer": |-
+      The horse is jumping over the hurdle.
+  "image": |-
+    2328939.jpg
+- "id": |-
+    2405401
+  "prompt":
+    "question": |-
+      What are the animals that the vehicle to the right of the man is pulled by?
+  "answers":
+    "answer": |-
+      horses
+    "fullAnswer": |-
+      The animals are horses.
+  "image": |-
+    2405401.jpg
+- "id": |-
+    2327787
+  "prompt":
+    "question": |-
+      What is the name of this cooking utensil?
+  "answers":
+    "answer": |-
+      cutting board
+    "fullAnswer": |-
+      This is a cutting board.
+  "image": |-
+    2327787.jpg
+- "id": |-
+    2322049
+  "prompt":
+    "question": |-
+      What cooking utensil is black?
+  "answers":
+    "answer": |-
+      pan
+    "fullAnswer": |-
+      The cooking utensil is a pan.
+  "image": |-
+    2322049.jpg
+- "id": |-
+    2386261
+  "prompt":
+    "question": |-
+      What cooking utensil is the woman holding?
+  "answers":
+    "answer": |-
+      tea kettle
+    "fullAnswer": |-
+      The woman is holding the tea kettle.
+  "image": |-
+    2386261.jpg
+- "id": |-
+    2364217
+  "prompt":
+    "question": |-
+      What cooking utensil is behind the melon?
+  "answers":
+    "answer": |-
+      kettle
+    "fullAnswer": |-
+      The cooking utensil is a kettle.
+  "image": |-
+    2364217.jpg
+- "id": |-
+    2351890
+  "prompt":
+    "question": |-
+      What kind of cooking utensil is on the shelf?
+  "answers":
+    "answer": |-
+      pans
+    "fullAnswer": |-
+      The cooking utensils are pans.
+  "image": |-
+    2351890.jpg
+- "id": |-
+    2390130
+  "prompt":
+    "question": |-
+      Which kind of aircraft is flying in the sky?
+  "answers":
+    "answer": |-
+      airplane
+    "fullAnswer": |-
+      The aircraft is an airplane.
+  "image": |-
+    2390130.jpg
+- "id": |-
+    2350095
+  "prompt":
+    "question": |-
+      Which kind of aircraft is on the bridge?
+  "answers":
+    "answer": |-
+      airplane
+    "fullAnswer": |-
+      The aircraft is an airplane.
+  "image": |-
+    2350095.jpg
+- "id": |-
+    2402545
+  "prompt":
+    "question": |-
+      Where is the hangar?
+  "answers":
+    "answer": |-
+      airplane
+    "fullAnswer": |-
+      The hangar is at the airplane.
+  "image": |-
+    2402545.jpg
+- "id": |-
+    2384964
+  "prompt":
+    "question": |-
+      What do you think is flying in the sky?
+  "answers":
+    "answer": |-
+      airplane
+    "fullAnswer": |-
+      The airplane is flying in the sky.
+  "image": |-
+    2384964.jpg
+- "id": |-
+    2391595
+  "prompt":
+    "question": |-
+      Which kind of aircraft is to the right of the bus?
+  "answers":
+    "answer": |-
+      airplanes
+    "fullAnswer": |-
+      The aircraft is airplanes.
+  "image": |-
+    2391595.jpg
+- "id": |-
+    2401360
+  "prompt":
+    "question": |-
+      What is on the pillow on the right of the picture?
+  "answers":
+    "answer": |-
+      pillowcase
+    "fullAnswer": |-
+      The pillowcase is on the pillow.
+  "image": |-
+    2401360.jpg
+- "id": |-
+    1592581
+  "prompt":
+    "question": |-
+      What covers the window?
+  "answers":
+    "answer": |-
+      curtain
+    "fullAnswer": |-
+      The curtain covers the window.
+  "image": |-
+    1592581.jpg
+- "id": |-
+    2382986
+  "prompt":
+    "question": |-
+      What is the sandwich on?
+  "answers":
+    "answer": |-
+      towel
+    "fullAnswer": |-
+      The sandwich is on the towel.
+  "image": |-
+    2382986.jpg
+- "id": |-
+    2322669
+  "prompt":
+    "question": |-
+      What is located on top of the bed?
+  "answers":
+    "answer": |-
+      blanket
+    "fullAnswer": |-
+      The blanket is on top of the bed.
+  "image": |-
+    2322669.jpg
+- "id": |-
+    2318442
+  "prompt":
+    "question": |-
+      What is that toilet in front of?
+  "answers":
+    "answer": |-
+      curtain
+    "fullAnswer": |-
+      The toilet is in front of the curtain.
+  "image": |-
+    2318442.jpg
+- "id": |-
+    2392431
+  "prompt":
+    "question": |-
+      What appliance is light?
+  "answers":
+    "answer": |-
+      microwave
+    "fullAnswer": |-
+      The appliance is a microwave.
+  "image": |-
+    2392431.jpg
+- "id": |-
+    2329692
+  "prompt":
+    "question": |-
+      What appliance is on the counter?
+  "answers":
+    "answer": |-
+      toaster
+    "fullAnswer": |-
+      The appliance is a toaster.
+  "image": |-
+    2329692.jpg
+- "id": |-
+    2403460
+  "prompt":
+    "question": |-
+      What is the juice in?
+  "answers":
+    "answer": |-
+      refrigerator
+    "fullAnswer": |-
+      The juice is in the freezer.
+  "image": |-
+    2403460.jpg
+- "id": |-
+    2403677
+  "prompt":
+    "question": |-
+      What kind of appliance is below the cabinet on the left side?
+  "answers":
+    "answer": |-
+      microwave
+    "fullAnswer": |-
+      The appliance is a microwave.
+  "image": |-
+    2403677.jpg
+- "id": |-
+    2364335
+  "prompt":
+    "question": |-
+      What appliance is below the kettle?
+  "answers":
+    "answer": |-
+      stove
+    "fullAnswer": |-
+      The appliance is a stove.
+  "image": |-
+    2364335.jpg
+- "id": |-
+    2376837
+  "prompt":
+    "question": |-
+      What type of food is brown, the apple or the muffin?
+  "answers":
+    "answer": |-
+      muffin
+    "fullAnswer": |-
+      The muffin is brown.
+  "image": |-
+    2376837.jpg
+- "id": |-
+    2341708
+  "prompt":
+    "question": |-
+      What is on the plate?
+  "answers":
+    "answer": |-
+      muffin
+    "fullAnswer": |-
+      The muffin is on the plate.
+  "image": |-
+    2341708.jpg
+- "id": |-
+    2321955
+  "prompt":
+    "question": |-
+      Which are less healthy, the muffin or the lemons?
+  "answers":
+    "answer": |-
+      muffin
+    "fullAnswer": |-
+      The muffin are less healthy than the lemons.
+  "image": |-
+    2321955.jpg
+- "id": |-
+    2376837
+  "prompt":
+    "question": |-
+      What kind of pastry is on top of the apple?
+  "answers":
+    "answer": |-
+      muffin
+    "fullAnswer": |-
+      The pastry is a muffin.
+  "image": |-
+    2376837.jpg
+- "id": |-
+    2341708
+  "prompt":
+    "question": |-
+      What is on the plate?
+  "answers":
+    "answer": |-
+      muffin
+    "fullAnswer": |-
+      The muffin is on the plate.
+  "image": |-
+    2341708.jpg
+- "id": |-
+    2404433
+  "prompt":
+    "question": |-
+      What's the pipe on?
+  "answers":
+    "answer": |-
+      ceiling
+    "fullAnswer": |-
+      The pipe is on the ceiling.
+  "image": |-
+    2404433.jpg
+- "id": |-
+    2327830
+  "prompt":
+    "question": |-
+      What is the curtain that looks blue hanging on?
+  "answers":
+    "answer": |-
+      door
+    "fullAnswer": |-
+      The curtain is hanging on the door.
+  "image": |-
+    2327830.jpg
+- "id": |-
+    2394690
+  "prompt":
+    "question": |-
+      Where is the cat?
+  "answers":
+    "answer": |-
+      floor
+    "fullAnswer": |-
+      The cat is on the floor.
+  "image": |-
+    2394690.jpg
+- "id": |-
+    2405118
+  "prompt":
+    "question": |-
+      That tree is in front of what?
+  "answers":
+    "answer": |-
+      window
+    "fullAnswer": |-
+      The tree is in front of the window.
+  "image": |-
+    2405118.jpg
+- "id": |-
+    2390896
+  "prompt":
+    "question": |-
+      What is located on top of the building?
+  "answers":
+    "answer": |-
+      roof
+    "fullAnswer": |-
+      The roof is on top of the building.
+  "image": |-
+    2390896.jpg
+- "id": |-
+    2403153
+  "prompt":
+    "question": |-
+      What is in the pocket?
+  "answers":
+    "answer": |-
+      pens
+    "fullAnswer": |-
+      The pens are in the pocket.
+  "image": |-
+    2403153.jpg
+- "id": |-
+    2358298
+  "prompt":
+    "question": |-
+      What is on the wall?
+  "answers":
+    "answer": |-
+      scissors
+    "fullAnswer": |-
+      The scissors are on the wall.
+  "image": |-
+    2358298.jpg
+- "id": |-
+    2344648
+  "prompt":
+    "question": |-
+      What is on the table?
+  "answers":
+    "answer": |-
+      pens
+    "fullAnswer": |-
+      The pens are on the table.
+  "image": |-
+    2344648.jpg
+- "id": |-
+    2386438
+  "prompt":
+    "question": |-
+      What is located on top of the bag?
+  "answers":
+    "answer": |-
+      scissors
+    "fullAnswer": |-
+      The scissors are on top of the bag.
+  "image": |-
+    2386438.jpg
+- "id": |-
+    2344648
+  "prompt":
+    "question": |-
+      What is on the table?
+  "answers":
+    "answer": |-
+      pens
+    "fullAnswer": |-
+      The pens are on the table.
+  "image": |-
+    2344648.jpg
+- "id": |-
+    2344346
+  "prompt":
+    "question": |-
+      Is the white device above the star off or on?
+  "answers":
+    "answer": |-
+      on
+    "fullAnswer": |-
+      The monitor is on.
+  "image": |-
+    2344346.jpg
+- "id": |-
+    2393739
+  "prompt":
+    "question": |-
+      Is the device that is not big on or off?
+  "answers":
+    "answer": |-
+      on
+    "fullAnswer": |-
+      The TV is on.
+  "image": |-
+    2393739.jpg
+- "id": |-
+    930
+  "prompt":
+    "question": |-
+      Is the monitor to the left of the computer off or on?
+  "answers":
+    "answer": |-
+      off
+    "fullAnswer": |-
+      The monitor is off.
+  "image": |-
+    930.jpg
+- "id": |-
+    2345698
+  "prompt":
+    "question": |-
+      How does the small device seem to be, off or on?
+  "answers":
+    "answer": |-
+      off
+    "fullAnswer": |-
+      The television is off.
+  "image": |-
+    2345698.jpg
+- "id": |-
+    2401331
+  "prompt":
+    "question": |-
+      Does the small device seem to be off or on?
+  "answers":
+    "answer": |-
+      on
+    "fullAnswer": |-
+      The cellphone is on.
+  "image": |-
+    2401331.jpg
+- "id": |-
+    2322635
+  "prompt":
+    "question": |-
+      Do the bananas look ripe or unripe?
+  "answers":
+    "answer": |-
+      unripe
+    "fullAnswer": |-
+      The bananas are unripe.
+  "image": |-
+    2322635.jpg
+- "id": |-
+    2392936
+  "prompt":
+    "question": |-
+      Are the bananas that are not thin unripe or ripe?
+  "answers":
+    "answer": |-
+      unripe
+    "fullAnswer": |-
+      The bananas are unripe.
+  "image": |-
+    2392936.jpg
+- "id": |-
+    2320373
+  "prompt":
+    "question": |-
+      Is the banana unripe or ripe?
+  "answers":
+    "answer": |-
+      ripe
+    "fullAnswer": |-
+      The banana is ripe.
+  "image": |-
+    2320373.jpg
+- "id": |-
+    2320373
+  "prompt":
+    "question": |-
+      Is the banana unripe or ripe?
+  "answers":
+    "answer": |-
+      ripe
+    "fullAnswer": |-
+      The banana is ripe.
+  "image": |-
+    2320373.jpg
+- "id": |-
+    2320373
+  "prompt":
+    "question": |-
+      Is the banana unripe or ripe?
+  "answers":
+    "answer": |-
+      ripe
+    "fullAnswer": |-
+      The banana is ripe.
+  "image": |-
+    2320373.jpg
+- "id": |-
+    2341300
+  "prompt":
+    "question": |-
+      What is the color of the water the man is in?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The water is dark.
+  "image": |-
+    2341300.jpg
+- "id": |-
+    2409391
+  "prompt":
+    "question": |-
+      What color is that coat?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The coat is dark.
+  "image": |-
+    2409391.jpg
+- "id": |-
+    2363398
+  "prompt":
+    "question": |-
+      What color do you think the snowpants are?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The snowpants are dark.
+  "image": |-
+    2363398.jpg
+- "id": |-
+    2391733
+  "prompt":
+    "question": |-
+      Which color is the wetsuit that the person is wearing?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The wet suit is dark.
+  "image": |-
+    2391733.jpg
+- "id": |-
+    713333
+  "prompt":
+    "question": |-
+      What color is the curtain on the window?
+  "answers":
+    "answer": |-
+      dark
+    "fullAnswer": |-
+      The curtain is dark.
+  "image": |-
+    713333.jpg
+- "id": |-
+    2378779
+  "prompt":
+    "question": |-
+      What is in front of the zebra?
+  "answers":
+    "answer": |-
+      tree
+    "fullAnswer": |-
+      The tree is in front of the zebra.
+  "image": |-
+    2378779.jpg
+- "id": |-
+    2399882
+  "prompt":
+    "question": |-
+      What is in front of the trash bin?
+  "answers":
+    "answer": |-
+      tree
+    "fullAnswer": |-
+      The tree is in front of the trash bin.
+  "image": |-
+    2399882.jpg
+- "id": |-
+    2328496
+  "prompt":
+    "question": |-
+      What is the water surrounded by?
+  "answers":
+    "answer": |-
+      trees
+    "fullAnswer": |-
+      The water is surrounded by the trees.
+  "image": |-
+    2328496.jpg
+- "id": |-
+    2410202
+  "prompt":
+    "question": |-
+      What's the gate in front of?
+  "answers":
+    "answer": |-
+      tree
+    "fullAnswer": |-
+      The gate is in front of the tree.
+  "image": |-
+    2410202.jpg
+- "id": |-
+    2394076
+  "prompt":
+    "question": |-
+      What is inside the fence to the right of the cow?
+  "answers":
+    "answer": |-
+      tree
+    "fullAnswer": |-
+      The tree is inside the fence.
+  "image": |-
+    2394076.jpg
+- "id": |-
+    2403060
+  "prompt":
+    "question": |-
+      Who is younger, the baby or the lady?
+  "answers":
+    "answer": |-
+      baby
+    "fullAnswer": |-
+      The baby is younger than the lady.
+  "image": |-
+    2403060.jpg
+- "id": |-
+    2397341
+  "prompt":
+    "question": |-
+      Who in the scene is dressed in blue?
+  "answers":
+    "answer": |-
+      baby
+    "fullAnswer": |-
+      The baby is dressed in blue.
+  "image": |-
+    2397341.jpg
+- "id": |-
+    2335797
+  "prompt":
+    "question": |-
+      Who is the man to the left of the pillow holding?
+  "answers":
+    "answer": |-
+      baby
+    "fullAnswer": |-
+      The man is holding the baby.
+  "image": |-
+    2335797.jpg
+- "id": |-
+    2389006
+  "prompt":
+    "question": |-
+      Who is lying on the bed that looks white?
+  "answers":
+    "answer": |-
+      baby
+    "fullAnswer": |-
+      The baby is lying on the bed.
+  "image": |-
+    2389006.jpg
+- "id": |-
+    2375091
+  "prompt":
+    "question": |-
+      Who is the woman to the right of the camera carrying?
+  "answers":
+    "answer": |-
+      baby
+    "fullAnswer": |-
+      The woman is carrying a baby.
+  "image": |-
+    2375091.jpg
+- "id": |-
+    2358465
+  "prompt":
+    "question": |-
+      Is the narrow road paved or unpaved?
+  "answers":
+    "answer": |-
+      unpaved
+    "fullAnswer": |-
+      The road is unpaved.
+  "image": |-
+    2358465.jpg
+- "id": |-
+    2358465
+  "prompt":
+    "question": |-
+      Is the narrow road paved or unpaved?
+  "answers":
+    "answer": |-
+      unpaved
+    "fullAnswer": |-
+      The road is unpaved.
+  "image": |-
+    2358465.jpg
+- "id": |-
+    2384642
+  "prompt":
+    "question": |-
+      Is the road paved or unpaved?
+  "answers":
+    "answer": |-
+      unpaved
+    "fullAnswer": |-
+      The road is unpaved.
+  "image": |-
+    2384642.jpg
+- "id": |-
+    2356670
+  "prompt":
+    "question": |-
+      Is the road unpaved or paved?
+  "answers":
+    "answer": |-
+      unpaved
+    "fullAnswer": |-
+      The road is unpaved.
+  "image": |-
+    2356670.jpg
+- "id": |-
+    2384642
+  "prompt":
+    "question": |-
+      Is the road paved or unpaved?
+  "answers":
+    "answer": |-
+      unpaved
+    "fullAnswer": |-
+      The road is unpaved.
+  "image": |-
+    2384642.jpg
+- "id": |-
+    2344853
+  "prompt":
+    "question": |-
+      Does the ground appear to be bare or rocky?
+  "answers":
+    "answer": |-
+      rocky
+    "fullAnswer": |-
+      The ground is rocky.
+  "image": |-
+    2344853.jpg
+- "id": |-
+    2416225
+  "prompt":
+    "question": |-
+      Is the path grassy or rocky?
+  "answers":
+    "answer": |-
+      rocky
+    "fullAnswer": |-
+      The path is rocky.
+  "image": |-
+    2416225.jpg
+- "id": |-
+    2405070
+  "prompt":
+    "question": |-
+      Does that ground look sandy or bare?
+  "answers":
+    "answer": |-
+      sandy
+    "fullAnswer": |-
+      The ground is sandy.
+  "image": |-
+    2405070.jpg
+- "id": |-
+    2355043
+  "prompt":
+    "question": |-
+      Is the beach rocky or sandy?
+  "answers":
+    "answer": |-
+      sandy
+    "fullAnswer": |-
+      The beach is sandy.
+  "image": |-
+    2355043.jpg
+- "id": |-
+    2391964
+  "prompt":
+    "question": |-
+      Is the ground made of concrete bare or maybe snowy?
+  "answers":
+    "answer": |-
+      bare
+    "fullAnswer": |-
+      The ground is bare.
+  "image": |-
+    2391964.jpg
+- "id": |-
+    2371325
+  "prompt":
+    "question": |-
+      Is the shirt of the girl colorful or black and white?
+  "answers":
+    "answer": |-
+      colorful
+    "fullAnswer": |-
+      The shirt is colorful.
+  "image": |-
+    2371325.jpg
+- "id": |-
+    2369626
+  "prompt":
+    "question": |-
+      Is the kite that looks black and white black and white or colorful?
+  "answers":
+    "answer": |-
+      black and white
+    "fullAnswer": |-
+      The kite is black and white.
+  "image": |-
+    2369626.jpg
+- "id": |-
+    2379466
+  "prompt":
+    "question": |-
+      Is the hat rainbow colored or black and white?
+  "answers":
+    "answer": |-
+      rainbow colored
+    "fullAnswer": |-
+      The hat is rainbow colored.
+  "image": |-
+    2379466.jpg
+- "id": |-
+    2406643
+  "prompt":
+    "question": |-
+      Is the glove colorful or is it black and white?
+  "answers":
+    "answer": |-
+      colorful
+    "fullAnswer": |-
+      The glove is colorful.
+  "image": |-
+    2406643.jpg
+- "id": |-
+    2388803
+  "prompt":
+    "question": |-
+      Is the shoe black and white or colorful?
+  "answers":
+    "answer": |-
+      black and white
+    "fullAnswer": |-
+      The shoe is black and white.
+  "image": |-
+    2388803.jpg
+- "id": |-
+    2384847
+  "prompt":
+    "question": |-
+      What is the woman with the camera wearing?
+  "answers":
+    "answer": |-
+      jacket
+    "fullAnswer": |-
+      The woman is wearing a jacket.
+  "image": |-
+    2384847.jpg
+- "id": |-
+    2368884
+  "prompt":
+    "question": |-
+      What is the person that is waiting wearing?
+  "answers":
+    "answer": |-
+      shirt
+    "fullAnswer": |-
+      The man is wearing a shirt.
+  "image": |-
+    2368884.jpg
+- "id": |-
+    2375091
+  "prompt":
+    "question": |-
+      What is the person to the right of the box wearing?
+  "answers":
+    "answer": |-
+      hat
+    "fullAnswer": |-
+      The person is wearing a hat.
+  "image": |-
+    2375091.jpg
+- "id": |-
+    2350808
+  "prompt":
+    "question": |-
+      What is the name of the dark clothing item?
+  "answers":
+    "answer": |-
+      wetsuit
+    "fullAnswer": |-
+      The clothing item is a wetsuit.
+  "image": |-
+    2350808.jpg
+- "id": |-
+    2377849
+  "prompt":
+    "question": |-
+      What is the clothing item that is brown called?
+  "answers":
+    "answer": |-
+      shirt
+    "fullAnswer": |-
+      The clothing item is a shirt.
+  "image": |-
+    2377849.jpg
+- "id": |-
+    2375756
+  "prompt":
+    "question": |-
+      What is she wearing?
+  "answers":
+    "answer": |-
+      glasses
+    "fullAnswer": |-
+      The lady is wearing glasses.
+  "image": |-
+    2375756.jpg
+- "id": |-
+    2380053
+  "prompt":
+    "question": |-
+      What is on the wall made of brick?
+  "answers":
+    "answer": |-
+      urinal
+    "fullAnswer": |-
+      The urinal is on the wall.
+  "image": |-
+    2380053.jpg
+- "id": |-
+    2376775
+  "prompt":
+    "question": |-
+      What is the person looking at?
+  "answers":
+    "answer": |-
+      bike
+    "fullAnswer": |-
+      The person is looking at the bike.
+  "image": |-
+    2376775.jpg
+- "id": |-
+    2325132
+  "prompt":
+    "question": |-
+      What is the lady holding?
+  "answers":
+    "answer": |-
+      racket
+    "fullAnswer": |-
+      The lady is holding the racket.
+  "image": |-
+    2325132.jpg
+- "id": |-
+    2410635
+  "prompt":
+    "question": |-
+      What are the clothes on?
+  "answers":
+    "answer": |-
+      mattress
+    "fullAnswer": |-
+      The clothes are on the mattress.
+  "image": |-
+    2410635.jpg
+- "id": |-
+    2411509
+  "prompt":
+    "question": |-
+      Where is the girl?
+  "answers":
+    "answer": |-
+      zoo
+    "fullAnswer": |-
+      The girl is at the zoo.
+  "image": |-
+    2411509.jpg
+- "id": |-
+    2375390
+  "prompt":
+    "question": |-
+      Which place is it?
+  "answers":
+    "answer": |-
+      field
+    "fullAnswer": |-
+      It is a field.
+  "image": |-
+    2375390.jpg
+- "id": |-
+    2339000
+  "prompt":
+    "question": |-
+      Where are the trees?
+  "answers":
+    "answer": |-
+      mountain
+    "fullAnswer": |-
+      The trees are on the mountain.
+  "image": |-
+    2339000.jpg
+- "id": |-
+    2318140
+  "prompt":
+    "question": |-
+      Which place is it?
+  "answers":
+    "answer": |-
+      shore
+    "fullAnswer": |-
+      It is a shore.
+  "image": |-
+    2318140.jpg
+- "id": |-
+    2395430
+  "prompt":
+    "question": |-
+      Where is the sand?
+  "answers":
+    "answer": |-
+      beach
+    "fullAnswer": |-
+      The sand is on the beach.
+  "image": |-
+    2395430.jpg
+- "id": |-
+    2315558
+  "prompt":
+    "question": |-
+      Are the puffy clouds in the sky thin or thick?
+  "answers":
+    "answer": |-
+      thin
+    "fullAnswer": |-
+      The clouds are thin.
+  "image": |-
+    2315558.jpg
+- "id": |-
+    2401622
+  "prompt":
+    "question": |-
+      How fat is the person that the boy is close to?
+  "answers":
+    "answer": |-
+      skinny
+    "fullAnswer": |-
+      The girl is skinny.
+  "image": |-
+    2401622.jpg
+- "id": |-
+    2315383
+  "prompt":
+    "question": |-
+      How thick is the hair?
+  "answers":
+    "answer": |-
+      thin
+    "fullAnswer": |-
+      The hair is thin.
+  "image": |-
+    2315383.jpg
+- "id": |-
+    2410596
+  "prompt":
+    "question": |-
+      How thick are the wires?
+  "answers":
+    "answer": |-
+      thin
+    "fullAnswer": |-
+      The wires are thin.
+  "image": |-
+    2410596.jpg
+- "id": |-
+    2408676
+  "prompt":
+    "question": |-
+      How fat are the long skis?
+  "answers":
+    "answer": |-
+      skinny
+    "fullAnswer": |-
+      The skis are skinny.
+  "image": |-
+    2408676.jpg
+- "id": |-
+    2382346
+  "prompt":
+    "question": |-
+      How is the meat on the plate in the bottom part of the photo called?
+  "answers":
+    "answer": |-
+      bacon
+    "fullAnswer": |-
+      The meat is bacon.
+  "image": |-
+    2382346.jpg
+- "id": |-
+    2340391
+  "prompt":
+    "question": |-
+      What is the meat to the right of the girl on the left of the picture called?
+  "answers":
+    "answer": |-
+      pepperoni
+    "fullAnswer": |-
+      The meat is pepperoni.
+  "image": |-
+    2340391.jpg
+- "id": |-
+    2414271
+  "prompt":
+    "question": |-
+      What is the food that the utensil to the right of the food is touching?
+  "answers":
+    "answer": |-
+      sausage
+    "fullAnswer": |-
+      The food is a sausage.
+  "image": |-
+    2414271.jpg
+- "id": |-
+    2414271
+  "prompt":
+    "question": |-
+      What type of food is to the right of the vegetable the knife is to the left of?
+  "answers":
+    "answer": |-
+      sausage
+    "fullAnswer": |-
+      The food is a sausage.
+  "image": |-
+    2414271.jpg
+- "id": |-
+    2374319
+  "prompt":
+    "question": |-
+      What kind of meat is on the cheese pizza?
+  "answers":
+    "answer": |-
+      pepperoni
+    "fullAnswer": |-
+      The meat is pepperoni.
+  "image": |-
+    2374319.jpg
+- "id": |-
+    2389904
+  "prompt":
+    "question": |-
+      What are the people to the right of the man wearing?
+  "answers":
+    "answer": |-
+      headband
+    "fullAnswer": |-
+      The people are wearing a head band.
+  "image": |-
+    2389904.jpg
+- "id": |-
+    2348004
+  "prompt":
+    "question": |-
+      What is the person that is to the left of the ball wearing?
+  "answers":
+    "answer": |-
+      wristband
+    "fullAnswer": |-
+      The man is wearing a wrist band.
+  "image": |-
+    2348004.jpg
+- "id": |-
+    2395760
+  "prompt":
+    "question": |-
+      What is the young person looking at?
+  "answers":
+    "answer": |-
+      tie
+    "fullAnswer": |-
+      The boy is looking at the necktie.
+  "image": |-
+    2395760.jpg
+- "id": |-
+    2334878
+  "prompt":
+    "question": |-
+      What is the person to the left of the man wearing?
+  "answers":
+    "answer": |-
+      scarf
+    "fullAnswer": |-
+      The woman is wearing a scarf.
+  "image": |-
+    2334878.jpg
+- "id": |-
+    2326937
+  "prompt":
+    "question": |-
+      What is the boy wearing?
+  "answers":
+    "answer": |-
+      goggles
+    "fullAnswer": |-
+      The boy is wearing goggles.
+  "image": |-
+    2326937.jpg
+- "id": |-
+    2353206
+  "prompt":
+    "question": |-
+      What are the plates on, a hamburger or a pizza?
+  "answers":
+    "answer": |-
+      pizza
+    "fullAnswer": |-
+      The plates are on a pizza.
+  "image": |-
+    2353206.jpg
+- "id": |-
+    2344179
+  "prompt":
+    "question": |-
+      What type of fast food is on the bread?
+  "answers":
+    "answer": |-
+      hot dog
+    "fullAnswer": |-
+      The food is a hot dog.
+  "image": |-
+    2344179.jpg
+- "id": |-
+    2344179
+  "prompt":
+    "question": |-
+      Which kind of fast food is on the bread?
+  "answers":
+    "answer": |-
+      hot dog
+    "fullAnswer": |-
+      The food is a hot dog.
+  "image": |-
+    2344179.jpg
+- "id": |-
+    2347752
+  "prompt":
+    "question": |-
+      What is she biting?
+  "answers":
+    "answer": |-
+      pizza
+    "fullAnswer": |-
+      The woman is biting the pizza.
+  "image": |-
+    2347752.jpg
+- "id": |-
+    2363859
+  "prompt":
+    "question": |-
+      What is on the tablecloth that the pepper is to the right of?
+  "answers":
+    "answer": |-
+      pizza
+    "fullAnswer": |-
+      The pizza is on the tablecloth.
+  "image": |-
+    2363859.jpg
+- "id": |-
+    2361493
+  "prompt":
+    "question": |-
+      What is the ethnic group of the woman that is holding the door?
+  "answers":
+    "answer": |-
+      caucasian
+    "fullAnswer": |-
+      The woman is caucasian.
+  "image": |-
+    2361493.jpg
+- "id": |-
+    2392252
+  "prompt":
+    "question": |-
+      What is the race of the man that is holding the umbrella?
+  "answers":
+    "answer": |-
+      asian
+    "fullAnswer": |-
+      The man is asian.
+  "image": |-
+    2392252.jpg
+- "id": |-
+    2351098
+  "prompt":
+    "question": |-
+      What is the ethnic group of the people that are carrying a bag?
+  "answers":
+    "answer": |-
+      asian
+    "fullAnswer": |-
+      The people are asian.
+  "image": |-
+    2351098.jpg
+- "id": |-
+    2396407
+  "prompt":
+    "question": |-
+      What ethnic group is the man that is riding a motorcycle?
+  "answers":
+    "answer": |-
+      caucasian
+    "fullAnswer": |-
+      The man is caucasian.
+  "image": |-
+    2396407.jpg
+- "id": |-
+    2361493
+  "prompt":
+    "question": |-
+      What is the ethnic group of the woman that is holding the door?
+  "answers":
+    "answer": |-
+      caucasian
+    "fullAnswer": |-
+      The woman is caucasian.
+  "image": |-
+    2361493.jpg
+- "id": |-
+    2409866
+  "prompt":
+    "question": |-
+      How tall is the fence that is in the top part of the image?
+  "answers":
+    "answer": |-
+      tall
+    "fullAnswer": |-
+      The fence is tall.
+  "image": |-
+    2409866.jpg
+- "id": |-
+    2327792
+  "prompt":
+    "question": |-
+      How tall is the street?
+  "answers":
+    "answer": |-
+      tall
+    "fullAnswer": |-
+      The street is tall.
+  "image": |-
+    2327792.jpg
+- "id": |-
+    2352745
+  "prompt":
+    "question": |-
+      How tall do you think is that fence?
+  "answers":
+    "answer": |-
+      tall
+    "fullAnswer": |-
+      The fence is tall.
+  "image": |-
+    2352745.jpg
+- "id": |-
+    2370438
+  "prompt":
+    "question": |-
+      What is the height of that fence?
+  "answers":
+    "answer": |-
+      tall
+    "fullAnswer": |-
+      The fence is tall.
+  "image": |-
+    2370438.jpg
+- "id": |-
+    2341549
+  "prompt":
+    "question": |-
+      How tall is the pine in the bottom of the photo?
+  "answers":
+    "answer": |-
+      short
+    "fullAnswer": |-
+      The pine is short.
+  "image": |-
+    2341549.jpg
+- "id": |-
+    2364886
+  "prompt":
+    "question": |-
+      What animal does the cat watch?
+  "answers":
+    "answer": |-
+      birds
+    "fullAnswer": |-
+      The cat watches the birds.
+  "image": |-
+    2364886.jpg
+- "id": |-
+    2399079
+  "prompt":
+    "question": |-
+      What kind of animal is green?
+  "answers":
+    "answer": |-
+      bird
+    "fullAnswer": |-
+      The animal is a bird.
+  "image": |-
+    2399079.jpg
+- "id": |-
+    2364886
+  "prompt":
+    "question": |-
+      What animals does the cat watch?
+  "answers":
+    "answer": |-
+      birds
+    "fullAnswer": |-
+      The cat watches the birds.
+  "image": |-
+    2364886.jpg
+- "id": |-
+    2336219
+  "prompt":
+    "question": |-
+      What is this animal called?
+  "answers":
+    "answer": |-
+      bird
+    "fullAnswer": |-
+      This is a bird.
+  "image": |-
+    2336219.jpg
+- "id": |-
+    2364886
+  "prompt":
+    "question": |-
+      Which kind of animal is in the grass?
+  "answers":
+    "answer": |-
+      birds
+    "fullAnswer": |-
+      The animals are birds.
+  "image": |-
+    2364886.jpg
+- "id": |-
+    2390939
+  "prompt":
+    "question": |-
+      How real is the utensil that is on the plate?
+  "answers":
+    "answer": |-
+      real
+    "fullAnswer": |-
+      The fork is real.
+  "image": |-
+    2390939.jpg
+- "id": |-
+    2344162
+  "prompt":
+    "question": |-
+      How real is the spider in the center?
+  "answers":
+    "answer": |-
+      fake
+    "fullAnswer": |-
+      The spider is fake.
+  "image": |-
+    2344162.jpg
+- "id": |-
+    2373966
+  "prompt":
+    "question": |-
+      How real is the counter made of granite?
+  "answers":
+    "answer": |-
+      real
+    "fullAnswer": |-
+      The counter is real.
+  "image": |-
+    2373966.jpg
+- "id": |-
+    2344162
+  "prompt":
+    "question": |-
+      How real is the spider in the center?
+  "answers":
+    "answer": |-
+      fake
+    "fullAnswer": |-
+      The spider is fake.
+  "image": |-
+    2344162.jpg
+- "id": |-
+    2344009
+  "prompt":
+    "question": |-
+      How real is the pizza?
+  "answers":
+    "answer": |-
+      real
+    "fullAnswer": |-
+      The pizza is real.
+  "image": |-
+    2344009.jpg
+- "id": |-
+    2392355
+  "prompt":
+    "question": |-
+      What color are the shorts?
+  "answers":
+    "answer": |-
+      green
+    "fullAnswer": |-
+      The shorts are green.
+  "image": |-
+    2392355.jpg
+- "id": |-
+    2378292
+  "prompt":
+    "question": |-
+      Is that cellphone white or blue?
+  "answers":
+    "answer": |-
+      white
+    "fullAnswer": |-
+      The cellphone is white.
+  "image": |-
+    2378292.jpg
+- "id": |-
+    2353747
+  "prompt":
+    "question": |-
+      Does the floor look green or tan?
+  "answers":
+    "answer": |-
+      green
+    "fullAnswer": |-
+      The floor is green.
+  "image": |-
+    2353747.jpg
+- "id": |-
+    2343586
+  "prompt":
+    "question": |-
+      What color does the vest have?
+  "answers":
+    "answer": |-
+      orange
+    "fullAnswer": |-
+      The vest has orange color.
+  "image": |-
+    2343586.jpg
+- "id": |-
+    2382216
+  "prompt":
+    "question": |-
+      What color is this fence, white or black?
+  "answers":
+    "answer": |-
+      white
+    "fullAnswer": |-
+      The fence is white.
+  "image": |-
+    2382216.jpg
+- "id": |-
+    2401037
+  "prompt":
+    "question": |-
+      What is the walking man to the left of the carriage wearing?
+  "answers":
+    "answer": |-
+      shoe
+    "fullAnswer": |-
+      The man is wearing a shoe.
+  "image": |-
+    2401037.jpg
+- "id": |-
+    2359744
+  "prompt":
+    "question": |-
+      What is the cat wearing?
+  "answers":
+    "answer": |-
+      shoes
+    "fullAnswer": |-
+      The cat is wearing shoes.
+  "image": |-
+    2359744.jpg
+- "id": |-
+    2406736
+  "prompt":
+    "question": |-
+      What is the person to the left of the person wearing?
+  "answers":
+    "answer": |-
+      shoes
+    "fullAnswer": |-
+      The woman is wearing shoes.
+  "image": |-
+    2406736.jpg
+- "id": |-
+    2317780
+  "prompt":
+    "question": |-
+      What does the woman wear?
+  "answers":
+    "answer": |-
+      shoes
+    "fullAnswer": |-
+      The woman wears shoes.
+  "image": |-
+    2317780.jpg
+- "id": |-
+    2336256
+  "prompt":
+    "question": |-
+      What is the guy wearing?
+  "answers":
+    "answer": |-
+      flip flop
+    "fullAnswer": |-
+      The guy is wearing a flip flop.
+  "image": |-
+    2336256.jpg
+- "id": |-
+    2326628
+  "prompt":
+    "question": |-
+      Which kind of sign is it?
+  "answers":
+    "answer": |-
+      traffic sign
+    "fullAnswer": |-
+      The sign is a traffic sign.
+  "image": |-
+    2326628.jpg
+- "id": |-
+    2402625
+  "prompt":
+    "question": |-
+      What is on the pole?
+  "answers":
+    "answer": |-
+      stop sign
+    "fullAnswer": |-
+      The stop sign is on the pole.
+  "image": |-
+    2402625.jpg
+- "id": |-
+    2357167
+  "prompt":
+    "question": |-
+      What kind of sign is large?
+  "answers":
+    "answer": |-
+      stop sign
+    "fullAnswer": |-
+      The sign is a stop sign.
+  "image": |-
+    2357167.jpg
+- "id": |-
+    2316646
+  "prompt":
+    "question": |-
+      What is the graffiti on?
+  "answers":
+    "answer": |-
+      sign
+    "fullAnswer": |-
+      The graffiti is on the sign.
+  "image": |-
+    2316646.jpg
+- "id": |-
+    2379209
+  "prompt":
+    "question": |-
+      What sign is on the sidewalk?
+  "answers":
+    "answer": |-
+      parking sign
+    "fullAnswer": |-
+      The sign is a parking sign.
+  "image": |-
+    2379209.jpg
+- "id": |-
+    2316582
+  "prompt":
+    "question": |-
+      Is that water beautiful or ugly?
+  "answers":
+    "answer": |-
+      beautiful
+    "fullAnswer": |-
+      The water is beautiful.
+  "image": |-
+    2316582.jpg
+- "id": |-
+    2378167
+  "prompt":
+    "question": |-
+      Are the wildflowers ugly or beautiful?
+  "answers":
+    "answer": |-
+      beautiful
+    "fullAnswer": |-
+      The wildflowers are beautiful.
+  "image": |-
+    2378167.jpg
+- "id": |-
+    2316582
+  "prompt":
+    "question": |-
+      Is that water beautiful or ugly?
+  "answers":
+    "answer": |-
+      beautiful
+    "fullAnswer": |-
+      The water is beautiful.
+  "image": |-
+    2316582.jpg
+- "id": |-
+    2378167
+  "prompt":
+    "question": |-
+      Are the wildflowers ugly or beautiful?
+  "answers":
+    "answer": |-
+      beautiful
+    "fullAnswer": |-
+      The wildflowers are beautiful.
+  "image": |-
+    2378167.jpg
+- "id": |-
+    2397194
+  "prompt":
+    "question": |-
+      Is the window ugly or beautiful?
+  "answers":
+    "answer": |-
+      beautiful
+    "fullAnswer": |-
+      The window is beautiful.
+  "image": |-
+    2397194.jpg
+- "id": |-
+    2401068
+  "prompt":
+    "question": |-
+      What kind of food is on the paper?
+  "answers":
+    "answer": |-
+      sandwich
+    "fullAnswer": |-
+      The food is a sandwich.
+  "image": |-
+    2401068.jpg
+- "id": |-
+    2363033
+  "prompt":
+    "question": |-
+      What is the food on the plate?
+  "answers":
+    "answer": |-
+      egg
+    "fullAnswer": |-
+      The food is an egg.
+  "image": |-
+    2363033.jpg
+- "id": |-
+    2383506
+  "prompt":
+    "question": |-
+      What kind of food is in the pot in the bottom?
+  "answers":
+    "answer": |-
+      rice
+    "fullAnswer": |-
+      The food is rice.
+  "image": |-
+    2383506.jpg
+- "id": |-
+    2351294
+  "prompt":
+    "question": |-
+      Which kind of food is on the toast?
+  "answers":
+    "answer": |-
+      eggs
+    "fullAnswer": |-
+      The food is eggs.
+  "image": |-
+    2351294.jpg
+- "id": |-
+    2353599
+  "prompt":
+    "question": |-
+      What's inside the bowl?
+  "answers":
+    "answer": |-
+      cookies
+    "fullAnswer": |-
+      The cookies are inside the bowl.
+  "image": |-
+    2353599.jpg
+- "id": |-
+    2370926
+  "prompt":
+    "question": |-
+      Which company is the shirt from?
+  "answers":
+    "answer": |-
+      adidas
+    "fullAnswer": |-
+      The shirt is from adidas.
+  "image": |-
+    2370926.jpg
+- "id": |-
+    2364004
+  "prompt":
+    "question": |-
+      Which company are the shorts from?
+  "answers":
+    "answer": |-
+      adidas
+    "fullAnswer": |-
+      The shorts are from adidas.
+  "image": |-
+    2364004.jpg
+- "id": |-
+    2411059
+  "prompt":
+    "question": |-
+      What is the company the made the blue shoe called?
+  "answers":
+    "answer": |-
+      adidas
+    "fullAnswer": |-
+      The company is adidas.
+  "image": |-
+    2411059.jpg
+- "id": |-
+    2364004
+  "prompt":
+    "question": |-
+      Which company are the shorts from?
+  "answers":
+    "answer": |-
+      adidas
+    "fullAnswer": |-
+      The shorts are from adidas.
+  "image": |-
+    2364004.jpg
+- "id": |-
+    2332541
+  "prompt":
+    "question": |-
+      Which company is the shoe from?
+  "answers":
+    "answer": |-
+      adidas
+    "fullAnswer": |-
+      The shoe is from adidas.
+  "image": |-
+    2332541.jpg
+- "id": |-
+    2376660
+  "prompt":
+    "question": |-
+      What Pokemon is on top of the bed?
+  "answers":
+    "answer": |-
+      pikachu
+    "fullAnswer": |-
+      The Pokemon is a Pikachu.
+  "image": |-
+    2376660.jpg
+- "id": |-
+    2376660
+  "prompt":
+    "question": |-
+      How is that Pokemon called?
+  "answers":
+    "answer": |-
+      pikachu
+    "fullAnswer": |-
+      That is a Pikachu.
+  "image": |-
+    2376660.jpg
+- "id": |-
+    2376660
+  "prompt":
+    "question": |-
+      Which kind of Pokemon is stuffed?
+  "answers":
+    "answer": |-
+      pikachu
+    "fullAnswer": |-
+      The Pokemon is a Pikachu.
+  "image": |-
+    2376660.jpg
+- "id": |-
+    2376660
+  "prompt":
+    "question": |-
+      How is that Pokemon called?
+  "answers":
+    "answer": |-
+      pikachu
+    "fullAnswer": |-
+      That is a Pikachu.
+  "image": |-
+    2376660.jpg
+- "id": |-
+    2376660
+  "prompt":
+    "question": |-
+      What kind of Pokemon is black?
+  "answers":
+    "answer": |-
+      pikachu
+    "fullAnswer": |-
+      The Pokemon is a Pikachu.
+  "image": |-
+    2376660.jpg
+- "id": |-
+    2350516
+  "prompt":
+    "question": |-
+      Is the sky clear or partly cloudy?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      The sky is clear.
+  "image": |-
+    2350516.jpg
+- "id": |-
+    2378224
+  "prompt":
+    "question": |-
+      Is the logo clear or opaque?
+  "answers":
+    "answer": |-
+      opaque
+    "fullAnswer": |-
+      The logo is opaque.
+  "image": |-
+    2378224.jpg
+- "id": |-
+    2351386
+  "prompt":
+    "question": |-
+      How is the weather?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      It is clear.
+  "image": |-
+    2351386.jpg
+- "id": |-
+    2404092
+  "prompt":
+    "question": |-
+      How is the weather today?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      It is clear.
+  "image": |-
+    2404092.jpg
+- "id": |-
+    2399130
+  "prompt":
+    "question": |-
+      Is the weather foggy or clear in this image?
+  "answers":
+    "answer": |-
+      clear
+    "fullAnswer": |-
+      It is clear.
+  "image": |-
+    2399130.jpg
+- "id": |-
+    2366550
+  "prompt":
+    "question": |-
+      What is the weapon to the left of the animal on the right?
+  "answers":
+    "answer": |-
+      spear
+    "fullAnswer": |-
+      The weapon is a spear.
+  "image": |-
+    2366550.jpg
+- "id": |-
+    2363887
+  "prompt":
+    "question": |-
+      What kind of weapon is to the right of the bread that is to the right of the French fries?
+  "answers":
+    "answer": |-
+      sword
+    "fullAnswer": |-
+      The weapon is a sword.
+  "image": |-
+    2363887.jpg
+- "id": |-
+    2382716
+  "prompt":
+    "question": |-
+      What weapon is to the left of the purse?
+  "answers":
+    "answer": |-
+      sword
+    "fullAnswer": |-
+      The weapon is a sword.
+  "image": |-
+    2382716.jpg
+- "id": |-
+    2382716
+  "prompt":
+    "question": |-
+      What weapon is the man holding?
+  "answers":
+    "answer": |-
+      sword
+    "fullAnswer": |-
+      The man is holding the sword.
+  "image": |-
+    2382716.jpg
+- "id": |-
+    2348624
+  "prompt":
+    "question": |-
+      What type of weapon is made of the same material as the clock to the right of the bear?
+  "answers":
+    "answer": |-
+      gun
+    "fullAnswer": |-
+      The gun is made of the same material as the clock.
+  "image": |-
+    2348624.jpg
+- "id": |-
+    1421
+  "prompt":
+    "question": |-
+      Are the leaves sparse or dense?
+  "answers":
+    "answer": |-
+      sparse
+    "fullAnswer": |-
+      The leaves are sparse.
+  "image": |-
+    1421.jpg
+- "id": |-
+    2317511
+  "prompt":
+    "question": |-
+      Is the grass on the field sparse or dense?
+  "answers":
+    "answer": |-
+      dense
+    "fullAnswer": |-
+      The grass is dense.
+  "image": |-
+    2317511.jpg
+- "id": |-
+    2317511
+  "prompt":
+    "question": |-
+      Is the grass on the field sparse or dense?
+  "answers":
+    "answer": |-
+      dense
+    "fullAnswer": |-
+      The grass is dense.
+  "image": |-
+    2317511.jpg
+- "id": |-
+    2377549
+  "prompt":
+    "question": |-
+      Is the tall grass sparse or dense?
+  "answers":
+    "answer": |-
+      sparse
+    "fullAnswer": |-
+      The grass is sparse.
+  "image": |-
+    2377549.jpg
+- "id": |-
+    1421
+  "prompt":
+    "question": |-
+      Are the leaves sparse or dense?
+  "answers":
+    "answer": |-
+      sparse
+    "fullAnswer": |-
+      The leaves are sparse.
+  "image": |-
+    1421.jpg
