@@ -126,8 +126,8 @@ def main():
                         raise ValueError('No program generated')
                     if len(final_lines) != len(prompt_objects) + 1:
 
-                        print(f"Final lines does not equal prompt objects + 1... waiting for {args.wait_time} seconds")
-                        time.sleep(args.wait_time)
+                        print(f"Final lines does not equal prompt objects + 1... waiting for {args.wait_time - 5} seconds")
+                        time.sleep(args.wait_time - 5)
 
                         if len(final_lines) == 1:
                             print(f'Answer: {program}')
