@@ -1162,6 +1162,30 @@
     IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='Are the oranges bright or dull?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='oranges')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the brightness of the oranges?')
+    ANSWER1=EVAL(expr="'bright' if 'bright' in {ANSWER0} else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='oranges')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='oranges')
+    ANSWER0=VQA(image=IMAGE0,question='Are the oranges bright or dull?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='orange')
+    LEFT_ORANGES = LOC_LEFT(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE,question='What is the color of the oranges?')
+    ANSWER1=EVAL(expr="'bright' if all(color == 'bright' for color in ANSWER0) else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='LEFT')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='oranges')
+    ANSWER0=COUNT(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     107961
   "prompt":
@@ -1180,6 +1204,32 @@
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='Is the blue helmet dull or bright?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='blue helmet')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the brightness of the helmet?')
+    ANSWER1=EVAL(expr="'bright' if 'bright' in {ANSWER0} else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue helmet')
+    ANSWER0=VQA(image=IMAGE,question='Is the blue helmet dull or bright?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='helmet')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the helmet?')
+    BLUE_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'blue')")
+    BRIGHT_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'bright')")
+    DULL_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'dull')")
+    BRIGHTNESS_RATIO=EVAL(expr="(BRIGHT_COUNT - DULL_COUNT) / (BRIGHT_COUNT + DULL_COUNT)")
+    ANSWER1=EVAL(expr="'bright' if BRIGHTNESS_RATIO > 0 else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='helmet')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the helmet?')
+    ANSWER1=EVAL(expr="'bright' if ANSWER0 == 'blue' else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     107961
   "prompt":
@@ -1198,6 +1248,31 @@
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='Is the blue helmet dull or bright?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='blue helmet')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the brightness of the helmet?')
+    ANSWER1=EVAL(expr="'bright' if 'bright' in {ANSWER0} else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue helmet')
+    ANSWER0=VQA(image=IMAGE,question='Is the blue helmet dull or bright?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue helmet')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the helmet?')
+    BRIGHT_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'bright')")
+    DULL_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'dull')")
+    BRIGHTNESS_RATIO=EVAL(expr="(BRIGHT_COUNT - DULL_COUNT) / (BRIGHT_COUNT + DULL_COUNT)")
+    ANSWER1=EVAL(expr="'bright' if BRIGHTNESS_RATIO > 0 else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='helmet')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the helmet?')
+    ANSWER1=EVAL(expr="'bright' if ANSWER0 == 'blue' else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     107961
   "prompt":
@@ -1216,6 +1291,31 @@
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='Is the blue helmet dull or bright?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='blue helmet')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the brightness of the helmet?')
+    ANSWER1=EVAL(expr="'bright' if 'bright' in {ANSWER0} else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue helmet')
+    ANSWER0=VQA(image=IMAGE,question='Is the blue helmet dull or bright?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue helmet')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the helmet?')
+    BRIGHT_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'bright')")
+    DULL_COUNT=EVAL(expr="sum(1 for color in ANSWER0 if color == 'dull')")
+    BRIGHTNESS_RATIO=EVAL(expr="(BRIGHT_COUNT - DULL_COUNT) / (BRIGHT_COUNT + DULL_COUNT)")
+    ANSWER1=EVAL(expr="'bright' if BRIGHTNESS_RATIO > 0 else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='helmet')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the helmet?')
+    ANSWER1=EVAL(expr="'bright' if ANSWER0 == 'blue' else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2338035
   "prompt":
@@ -1237,6 +1337,40 @@
     ANSWER1=VQA(image=IMAGE1, question='What color are the other oranges?')
     ANSWER2=EVAL(expr="'bright' if {ANSWER0} == {ANSWER1} else 'dull'")
     FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE, object='orange')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    IMAGE1=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the color of the oranges?')
+    ANSWER1=VQA(image=IMAGE1, question='What is the color of the oranges?')
+    ANSWER2=EVAL(expr="'bright' if {ANSWER0} == {ANSWER1} else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE, object='oranges')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE, object='oranges')
+    ANSWER0=COLOR(image=IMAGE0, box=BOX0)
+    ANSWER1=COLOR(image=IMAGE, box=BOX1)
+    ANSWER2=EVAL(expr="'bright' if ANSWER0 == ANSWER1 else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE,object='orange')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='LEFT')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What color are the oranges?')
+    ANSWER1=VQA(image=IMAGE0,question='What color are the other oranges?')
+    ANSWER2=EVAL(expr="'bright' if {ANSWER0} != {ANSWER1} else 'dull'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE, object='oranges')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='bright oranges')
+    ANSWER0=COUNT(box=BOX1)
+    BOX2=LOC(image=IMAGE0, object='dull oranges')
+    ANSWER1=COUNT(box=BOX2)
+    ANSWER2=EVAL(expr="'bright' if {ANSWER0} > 0 else 'dull' if {ANSWER1} > 0 else 'neither'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
 - "id": |-
     2390146
   "prompt":
@@ -1252,6 +1386,21 @@
   "programs":
   - |-
     BOX0=LOC(image=IMAGE, object='dome')
+    ANSWER0=VQA(image=IMAGE, question='What is the dome on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='dome')
+    ANSWER0=VQA(image=IMAGE, question='What is the dome on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='dome')
+    ANSWER0=VQA(image=IMAGE, question='What is the dome on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='dome')
+    ANSWER0=VQA(image=IMAGE,question='What is the dome on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
     ANSWER0=VQA(image=IMAGE, question='What is the dome on?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
@@ -1272,6 +1421,24 @@
     IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='What is before the tower?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='tower')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the object before the tower?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='tower')
+    BOX1=LOC(image=IMAGE, object='before')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is before the tower?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tower')
+    ANSWER0=VQA(image=IMAGE,question='What is the tower before?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='What is the tower before?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2385589
   "prompt":
@@ -1287,6 +1454,22 @@
   "programs":
   - |-
     BOX0=LOC(image=IMAGE, object='fence')
+    ANSWER0=VQA(image=IMAGE, question='What is the fence around of?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='fence')
+    ANSWER0=VQA(image=IMAGE, question='What is the fence around of?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='fence')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the fence around of?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='fence')
+    ANSWER0=VQA(image=IMAGE,question='What is the fence around of?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
     ANSWER0=VQA(image=IMAGE, question='What is the fence around of?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
@@ -1308,6 +1491,23 @@
     BOX1=LOC(image=IMAGE0,relation='on')
     OBJECT_BENEATH=RETRIEVE_OBJECT(image=IMAGE0,box=BOX1)
     FINAL_RESULT=RESULT(var=OBJECT_BENEATH)
+  - |-
+    BOX0=LOC(image=IMAGE,object='dome')
+    ANSWER0=LOC_ON(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='dome')
+    ANSWER0=LOCATE_ON(image=IMAGE,box=BOX0)
+    ANSWER1=EVAL(expr="'The dome is on {ANSWER0}'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='dome')
+    OBJECT_ON_TOP = VQA(image=IMAGE, question='What is the dome on?')
+    FINAL_RESULT = RESULT(var=OBJECT_ON_TOP)
+  - |-
+    BOX0=LOC(image=IMAGE, object='dome')
+    ANSWER0=VQA(image=IMAGE, question='What is the dome on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2391049
   "prompt":
@@ -1327,6 +1527,27 @@
     BOX1=LOC(image=IMAGE0,relation='in front of')
     OBJECT_IN_FRONT=RETRIEVE_OBJECT(image=IMAGE0,box=BOX1)
     FINAL_RESULT=RESULT(var=OBJECT_IN_FRONT)
+  - |-
+    BOX0=LOC(image=IMAGE,object='large building')
+    IMAGE0=CROP_FRONT(image=IMAGE,box=BOX0)
+    ANSWER0=LOC(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='large building')
+    IMAGE0=CROP_FRONT(image=IMAGE,box=BOX0)
+    ANSWER0=OBJECTS(image=IMAGE0)
+    ANSWER1=EVAL(expr="'In front of the large building, there is {ANSWER0}'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='large building')
+    IMAGE0 = CROP_FRONT(image=IMAGE, box=BOX0)
+    OBJECTS_IN_FRONT = FIND_OBJECTS(image=IMAGE0)
+    FINAL_RESULT = RESULT(var=OBJECTS_IN_FRONT)
+  - |-
+    BOX0=LOC(image=IMAGE, object='large building')
+    IMAGE0=CROP_FRONT(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is in front of the large building?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2386043
   "prompt":
@@ -2080,6 +2301,34 @@
     CLEAN_OBJECTS=FILTER_CLEAN(objects=OBJECTS_INSIDE)
     UNCLEAN_OBJECTS=FILTER_UNCLEAN(objects=OBJECTS_INSIDE, clean_objects=CLEAN_OBJECTS)
     FINAL_RESULT=RESULT(var=UNCLEAN_OBJECTS)
+  - |-
+    BOX0=LOC(image=IMAGE,object='oven')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='not clean')
+    ANSWER0=LOC_INSIDE(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='oven')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='not clean')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=OBJECTS(image=IMAGE1)
+    ANSWER1=EVAL(expr="'In the oven that is not clean, there is {ANSWER0}'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='oven')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    OBJECTS_INSIDE_OVEN = FIND_OBJECTS(image=IMAGE0)
+    CLEAN_OBJECTS = FILTER_CLEAN(image=IMAGE0, objects=OBJECTS_INSIDE_OVEN)
+    DIRTY_OBJECTS = DIFFERENCE(objects=OBJECTS_INSIDE_OVEN, clean_objects=CLEAN_OBJECTS)
+    FINAL_RESULT = RESULT(var=DIRTY_OBJECTS)
+  - |-
+    BOX0=LOC(image=IMAGE, object='oven')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='not clean')
+    ANSWER0=VQA(image=IMAGE0, question='What is in the oven?')
+    ANSWER1=VQA(image=IMAGE0, question='What is not clean in the oven?')
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2403093
   "prompt":
@@ -2098,6 +2347,25 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     OBJECTS_ON_PLATTER=DETECT_OBJECTS(image=IMAGE0)
     FINAL_RESULT=RESULT(var=OBJECTS_ON_PLATTER)
+  - |-
+    BOX0=LOC(image=IMAGE,object='platter')
+    ANSWER0=LOC_ON(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='platter')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=OBJECTS(image=IMAGE0)
+    ANSWER1=EVAL(expr="'On the platter, there is {ANSWER0}'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='platter')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    OBJECTS_ON_PLATTER = FIND_OBJECTS(image=IMAGE0)
+    FINAL_RESULT = RESULT(var=OBJECTS_ON_PLATTER)
+  - |-
+    BOX0=LOC(image=IMAGE, object='platter')
+    ANSWER0=VQA(image=IMAGE, question='What is on the platter?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2337344
   "prompt":
@@ -2111,6 +2379,30 @@
   "image": |-
     2337344.jpg
   "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='container')
+    ANSWER0=VQA(image=IMAGE0,question='What is in the container?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='container')
+    ANSWER0=VQA(image=IMAGE0,question='What is in the container?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='napkin')
+    IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='container')
+    ANSWER0 = VQA(image=IMAGE0, question='What is in the container?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='container')
+    ANSWER0=VQA(image=IMAGE0, question='What does the container hold?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
   - |-
     BOX0=LOC(image=IMAGE,object='napkin')
     IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
@@ -2134,6 +2426,24 @@
     BOX0=LOC(image=IMAGE,object='jar')
     ANSWER0=VQA(image=IMAGE,question='What is in the jar?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='jar')
+    ANSWER0=VQA(image=IMAGE,question='What is in the jar?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='jar')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is in the jar?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='jar')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is in the jar?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='jar')
+    ANSWER0=VQA(image=IMAGE,question='What is in the jar?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2403093
   "prompt":
@@ -2147,6 +2457,24 @@
   "image": |-
     2403093.jpg
   "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='oven')
+    ANSWER0=VQA(image=IMAGE,question='What is in the oven?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='oven')
+    ANSWER0=VQA(image=IMAGE,question='What is in the oven?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='oven')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is in the oven?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='oven')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is in the oven?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
   - |-
     BOX0=LOC(image=IMAGE,object='oven')
     ANSWER0=VQA(image=IMAGE,question='What is in the oven?')
@@ -2167,6 +2495,21 @@
   - |-
     ANSWER0=VQA(image=IMAGE,question='How is the weather?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=WEATHER(image=IMAGE)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0 = VQA(image=IMAGE, question='How is the weather?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=WEATHER_API()
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='clouds')
+    BOX1=LOC(image=IMAGE,object='sun')
+    BOX2=LOC(image=IMAGE,object='rain')
+    ANSWER0=EVAL(expr="'sunny' if {BOX1} > 0 and {BOX0} > 0 else ('cloudy' if {BOX0} > 0 else 'rainy' if {BOX2} > 0 else 'unclear')")
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2398008
   "prompt":
@@ -2183,6 +2526,18 @@
   - |-
     ANSWER0 = VQA(image=IMAGE, question='How is the weather?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=WEATHER_API(location=LOCATION)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='How is the weather?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='How is the weather?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='How is the weather?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     1242
   "prompt":
@@ -2201,6 +2556,26 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Is the blue sky clear or cloudy?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='blue sky')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the blue sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sky')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue sky')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue sky')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     1242
   "prompt":
@@ -2219,6 +2594,26 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Is the blue sky clear or cloudy?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='blue sky')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the blue sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sky')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue sky')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue sky')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the sky clear or cloudy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2355866
   "prompt":
@@ -2237,6 +2632,25 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Is the water clear or murky?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water clear or murky?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the water clear or murky?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the water clear or murky?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    ANSWER0=VQA(image=IMAGE,question='Is the water clear or murky?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2416156
   "prompt":
@@ -2263,6 +2677,15 @@
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='What is on the wall?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wall')
+    ANSWER0=VQA(image=IMAGE, question='What is on the wall?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='wall')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is on the wall?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2416156
   "prompt":
@@ -2288,6 +2711,17 @@
     BOX0=LOC(image=IMAGE, object='wall')
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='What is on the wall?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wall')
+    ANSWER0=VQA(image=IMAGE, question='What is on the wall?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='wall')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=SELECT_AREA(image=IMAGE0,question='Where do you want to focus?')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What is on the wall?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2385600
@@ -2320,6 +2754,18 @@
     IMAGE1=CROP(image=IMAGE0, box=BOX1)
     ANSWER0=VQA(image=IMAGE1, question='What is on the vase?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='vase')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is on the vase?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='vase')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='right')
+    IMAGE1=CROP_RIGHTOF(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What is on the vase?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2329521
   "prompt":
@@ -2345,6 +2791,15 @@
     BOX0=LOC(image=IMAGE, object='floor')
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='What is sitting on the floor?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='floor')
+    ANSWER0=VQA(image=IMAGE, question='What is sitting on the floor?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='floor')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is sitting on the floor?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2411509
@@ -2377,6 +2832,13 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     SURFACE = IDENTIFY_SURFACE(image=IMAGE0, object='bird')
     FINAL_RESULT = RESULT(var=SURFACE)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bird')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='ground')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'ground' if {ANSWER0} > 0 else 'unknown'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2345745
   "prompt":
@@ -2413,6 +2875,12 @@
     PLATE = LOCATE_PLATE(image=IMAGE0)
     CLEANLINESS = ASSESS_CLEANLINESS(image=PLATE)
     FINAL_RESULT = RESULT(var=CLEANLINESS)
+  - |-
+    BOX0=LOC(image=IMAGE, object='fork')
+    IMAGE0=CROP_ABOVE(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='plate')
+    ANSWER0=CLEANLINESS(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2408981
   "prompt":
@@ -2442,6 +2910,10 @@
     TOILET = LOC(image=IMAGE, object='toilet')
     CLEANLINESS = ASSESS_CLEANLINESS(image=TOILET)
     FINAL_RESULT = RESULT(var=CLEANLINESS)
+  - |-
+    BOX0=LOC(image=IMAGE, object='toilet')
+    ANSWER0=CLEANLINESS(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2389327
   "prompt":
@@ -2471,6 +2943,10 @@
     BOWL = LOC(image=IMAGE, object='bowl')
     CLEANLINESS = ASSESS_CLEANLINESS(image=BOWL)
     FINAL_RESULT = RESULT(var=CLEANLINESS)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bowl')
+    ANSWER0=CLEANLINESS(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2378355
   "prompt":
@@ -2507,6 +2983,12 @@
     BOX1=LOC(image=IMAGE0,object='sheets')
     ANSWER0=VQA(image=IMAGE0,question='How clean are the sheets?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pillow')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='sheets')
+    ANSWER0=VQA(image=IMAGE0, question='How clean are the sheets?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2347977
   "prompt":
@@ -2539,6 +3021,11 @@
     BOX0=LOC(image=IMAGE,object='porcelain toilet')
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='Is the toilet stained or clean?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='porcelain toilet')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the toilet stained or clean?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2382109
@@ -2930,6 +3417,11 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='Is the cup down or up?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='Styrofoam cup')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the cup down or up?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2404396
   "prompt":
@@ -2960,6 +3452,11 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='Where is the dog looking at?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='dog')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Where is the dog looking at?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2364895
   "prompt":
@@ -2985,6 +3482,10 @@
     BOX0=LOC(image=IMAGE, object='man')
     ANSWER0=VQA(image=IMAGE, question='Which direction is the man looking at?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='man')
+    ANSWER0 = DIRECTION(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
   - |-
     BOX0 = LOC(image=IMAGE, object='man')
     ANSWER0 = DIRECTION(box=BOX0)
@@ -3023,6 +3524,14 @@
     ANSWER1 = VQA(image=IMAGE1, question='Is the Styrofoam down?')
     ANSWER2 = EVAL(expr="'down' if {ANSWER0} == 'yes' and {ANSWER1} == 'yes' else 'up'")
     FINAL_RESULT = RESULT(var=ANSWER2)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='cup')
+    BOX1 = LOC(image=IMAGE, object='Styrofoam')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    IMAGE1 = CROP(image=IMAGE, box=BOX1)
+    ANSWER0 = RELATIVE_POSITION(box0=BOX0, box1=BOX1)
+    ANSWER1 = EVAL(expr="'down' if {ANSWER0} == 'below' else 'up'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2413428
   "prompt":
@@ -3057,6 +3566,13 @@
     ANSWER1 = VQA(image=IMAGE1, question='Is the toilet seat up?')
     ANSWER2 = EVAL(expr="'down' if {ANSWER0} == 'yes' else 'up' if {ANSWER1} == 'yes' else 'uncertain'")
     FINAL_RESULT = RESULT(var=ANSWER2)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='toilet seat')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='down')
+    ANSWER0 = COUNT(box=BOX1)
+    ANSWER1 = EVAL(expr="'down' if {ANSWER0} > 0 else 'up'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2327080
   "prompt":
@@ -3086,6 +3602,10 @@
     BOX0 = LOC(image=IMAGE, object='leaves')
     ANSWER0 = WIDTH(box=BOX0)
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='leaves')
+    WIDTH = MEASURE_WIDTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=WIDTH)
 - "id": |-
     2411225
   "prompt":
@@ -3114,6 +3634,10 @@
   - |-
     BOX0=LOC(image=IMAGE, object='suitcase')
     WIDTH=MEASURE(image=IMAGE, box=BOX0, dimension='width')
+    FINAL_RESULT=RESULT(var=WIDTH)
+  - |-
+    BOX0=LOC(image=IMAGE,object='suitcase')
+    WIDTH=MEASURE_WIDTH(box=BOX0)
     FINAL_RESULT=RESULT(var=WIDTH)
 - "id": |-
     2354394
@@ -3154,6 +3678,13 @@
     WIDTH=MEASURE(image=IMAGE0, box=BOX1, dimension='width')
     ANSWER0=EVAL(expr="'wide' if {WIDTH} > THRESHOLD else 'narrow'")
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='cheese')
+    WIDTH=MEASURE_WIDTH(box=BOX1)
+    ANSWER0=EVAL(expr="'wide' if {WIDTH} > THRESHOLD else 'narrow'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2338191
   "prompt":
@@ -3189,6 +3720,11 @@
     ASPECT_RATIO=EVAL(expr="{WIDTH} / {LENGTH}")
     ANSWER0=EVAL(expr="'wide' if {ASPECT_RATIO} > THRESHOLD else 'narrow'")
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='long_leaves')
+    WIDTH=MEASURE_WIDTH(box=BOX0)
+    ANSWER0=EVAL(expr="'wide' if {WIDTH} > THRESHOLD else 'narrow'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2387077
   "prompt":
@@ -3220,6 +3756,11 @@
   - |-
     BOX0=LOC(image=IMAGE, object='sidewalk')
     WIDTH=MEASURE(image=IMAGE, box=BOX0, dimension='width')
+    ANSWER0=EVAL(expr="'wide' if {WIDTH} > THRESHOLD else 'narrow'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sidewalk')
+    WIDTH=MEASURE_WIDTH(box=BOX0)
     ANSWER0=EVAL(expr="'wide' if {WIDTH} > THRESHOLD else 'narrow'")
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
@@ -4015,7 +4556,40 @@
       The pieces of furniture are couches.
   "image": |-
     2325537.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='coffee table')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC_LEFTOF(image=IMAGE0,object='furniture')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EXTRACT(object=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='coffee table')
+    IMAGE0=CROP_LEFT(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='furniture')
+    ANSWER0=LIST_ITEMS(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='coffee table')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='LEFT')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What furniture is in this image?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='coffee table')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='furniture')
+    ANSWER0=COUNT(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='coffee table')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC_LEFTOF(image=IMAGE0, object='furniture')
+    ANSWER0 = COUNT(box=BOX1)
+    ANSWER1 = EXTRACT_ITEMS(image=IMAGE0, box=BOX1, num_items=ANSWER0)
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2400094
   "prompt":
@@ -4028,7 +4602,37 @@
       The piece of furniture is a sofa.
   "image": |-
     2400094.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='girl')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC_LEFTOF(image=IMAGE0,object='furniture')
+    ANSWER0=CLASSIFY(image=IMAGE0,object=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='girl')
+    IMAGE0=CROP_LEFT(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What type of furniture is to the left?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='girl')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='LEFT')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What furniture is in this image?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='girl')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='furniture')
+    ANSWER0=TYPE(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='girl')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC_LEFTOF(image=IMAGE0, object='furniture')
+    ANSWER0 = VQA(image=IMAGE0, question='What type of furniture is to the left?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
 - "id": |-
     2379737
   "prompt":
@@ -4041,7 +4645,46 @@
       The couch is the same color as the cup.
   "image": |-
     2379737.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='cup made of plastic')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    COLOR0=VQA(image=IMAGE0,question='What color is the cup made of plastic?')
+    BOX1=LOC(image=IMAGE,object='furniture',color=COLOR0)
+    ANSWER0=EXTRACT(object=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='plastic cup')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What color is the plastic cup?')
+    BOX1=LOC_COLOR(image=IMAGE, color=ANSWER0)
+    ANSWER1=VQA(image=IMAGE, question='What furniture item is at the location of the cup?')
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plastic cup')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the plastic cup?')
+    BOX1=LOC_COLOR(image=IMAGE, color=ANSWER0)
+    IMAGE1=CROP(image=IMAGE,box=BOX1)
+    ANSWER1=VQA(image=IMAGE1,question='What furniture is in this image?')
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plastic cup')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    COLOR0=COLOR(image=IMAGE0)
+    BOX1=LOC(image=IMAGE,object='furniture')
+    IMAGE1=CROP(image=IMAGE,box=BOX1)
+    COLOR1=COLOR(image=IMAGE1)
+    ANSWER0=EVAL(expr="'yes' if {COLOR0} == {COLOR1} else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='cup')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What color is the cup?')
+    BOX1 = LOC(image=IMAGE, color=ANSWER0, object='furniture')
+    ANSWER1 = COUNT(box=BOX1)
+    ANSWER2 = EXTRACT_ITEMS(image=IMAGE, box=BOX1, num_items=ANSWER1)
+    FINAL_RESULT = RESULT(var=ANSWER2)
 - "id": |-
     2332116
   "prompt":
@@ -4054,7 +4697,39 @@
       The piece of furniture is a chair.
   "image": |-
     2332116.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='dresser')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC_RIGHTOF(image=IMAGE0,object='furniture')
+    ANSWER0=EXTRACT(object=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='dresser')
+    IMAGE0=CROP_RIGHT(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='furniture')
+    ANSWER0=LIST_ITEMS(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='dresser')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='RIGHT')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What furniture is in this image?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='dresser')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='furniture')
+    ANSWER0=TYPE(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='dresser')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC_RIGHTOF(image=IMAGE0, object='furniture')
+    ANSWER0 = COUNT(box=BOX1)
+    ANSWER1 = EXTRACT_ITEMS(image=IMAGE0, box=BOX1, num_items=ANSWER0)
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2377485
   "prompt":
@@ -4075,6 +4750,30 @@
     ANSWER0 = COUNT(box=BOX1)
     ANSWER1 = EVAL(expr="'furniture' if {ANSWER0} > 0 else 'none'")
     FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='man')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='furniture')
+    ANSWER0=VQA(image=IMAGE0, question='What are the items of furniture?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='furniture')
+    ANSWER0=SEGMENT(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='furniture')
+    ANSWER0=OBJECT_DETECTION(image=IMAGE0,object='furniture')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='furniture')
+    ANSWER0=VQA(image=IMAGE0,question='What are the items of furniture called?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2361827
   "prompt":
@@ -4094,6 +4793,30 @@
     BOX1 = LOC(image=IMAGE0, object='book')
     ANSWER0 = VQA(image=IMAGE0, question='How hard is the book?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pen')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC_BELOW(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE, question='How hard is the book?', box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pen')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='book')
+    ANSWER0=ANALYZE_TEXTURE(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pen')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='book')
+    ANSWER0=BOOK_HARDNESS(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pen')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='book')
+    ANSWER0=VQA(image=IMAGE0,question='How hard is the book?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2378689
   "prompt":
@@ -4113,6 +4836,23 @@
     BOX1 = LOC(image=IMAGE0, object='black')
     ANSWER0 = VQA(image=IMAGE0, question='How hard is the hat?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='black hat')
+    ANSWER0=VQA(image=IMAGE, question='How hard is the black hat?', box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='black hat')
+    ANSWER0=ANALYZE_TEXTURE(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='black hat')
+    ANSWER0=VQA(image=IMAGE,question='What color is the hat?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='black hat')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='How hard is the hat?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2378689
   "prompt":
@@ -4135,6 +4875,36 @@
     ANSWER0 = COUNT(box=BOX2)
     ANSWER1 = EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
     FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='LEFT')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='wine')
+    IMAGE1=CROP_RIGHTOF(image=IMAGE0, box=BOX1)
+    BOX2=LOC(image=IMAGE1, object='bottles')
+    ANSWER0=COUNT(box=BOX2)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='LEFT')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='wine')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='bottles')
+    ANSWER0=COUNT(box=BOX2)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='black hat')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='table')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='black hat')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='How hard is the hat?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2385903
   "prompt":
@@ -4153,6 +4923,29 @@
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='How hard is the food?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='cheese')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='How hard is the food?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='food')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='cheese')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0, box=BOX1)
+    ANSWER0=ANALYZE_TEXTURE(image=IMAGE1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='cheese')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='How hard is the food?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='cheese')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='food')
+    ANSWER0=VQA(image=IMAGE0,question='How hard is the food?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2346389
   "prompt":
@@ -4170,6 +4963,28 @@
     BOX0=LOC(image=IMAGE, object='snow', color='white')
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='How hard is the snow?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='snow')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='How hard is the snow?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='snow')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC_COLOR(image=IMAGE0, color='white')
+    IMAGE1=CROP(image=IMAGE0, box=BOX1)
+    ANSWER0=ANALYZE_TEXTURE(image=IMAGE1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, color='white')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='How hard is the snow?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snow')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='How hard is the snow?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2371761
@@ -4922,6 +5737,21 @@
     IMAGE0=CROP(image=IMAGE, box=BOX0)
     ANSWER0=VQA(image=IMAGE0, question='Do the leaves look thick or thin?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='leaves')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Do the leaves look thick or thin?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='leaves')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=ANALYZE_THICKNESS(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='leaves')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Do the leaves look thick or thin?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2383947
   "prompt":
@@ -4947,6 +5777,24 @@
     IMAGE1=CROP_LEFTOF(image=IMAGE, box=BOX1)
     ANSWER0=VQA(image=IMAGE0, question='Is the carrot thin or thick?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='vegetables')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='carrot')
+    ANSWER0=VQA(image=IMAGE0, question='Is the carrot thin or thick?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='carrot')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC_LEFTOF(image=IMAGE, object='carrot')
+    IMAGE1=CROP(image=IMAGE, box=BOX1)
+    ANSWER0=ANALYZE_THICKNESS(image=IMAGE1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='carrot')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the carrot thin or thick?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2387251
   "prompt":
@@ -4968,6 +5816,20 @@
   - |-
     BOX0=LOC(image=IMAGE,object='blue clock')
     ANSWER0=MEASURE_THICKNESS(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='blue clock')
+    ANSWER0 = MEASURE_THICKNESS(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue clock')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=MEASURE(image=IMAGE0,property='thickness')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='blue clock')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=MEASURE_THICKNESS(image=IMAGE0)
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2346245
@@ -4992,6 +5854,23 @@
     ANSWER0=MEASURE_THICKNESS(box=BOX0)
     ANSWER1=EVAL(expr="'thin' if {ANSWER0} < THRESHOLD else 'thick'")
     FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='mattress')
+    ANSWER0 = MEASURE_THICKNESS(box=BOX0)
+    ANSWER1 = EVAL(expr="'thin' if {ANSWER0} < {THRESHOLD} else 'thick'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='mattress')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=MEASURE(image=IMAGE0,property='thickness')
+    ANSWER1=EVAL(expr="'thin' if {ANSWER0} < 10 else 'thick'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='mattress')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=MEASURE_THICKNESS(image=IMAGE0)
+    ANSWER1=EVAL(expr="'thick' if {ANSWER0} > THRESHOLD else 'thin'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2631
   "prompt":
@@ -5014,6 +5893,23 @@
     BOX0=LOC(image=IMAGE,object='small animal')
     ANSWER0=MEASURE_THICKNESS(box=BOX0)
     ANSWER1=EVAL(expr="'thin' if {ANSWER0} < THRESHOLD else 'thick'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='small animal')
+    ANSWER0 = MEASURE_THICKNESS(box=BOX0)
+    ANSWER1 = EVAL(expr="'thin' if {ANSWER0} < {THRESHOLD} else 'thick'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='small animal')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=MEASURE(image=IMAGE0,property='size')
+    ANSWER1=EVAL(expr="'thin' if {ANSWER0} < 5 else 'thick'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='small animal')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=MEASURE_SIZE(image=IMAGE0)
+    ANSWER1=EVAL(expr="'thick' if {ANSWER0} > THRESHOLD else 'thin'")
     FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2376430
@@ -5039,23 +5935,24 @@
     ANSWER0=DISTANCE(box1=BOX0, box2=BOX1)
     ANSWER1=EVAL(expr="'rotten' if {ANSWER0} < THRESHOLD else 'fresh'")
     FINAL_RESULT=RESULT(var=ANSWER1)
-- "id": |-
-    2371480
-  "prompt":
-    "question": |-
-      Is the vegetable to the left of the napkin fresh or rotten?
-  "answers":
-    "answer": |-
-      fresh
-    "fullAnswer": |-
-      The broccoli is fresh.
-  "image": |-
-    2371480.jpg
-  "programs":
   - |-
-    BOX0=LOC(image=IMAGE,object='vegetable')
-    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
-    ANSWER0=ANALYZE_CONDITION(image=IMAGE0,condition='fresh or rotten')
+    BOX0 = LOC(image=IMAGE, object='rocks')
+    BOX1 = LOC(image=IMAGE, object='water')
+    NEAR_ROCKS = FILTER_NEAR(box=BOX0, ref_box=BOX1, threshold=DISTANCE_THRESHOLD)
+    ANSWER0 = ASSESS_CONDITION(objects=NEAR_ROCKS, condition='rotten')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='rocks near water')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What condition are the rocks in?')
+    ANSWER1=EVAL(expr="'rotten' if 'rotten' in {ANSWER0} else 'fresh'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='rocks')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE,object='water')
+    IMAGE1=CROP(image=IMAGE,box=BOX1)
+    ANSWER0=COMPARE_CONDITION(image=IMAGE0,image_ref=IMAGE1)
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2371480
@@ -5074,6 +5971,74 @@
     BOX0=LOC(image=IMAGE,object='vegetable')
     IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
     ANSWER0=ANALYZE_CONDITION(image=IMAGE0,condition='fresh or rotten')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='Is the vegetable fresh or rotten?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='vegetable')
+    ANSWER0=CLASSIFY(image=IMAGE0, box=BOX1, class=['fresh', 'rotten'])
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'fresh' if {ANSWER0} > 0 else 'rotten'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='Is the vegetable fresh or rotten?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2371480
+  "prompt":
+    "question": |-
+      Is the vegetable to the left of the napkin fresh or rotten?
+  "answers":
+    "answer": |-
+      fresh
+    "fullAnswer": |-
+      The broccoli is fresh.
+  "image": |-
+    2371480.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='vegetable')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    ANSWER0=ANALYZE_CONDITION(image=IMAGE0,condition='fresh or rotten')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='Is the vegetable fresh or rotten?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='vegetable')
+    ANSWER0=CLASSIFY(image=IMAGE0, box=BOX1, class=['fresh', 'rotten'])
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'fresh' if {ANSWER0} > 0 else 'rotten'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='napkin')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=CLASSIFY(image=IMAGE0,object=BOX1,attribute='freshness')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2376430
@@ -5093,6 +6058,32 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=ANALYZE_CONDITION(image=IMAGE0,condition='rotten or fresh')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='rocks')
+    ANSWER0=CLASSIFY(image=IMAGE0, box=BOX1, class=['fresh', 'rotten'])
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_NEAR(image=IMAGE,box=BOX0,distance='close')
+    BOX1=LOC(image=IMAGE0,object='rocks')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'fresh' if {ANSWER0} > 0 else 'rotten'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_NEAR(image=IMAGE,box=BOX0,distance='short')
+    BOX1=LOC(image=IMAGE0,object='rocks')
+    ANSWER0=CLASSIFY(image=IMAGE0,object=BOX1,attribute='freshness')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE, object='rock')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2376430
   "prompt":
@@ -5111,6 +6102,32 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=ANALYZE_CONDITION(image=IMAGE0,condition='rotten or fresh')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='rocks')
+    ANSWER0=CLASSIFY(image=IMAGE0, box=BOX1, class=['fresh', 'rotten'])
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_NEAR(image=IMAGE,box=BOX0,distance='close')
+    BOX1=LOC(image=IMAGE0,object='rocks')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'fresh' if {ANSWER0} > 0 else 'rotten'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_NEAR(image=IMAGE,box=BOX0,distance='short')
+    BOX1=LOC(image=IMAGE0,object='rocks')
+    ANSWER0=VQA(image=IMAGE0,question='Are the rocks fresh or rotten?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE, object='rock')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2390727
   "prompt":
@@ -5514,6 +6531,26 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='What is the gender?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pants')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pants')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pants')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pants')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2350907
   "prompt":
@@ -5534,6 +6571,29 @@
     IMAGE1=CROP(image=IMAGE0,box=BOX1)
     ANSWER0=VQA(image=IMAGE1,question='What is the gender?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='skier')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the skier?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='BOTTOM')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='skier')
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the skier?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='BOTTOM')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='skier')
+    IMAGE1=CROP(image=IMAGE0, box=BOX1)
+    ANSWER0=VQA(image=IMAGE1, question='What is the gender of the skier?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='skier')
+    IMAGE0=CROP_BOTTOM(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the skier?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2371222
   "prompt":
@@ -5552,23 +6612,26 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='Which gender holds the menu?')
     FINAL_RESULT=RESULT(var=ANSWER0)
-- "id": |-
-    2318090
-  "prompt":
-    "question": |-
-      What is the gender of the person that is wearing a sock?
-  "answers":
-    "answer": |-
-      male
-    "fullAnswer": |-
-      The player is male.
-  "image": |-
-    2318090.jpg
-  "programs":
   - |-
-    BOX0=LOC(image=IMAGE,object='sock')
-    IMAGE0=CROP(image=IMAGE,box=BOX0)
-    ANSWER0=VQA(image=IMAGE0,question='What is the gender?')
+    BOX0=LOC(image=IMAGE, object='menu')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Which gender is holding the menu?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='menu')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='person')
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='menu')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Which gender is holding the menu?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='menu')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Which gender is holding the menu?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2318090
@@ -5587,6 +6650,66 @@
     BOX0=LOC(image=IMAGE,object='sock')
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='What is the gender?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person wearing the sock?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='person')
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person wearing the sock?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+- "id": |-
+    2318090
+  "prompt":
+    "question": |-
+      What is the gender of the person that is wearing a sock?
+  "answers":
+    "answer": |-
+      male
+    "fullAnswer": |-
+      The player is male.
+  "image": |-
+    2318090.jpg
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='sock')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is the gender?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sock')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='person')
+    ANSWER0=VQA(image=IMAGE0, question='What is the gender of the person?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2384504
@@ -5606,6 +6729,27 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='How is the water?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='blue water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water choppy or calm?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water', color='blue')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water choppy or calm?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water choppy or calm?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What color is the water?')
+    ANSWER1=EVAL(expr="'choppy' if {ANSWER0} == 'blue' else 'calm'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2361871
   "prompt":
@@ -5623,6 +6767,20 @@
     BOX0=LOC(image=IMAGE,object='water')
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='How is the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='How is the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='How is the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='How is the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=ANALYZE(image=IMAGE,aspect='water_condition')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2317229
@@ -5642,6 +6800,20 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='How is the water today?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='How is the water today?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='How is the water today?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='How is the water today?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=ANALYZE(image=IMAGE,date='today',aspect='water_condition')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2384504
   "prompt":
@@ -5659,6 +6831,27 @@
     BOX0=LOC(image=IMAGE,object='water')
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='How is the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='blue water')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Is the water choppy or calm?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='blue water')
+    TEXTURE_ANALYSIS = ANALYZE_TEXTURE(image=IMAGE, box=BOX0)
+    ANSWER = EVAL(expr="'choppy' if TEXTURE_ANALYSIS == 'choppy' else 'calm'")
+    FINAL_RESULT = RESULT(var=ANSWER)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What color is the water?')
+    ANSWER1=VQA(image=IMAGE0, question='Is the water choppy or calm?')
+    FINAL_RESULT=RESULT(var=[ANSWER0, ANSWER1])
+  - |-
+    BOX0=LOC(image=IMAGE,object='water',color='blue')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=ANALYZE(image=IMAGE0,aspect='water_condition')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2398164
@@ -5678,6 +6871,21 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     ANSWER0=VQA(image=IMAGE0,question='How is the water today?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0 = VQA(image=IMAGE, question='How is the water today?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    WATER_CONDITION = ANALYZE_WATER(image=IMAGE)
+    ANSWER = EVAL(expr="'calm' if WATER_CONDITION == 'calm' else 'choppy'")
+    FINAL_RESULT = RESULT(var=ANSWER)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the condition of the water today?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=ANALYZE(image=IMAGE,date='today',aspect='water_condition')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2403027
   "prompt":
@@ -5690,7 +6898,31 @@
       The plane is low.
   "image": |-
     2403027.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='plane')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Is the plane high or low?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='plane')
+    POSITION_ANALYSIS = ANALYZE_POSITION(image=IMAGE, box=BOX0)
+    ANSWER = EVAL(expr="'high' if POSITION_ANALYSIS == 'high' else 'low'")
+    FINAL_RESULT = RESULT(var=ANSWER)
+  - |-
+    BOX0=LOC(image=IMAGE, object='plane')
+    ANSWER0=POSITION(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} == 'top' else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plane')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='plane')
+    ANSWER0=VQA(image=IMAGE, question='Is the plane high or low?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2405819
   "prompt":
@@ -5703,7 +6935,33 @@
       The kite is high.
   "image": |-
     2405819.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='long kite')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Does the kite look low or high?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='long kite')
+    POSITION_ANALYSIS = ANALYZE_POSITION(image=IMAGE, box=BOX0)
+    ANSWER = EVAL(expr="'high' if POSITION_ANALYSIS == 'high' else 'low'")
+    FINAL_RESULT = RESULT(var=ANSWER)
+  - |-
+    BOX0=LOC(image=IMAGE, object='kite')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the length of the kite?')
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} == 'long' else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='long kite')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='kite')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the kite low or high?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2405819
   "prompt":
@@ -5716,7 +6974,33 @@
       The kite is high.
   "image": |-
     2405819.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='long kite')
+    ANSWER0=HEIGHT(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > threshold else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='long kite')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='sky')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='long kite')
+    ANSWER0=VQA(image=IMAGE,question='Does the long kite look low or high?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='long kite')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='kite')
+    ANSWER0=VQA(image=IMAGE,question='What is the height of the kite?')
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0.5 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2379492
   "prompt":
@@ -5729,7 +7013,35 @@
       The fence is high.
   "image": |-
     2379492.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='fence')
+    BOX1=COLOR(image=IMAGE, box=BOX0)
+    ANSWER0=EVAL(expr="'low' if 'metal' in {BOX1} else 'high'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='fence')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='metal')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='fence')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the fence made of metal low or high?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='fence', material='metal')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='fence')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What material is the fence made of?')
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} == 'metal' else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2403027
   "prompt":
@@ -5742,7 +7054,33 @@
       The plane is low.
   "image": |-
     2403027.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='plane')
+    ANSWER0=HEIGHT(box=BOX0)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > threshold else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='plane')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='sky')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'high' if {ANSWER0} > 0 else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plane')
+    ANSWER0=VQA(image=IMAGE,question='Is the plane high or low?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plane')
+    POSITION=VERTICAL_POSITION(box=BOX0)
+    ANSWER=EVAL(expr="'high' if {POSITION} is upper else 'low'")
+    FINAL_RESULT=RESULT(var=ANSWER)
+  - |-
+    BOX0=LOC(image=IMAGE, object='plane')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the plane high or low?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2390938
   "prompt":
@@ -5755,7 +7093,32 @@
       The receipt is under the tea pot.
   "image": |-
     2390938.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='tea pot')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is under the tea pot?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='tea pot')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is under the tea pot?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tea pot')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is under the tea pot?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tea pot')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is under the tea pot?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='tea pot')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is under the tea pot?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2351749
   "prompt":
@@ -5768,7 +7131,35 @@
       The price tag is on the fruit.
   "image": |-
     2351749.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='fruit')
+    ANSWER0=VQA(image=IMAGE0, question='What is on the fruit?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bananas')
+    IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='fruit')
+    ANSWER0 = VQA(image=IMAGE0, question='What is on the fruit?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    BOX1=LOC_LEFTOF(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE,question='What is on the fruit?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bananas')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='fruit')
+    ANSWER0=VQA(image=IMAGE0, question='What is on the fruit that the bananas are to the left of?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is on the fruit?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2411741
   "prompt":
@@ -5781,7 +7172,37 @@
       The label is on the blender.
   "image": |-
     2411741.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='bike')
+    IMAGE0=CROP_BEHIND(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='appliance')
+    ANSWER0=VQA(image=IMAGE0, question='What is on the appliance?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bike')
+    IMAGE0 = CROP_BEHIND(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='appliance')
+    ANSWER0 = VQA(image=IMAGE0, question='What is on the appliance?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    BOX1=LOC_BEHIND(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE,question='What is on the appliance?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bike')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='appliance')
+    ANSWER0=VQA(image=IMAGE0, question='What is on the appliance behind the bike?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    IMAGE0=CROP_BEHIND(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='appliance')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2343793
   "prompt":
@@ -5794,7 +7215,38 @@
       The tag is in front of the monitor.
   "image": |-
     2343793.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='monitor')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='in_front')
+    ANSWER0=VQA(image=IMAGE0, question='What is in front of the monitor?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='monitor')
+    IMAGE0 = CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='object')
+    ANSWER0 = VQA(image=IMAGE0, question='What is in front of the monitor?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='monitor')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='front')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='monitor')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='front')
+    ANSWER0=VQA(image=IMAGE0,question='What is in front?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='monitor')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='in front')
+    ANSWER0=VQA(image=IMAGE0,question='What is in front?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2411741
   "prompt":
@@ -5807,7 +7259,38 @@
       The label is on the blender.
   "image": |-
     2411741.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='bike')
+    IMAGE0=CROP_BEHIND(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='appliance')
+    ANSWER0=VQA(image=IMAGE0, question='What is on the appliance?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bike')
+    IMAGE0 = CROP_BEHIND(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='appliance')
+    ANSWER0 = VQA(image=IMAGE0, question='What is on the appliance?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    IMAGE0=CROP_BEHIND(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='appliance')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'yes' if {ANSWER0} > 0 else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    IMAGE0=CROP_BEHIND(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='appliance')
+    ANSWER0=VQA(image=IMAGE0,question='What is on the appliance?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    IMAGE0=CROP_BEHIND(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='appliance')
+    ANSWER0=VQA(image=IMAGE0,question='What is on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2324917
   "prompt":
@@ -6248,7 +7731,38 @@
       The bananas are immature.
   "image": |-
     2382095.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bananas')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Are the bananas ripe?')
+    ANSWER1 = EVAL(expr="'mature' if ANSWER0 == 'yes' else 'immature'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Are the bananas mature?')
+    ANSWER1=EVAL(expr="'mature' if {ANSWER0} < 0.5 else 'immature'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='mature')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'mature' if {ANSWER0} > 0 else 'immature'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What do the bananas look like?')
+    ANSWER1=EVAL(expr="'mature' if 'little mature' in {ANSWER0} else 'immature'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='banana')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Do the bananas look mature or immature?')
+    ANSWER1 = EVAL(expr="'yes' if {'mature' in ANSWER0 or 'ripe' in ANSWER0 else 'no'}")
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2382095
   "prompt":
@@ -6261,7 +7775,38 @@
       The bananas are immature.
   "image": |-
     2382095.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bananas')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Are the bananas ripe?')
+    ANSWER1 = EVAL(expr="'mature' if ANSWER0 == 'yes' else 'immature'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Are the bananas mature?')
+    ANSWER1=EVAL(expr="'mature' if {ANSWER0} < 0.5 else 'immature'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='little')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'little mature' if {ANSWER0} > 0 else 'immature'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What do the bananas look like?')
+    ANSWER1=EVAL(expr="'little mature' in {ANSWER0} or 'immature' in {ANSWER0}")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='banana')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Do the bananas look mature or immature?')
+    ANSWER1 = EVAL(expr="'yes' if {'immature' in ANSWER0 or 'unripe' in ANSWER0 else 'no'}")
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2382095
   "prompt":
@@ -6274,7 +7819,37 @@
       The bananas are immature.
   "image": |-
     2382095.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bananas')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Are the bananas ripe?')
+    ANSWER1 = EVAL(expr="'mature' if ANSWER0 == 'yes' else 'immature'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bananas')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Do the bananas look mature?')
+    ANSWER1=VQA(image=IMAGE0, question='Do the bananas look immature?')
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} == 'yes' or {ANSWER1} == 'yes' else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    ANSWER0=VQA(image=IMAGE, question='Are the bananas little mature?')
+    ANSWER1=VQA(image=IMAGE, question='Are the bananas immature?')
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} == 'yes' or {ANSWER1} == 'yes' else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='banana')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Do the bananas look mature or immature?')
+    ANSWER1 = EVAL(expr="'yes' if {'little mature' in ANSWER0 or 'slightly ripe' in ANSWER0 else 'no'}")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question=QUESTION0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2382095
   "prompt":
@@ -6287,7 +7862,37 @@
       The bananas are immature.
   "image": |-
     2382095.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bananas')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Are the bananas ripe?')
+    ANSWER1 = EVAL(expr="'mature' if ANSWER0 == 'yes' else 'immature'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bananas')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Do the bananas look slightly mature?')
+    ANSWER1=VQA(image=IMAGE0, question='Do the bananas look immature?')
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} == 'yes' or {ANSWER1} == 'yes' else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    ANSWER0=VQA(image=IMAGE, question='Are the bananas little mature?')
+    ANSWER1=VQA(image=IMAGE, question='Are the bananas immature?')
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} == 'yes' or {ANSWER1} == 'yes' else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='banana')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Do the bananas look mature or immature?')
+    ANSWER1 = EVAL(expr="'yes' if {'little immature' in ANSWER0 or 'slightly unripe' in ANSWER0 else 'no'}")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question=QUESTION0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2382095
   "prompt":
@@ -6300,7 +7905,35 @@
       The bananas are immature.
   "image": |-
     2382095.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Are these bananas mature?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    ANSWER0=VQA(image=IMAGE, question='Are the bananas mature?')
+    ANSWER1=EVAL(expr="'mature' if {ANSWER0} == 'little mature' else 'immature'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Are the bananas ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bananas')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Do the bananas look somewhat mature?')
+    ANSWER1=VQA(image=IMAGE0, question='Do the bananas look immature?')
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} == 'yes' or {ANSWER1} == 'yes' else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE, object='banana')
+    ANSWER0=VQA(image=IMAGE, question='Are the bananas little mature?')
+    ANSWER1=VQA(image=IMAGE, question='Are the bananas immature?')
+    ANSWER2=EVAL(expr="'yes' if {ANSWER0} == 'yes' or {ANSWER1} == 'yes' else 'no'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
 - "id": |-
     2364373
   "prompt":
@@ -6313,7 +7946,28 @@
       The bird is on the ground.
   "image": |-
     2364373.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='bird')
+    ANSWER0=LOCATE_DIRECTION(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bird')
+    ANSWER0=VQA(image=IMAGE, question='Where is the bird?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bird')
+    ANSWER0=VQA(image=IMAGE,question='Where is the bird?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bird')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Where is the bird?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bird')
+    ANSWER0=VQA(image=IMAGE, question='Where is the bird?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2382162
   "prompt":
@@ -6326,7 +7980,28 @@
       The bike is in the sky.
   "image": |-
     2382162.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    ANSWER0=LOCATE_DIRECTION(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bike')
+    ANSWER0=VQA(image=IMAGE, question='Where is the bike located?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    ANSWER0=VQA(image=IMAGE,question='Where is the bike located?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bike')
+    ANSWER0 = COUNT(box=BOX0)
+    ANSWER1 = EVAL(expr="'right' if {ANSWER0} > 0 else 'left'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bike')
+    ANSWER0=VQA(image=IMAGE,question='Where is the bike?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2403803
   "prompt":
@@ -6339,7 +8014,34 @@
       The ground is in front of the water.
   "image": |-
     2403803.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_FRONT(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What object is in front of the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What object is in front of the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_AHEAD(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What object is in front of the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='water')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, relationship='front')
+    ANSWER0 = COUNT(box=BOX1)
+    ANSWER1 = EVAL(expr="'nothing' if {ANSWER0} == 0 else 'something'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is in front of the water?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2392698
   "prompt":
@@ -6352,7 +8054,36 @@
       The pond is in front of the ground.
   "image": |-
     2392698.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='pond')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is in front of the pond?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pond')
+    IMAGE0=CROP_FRONT(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is in front of the pond?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='pond')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, relationship='behind')
+    ANSWER0 = COUNT(box=BOX1)
+    ANSWER1 = EVAL(expr="'nothing' if {ANSWER0} == 0 else 'something'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='pond')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE, object='front')
+    IMAGE1=CROP(image=IMAGE, box=BOX1)
+    ANSWER0=VQA(image=IMAGE1, question='What is in front of the pond?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pond')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is in front of the pond?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2370684
   "prompt":
@@ -6365,7 +8096,31 @@
       The ground is covered with snow.
   "image": |-
     2370684.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='snow')
+    ANSWER0 = COUNT(box=BOX0)
+    ANSWER1 = EVAL(expr="'ground' if {ANSWER0} > 0 else 'nothing'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snow')
+    ANSWER0=VQA(image=IMAGE,question='What is covered with this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, attribute='snow')
+    ANSWER0 = COUNT(box=BOX0)
+    ANSWER1 = EVAL(expr="'nothing' if {ANSWER0} == 0 else 'something'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='snow')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'ground' if {ANSWER0} > 0 else 'no snow'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snow')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'ground' if {ANSWER0} > 0 else 'nothing'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2414605
   "prompt":
@@ -6383,6 +8138,26 @@
     BOX0=LOC(image=IMAGE, object='grass')
     ANSWER0=VQA(image=IMAGE, question='Is the grass healthy or unhealthy?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='grass')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Does the grass look healthy?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='grass')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Does the grass look healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='grass')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Does the grass look healthy or unhealthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='grass')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Does the grass look healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2361439
   "prompt":
@@ -6400,6 +8175,26 @@
     BOX0=LOC(image=IMAGE, object='palm tree')
     ANSWER0=VQA(image=IMAGE, question='Is the palm tree unhealthy or healthy?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='palm tree')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Is the palm tree healthy?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='palm tree')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the palm tree healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='palm tree')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the palm tree unhealthy or healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='palm tree')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the palm tree healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2361439
   "prompt":
@@ -6417,6 +8212,26 @@
     BOX0=LOC(image=IMAGE, object='palm tree')
     ANSWER0=VQA(image=IMAGE, question='Is the palm tree unhealthy or healthy?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='palm tree')
+    ANSWER0=VQA(image=IMAGE,question='Is the palm tree unhealthy or healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='palm tree')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Is the palm tree unhealthy or healthy?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='palm tree')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the palm tree unhealthy or healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='palm tree')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANALYSIS_RESULT=ANALYZE_HEALTH(image=IMAGE0)
+    ANSWER1=EVAL(expr="'healthy' if {ANALYSIS_RESULT} > threshold else 'unhealthy'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2414605
   "prompt":
@@ -6434,6 +8249,26 @@
     BOX0=LOC(image=IMAGE, object='grass')
     ANSWER0=VQA(image=IMAGE, question='Does the grass look healthy or unhealthy?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='grass')
+    ANSWER0=VQA(image=IMAGE,question='Does the grass look healthy or unhealthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='grass')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='Does the grass look healthy or unhealthy?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='grass')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Does the grass look healthy or unhealthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='grass')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANALYSIS_RESULT=ANALYZE_HEALTH(image=IMAGE0)
+    ANSWER1=EVAL(expr="'healthy' if {ANALYSIS_RESULT} > threshold else 'unhealthy'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2414605
   "prompt":
@@ -6451,6 +8286,21 @@
     BOX0=LOC(image=IMAGE, object='grass')
     ANSWER0=VQA(image=IMAGE, question='Does the grass look healthy or unhealthy?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Does the grass look healthy?')
+    ANSWER1=VQA(image=IMAGE,question='Does the grass look unhealthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0 + ANSWER1)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Does the grass look healthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Does the grass look healthy or unhealthy?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='grass')
+    ANSWER0=VQA(image=IMAGE, question='Does the grass look healthy?')
+    ANSWER1=EVAL(expr="'healthy' if {ANSWER0} == 'yes' else 'unhealthy'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2385332
   "prompt":
@@ -6471,6 +8321,32 @@
     BOX2=LOC(image=IMAGE0, object='pepper')
     ANSWER0=EVAL(expr="'lemon' if COUNT(box=BOX1) > 0 else 'pepper'")
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is the man holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='stove')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What vegetable is the man holding, a lemon or a pepper?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='man')
+    IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='stove')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0, box=BOX1)
+    BOX2=LOC(image=IMAGE1, object='vegetable')
+    ANSWER0=VQA(image=IMAGE1, question='What vegetable is the man holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2369766
   "prompt":
@@ -6490,6 +8366,33 @@
     BOX1=LOC(image=IMAGE0, object='vegetable')
     ANSWER0=VQA(image=IMAGE0, question='What is the vegetable to the left?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='plate')
+    IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='vegetable')
+    BOX2 = LOC(image=IMAGE, object='vegetable', left_of=BOX1)
+    ANSWER0 = LABEL(image=IMAGE, box=BOX2)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plate')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plate')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='plate')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2325444
   "prompt":
@@ -6508,6 +8411,29 @@
     IMAGE0=CROP_LEFT(image=IMAGE, box=BOX0)
     BOX1=LOC(image=IMAGE0, object='vegetable')
     ANSWER0=VQA(image=IMAGE0, question='What is the vegetable to the left?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='potato')
+    BOX1 = LOC(image=IMAGE, object='vegetable', left_of=BOX0)
+    ANSWER0 = LABEL(image=IMAGE, box=BOX1)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='potato')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='potato')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='potato')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='What is the vegetable?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2371504
@@ -6529,6 +8455,38 @@
     ANSWER1=VQA(image=IMAGE, question='What color is the tomato?')
     ANSWER2=EVAL(expr="'pepper' if {ANSWER0} != 'black' else 'tomato'")
     FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='pepper')
+    BOX1 = LOC(image=IMAGE, object='tomato')
+    ANSWER0 = COLOR(image=IMAGE, box=BOX0)
+    ANSWER1 = COLOR(image=IMAGE, box=BOX1)
+    ANSWER2 = EVAL(expr="'pepper' if {ANSWER0} != 'black' else 'tomato'")
+    FINAL_RESULT = RESULT(var=ANSWER2)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pepper')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the pepper?')
+    BOX1=LOC(image=IMAGE,object='tomato')
+    IMAGE1=CROP(image=IMAGE,box=BOX1)
+    ANSWER1=VQA(image=IMAGE1,question='What color is the tomato?')
+    ANSWER2=EVAL(expr="'pepper' if {ANSWER0} != 'black' else 'tomato'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
+  - |-
+    BOX0_PEPPER = LOC(image=IMAGE, object='pepper')
+    BOX1_TOMATO = LOC(image=IMAGE, object='tomato')
+    COLOR_PEPPER = GET_COLOR(image=IMAGE, box=BOX0_PEPPER)
+    COLOR_TOMATO = GET_COLOR(image=IMAGE, box=BOX1_TOMATO)
+    ANSWER0 = EVAL(expr="'pepper' if '{COLOR_PEPPER}' != 'black' else 'tomato'")
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pepper')
+    BOX1=LOC(image=IMAGE,object='tomato')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    IMAGE1=CROP(image=IMAGE,box=BOX1)
+    ANSWER0=VQA(image=IMAGE0,question='What color is the pepper?')
+    ANSWER1=VQA(image=IMAGE1,question='What color is the tomato?')
+    ANSWER2=EVAL(expr="'pepper' if {ANSWER0} != 'black' else 'tomato'")
+    FINAL_RESULT=RESULT(var=ANSWER2)
 - "id": |-
     2320769
   "prompt":
@@ -6547,6 +8505,29 @@
     IMAGE0=CROP_LEFT(image=IMAGE, box=BOX0)
     BOX1=LOC(image=IMAGE0, object='vegetable')
     ANSWER0=VQA(image=IMAGE0, question='What is the vegetable to the left?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='broccoli')
+    BOX1 = LOC(image=IMAGE, object='vegetable', left_of=BOX0)
+    ANSWER0 = LABEL(image=IMAGE, box=BOX1)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='broccoli')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='vegetable')
+    ANSWER0=VQA(image=IMAGE0,question='What is the vegetable?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0_BROCCOLI = LOC(image=IMAGE, object='broccoli')
+    IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0_BROCCOLI)
+    BOX1_VEGETABLE = LOC(image=IMAGE0, object='vegetable')
+    ANSWER0 = GET_OBJECT_TYPE(image=IMAGE0, box=BOX1_VEGETABLE)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='broccoli')
+    BOX1=LOC_LEFTOF(image=IMAGE,box=BOX0)
+    IMAGE0=CROP(image=IMAGE,box=BOX1)
+    ANSWER0=VQA(image=IMAGE0,question='What is this vegetable?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2357448
@@ -9337,7 +11318,28 @@
       The bowl is shallow.
   "image": |-
     2355620.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='bowl')
+    ANSWER0 = DEPTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bowl')
+    DEPTH=MEASURE_DEPTH(box=BOX0)
+    FINAL_RESULT=RESULT(var=DEPTH)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bowl')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=DEPTH(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0_BOWL = LOC(image=IMAGE, object='bowl')
+    DEPTH_BOWL = MEASURE_DEPTH(image=IMAGE, box=BOX0_BOWL)
+    FINAL_RESULT = RESULT(var=DEPTH_BOWL)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bowl')
+    ANSWER0=DEPTH(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2345501
   "prompt":
@@ -9350,7 +11352,28 @@
       The water is shallow.
   "image": |-
     2345501.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='water')
+    ANSWER0 = DEPTH(box=BOX0)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    DEPTH=MEASURE_DEPTH(box=BOX0)
+    FINAL_RESULT=RESULT(var=DEPTH)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=DEPTH(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0_WATER = LOC(image=IMAGE, object='water')
+    DEPTH_WATER = MEASURE_DEPTH(image=IMAGE, box=BOX0_WATER)
+    FINAL_RESULT = RESULT(var=DEPTH_WATER)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    ANSWER0=DEPTH(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2408009
   "prompt":
@@ -9363,7 +11386,26 @@
       The water is deep.
   "image": |-
     2408009.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOXES_WATER = LOC_MULTIPLE(image=IMAGE, object='water')
+    average_depth = sum(depths) / len(depths)
+    FINAL_RESULT = RESULT(var=average_depth)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    DEPTH=MEASURE_DEPTH(box=BOX0)
+    FINAL_RESULT=RESULT(var=DEPTH)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=DEPTH(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question=DEPTH_QUESTION)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=DEPTH(image=IMAGE,object='water')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2342451
   "prompt":
@@ -9376,7 +11418,29 @@
       The snow is deep.
   "image": |-
     2342451.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0 = LOC(image=IMAGE, object='snow')
+    FEATURES_SNOW = EXTRACT_FEATURES(box=BOX0)
+    ANSWER0 = EVAL(expr="'deep' if {FEATURES_SNOW} else 'shallow'")
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snow')
+    DEPTH=MEASURE_DEPTH(box=BOX0)
+    ANSWER=EVAL(expr="'deep' if {DEPTH} > THRESHOLD else 'shallow'")
+    FINAL_RESULT=RESULT(var=ANSWER)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snow')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=DEPTH(image=IMAGE0)
+    ANSWER1=EVAL(expr="'deep' if {ANSWER0} > THRESHOLD else 'shallow'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question=SNOW_QUESTION)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Does the snow look deep or shallow?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2408009
   "prompt":
@@ -9389,7 +11453,25 @@
       The water is deep.
   "image": |-
     2408009.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    DEPTH=DETECT_DEPTH(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=DEPTH)
+  - |-
+    DEPTH=DEPTH_ESTIMATION(image=IMAGE, object='water')
+    FINAL_RESULT=RESULT(var=DEPTH)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    ANSWER0=DEPTH(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question=DEPTH_QUESTION)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=DEPTH(image=IMAGE,object='water')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2403462
   "prompt":
@@ -9402,7 +11484,26 @@
       The wine is in the wine glass.
   "image": |-
     2403462.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='wine')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    CONTAINER=DETECT_CONTAINER(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=CONTAINER)
+  - |-
+    BOX0=LOC(image=IMAGE,object='wine')
+    ANSWER0=LOC_CONTAIN(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wine')
+    ANSWER0=CONTAINER(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question=WINE_QUESTION)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='What is the wine in?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2391042
   "prompt":
@@ -9415,7 +11516,35 @@
       The cups are on top of the table.
   "image": |-
     2391042.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='table')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    TOP_ITEM=LOC(image=IMAGE0, object='TOP')
+    FINAL_RESULT=RESULT(var=TOP_ITEM)
+  - |-
+    BOX0=LOC(image=IMAGE,object='table')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='TOP')
+    ANSWER0=LOC_CONTAIN(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='table')
+    IMAGE0=CROP_ABOVE(image=IMAGE, box=BOX0)
+    ANSWER0=OBJECTS(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='table')
+    IMAGE0 = CROP_ABOVE(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='*')
+    ANSWER0 = LIST(box=BOX1)
+    ANSWER0 = FILTER(objects=ANSWER0, condition='not(table)')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='table')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is located on top of the table?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2411855
   "prompt":
@@ -9428,7 +11557,36 @@
       The saucer is higher than the plate.
   "image": |-
     2411855.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='saucer')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    HIGHER_ITEMS=LOC_HIGHER(image=IMAGE0, object='saucer')
+    FINAL_RESULT=RESULT(var=HIGHER_ITEMS)
+  - |-
+    BOX0=LOC(image=IMAGE,object='saucer')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='LOWER')
+    ANSWER0=LOC_CONTAIN(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='saucer')
+    IMAGE0=CROP_ABOVE(image=IMAGE, box=BOX0)
+    ANSWER0=OBJECTS(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='saucer')
+    IMAGE0 = CROP_ABOVE(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='*')
+    ANSWER0 = LIST(box=BOX1)
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='saucer')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='objects')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'nothing' if {ANSWER0} == 0 else 'other objects'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2272
   "prompt":
@@ -9441,7 +11599,35 @@
       The woman is holding the cup.
   "image": |-
     2272.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='woman')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the woman holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='woman')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='hand')
+    ANSWER0=VQA(image=IMAGE0, question='What is the hand holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='woman')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='hand')
+    ANSWER0=VQA(image=IMAGE1,question='What is the woman holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='woman')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is the woman holding?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='woman')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='objects')
+    ANSWER0=VQA(image=IMAGE0,question='What is the woman holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2383270
   "prompt":
@@ -9454,7 +11640,30 @@
       The sauce is on the plate.
   "image": |-
     2383270.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='sauce')
+    ANSWER0=VQA(image=IMAGE, question='What is the sauce on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sauce')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='What is the sauce on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sauce')
+    ANSWER0=VQA(image=IMAGE,question='What is the sauce on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='sauce')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What is the sauce on?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sauce')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is the sauce on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2387720
   "prompt":
@@ -10640,6 +12849,21 @@
     BOX0=LOC(image=IMAGE,object='woman')
     ANSWER0=REGION(image=IMAGE,box=BOX0)
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='woman')
+    ANSWER0=LOCATE(image=IMAGE, object='woman', reference='standing')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='woman')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='woman')
+    ANSWER0=VQA(image=IMAGE,question='Where is the woman standing?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='woman')
+    ANSWER0=POSITION(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2323573
   "prompt":
@@ -10657,6 +12881,21 @@
     BOX0=LOC(image=IMAGE,object='man')
     ANSWER0=REGION(image=IMAGE,box=BOX0)
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='man')
+    ANSWER0=LOCATE(image=IMAGE, object='man', reference='position')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='man')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    ANSWER0=VQA(image=IMAGE,question='Where is the man?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    ANSWER0=POSITION(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2412014
   "prompt":
@@ -10673,6 +12912,21 @@
   - |-
     ANSWER0=VQA(image=IMAGE,question='Which room is it?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Which room is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Which room is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='Which room is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='ALL')  # Locate all objects in the image
+    ROOM1_COUNT = COUNT(box=BOX0, objects=ROOM1_OBJECTS)  # Count objects relevant to Room 1
+    ROOM2_COUNT = COUNT(box=BOX0, objects=ROOM2_OBJECTS)  # Count objects relevant to Room 2
+    ROOM3_COUNT = COUNT(box=BOX0, objects=ROOM3_OBJECTS)  # Count objects relevant to Room 3
+    FINAL_RESULT = RESULT(var=ROOM)
 - "id": |-
     2387991
   "prompt":
@@ -10689,6 +12943,19 @@
   - |-
     ANSWER0=VQA(image=IMAGE,question='Which room is it?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=CLASSIFY(image=IMAGE,object='room')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Which room is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE, question='Which room is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BED_LOCATION = LOC(image=IMAGE, object='bed')  # Locate the bed in the image
+    NIGHTSTAND_LOCATION = LOC(image=IMAGE, object='nightstand')  # Locate the nightstand in the image
+    FINAL_RESULT = RESULT(var=ROOM)
 - "id": |-
     2365064
   "prompt":
@@ -10705,6 +12972,23 @@
   - |-
     BOX0=LOC(image=IMAGE,object='pot')
     ANSWER0=REGION(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pot')
+    ANSWER0=POSITION(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pot')
+    ANSWER0=DESCRIBE(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='pot')
+    ANSWER0 = COUNT(box=BOX0)
+    ANSWER1 = EVAL(expr="'not found' if {ANSWER0} == 0 else 'top' if BOX0.top < IMAGE.height / 2 else 'bottom'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pot')
+    ANSWER0=VQA(image=IMAGE,question='Where is the pot?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2412071
@@ -10725,6 +13009,30 @@
     BOX1=LOC(image=IMAGE0,object='baked good')
     ANSWER0=TYPE(box=BOX1)
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='cup')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=CLASSIFY(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='cup')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=CLASSIFY(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='cup')
+    IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='baked good')
+    ANSWER0 = VQA(image=IMAGE0, question='What type of baked good is this?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='cup')
+    IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=VQA(image=IMAGE0,question='What type of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2368202
   "prompt":
@@ -10743,6 +13051,29 @@
     IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
     BOX1=LOC(image=IMAGE0,object='baked good')
     ANSWER0=TYPE(box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='butter')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=VQA(image=IMAGE1,question='What type of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='butter')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='baked good')
+    ANSWER0=VQA(image=IMAGE1, question='What type of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='butter')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What type of baked good is the butter on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='butter')
+    IMAGE0=CROP_UNDER(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=CLASSIFY(image=IMAGE0,box=BOX1)
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2364858
@@ -10765,6 +13096,33 @@
     BOX2=LOC(image=IMAGE1,object='baked good')
     ANSWER0=TYPE(box=BOX2)
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='LEFT')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='tray')
+    IMAGE1=CROP_RIGHTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='baked good')
+    ANSWER0=VQA(image=IMAGE2,question='What kind of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='tray', side='left')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='baked good', side='right')
+    ANSWER0=VQA(image=IMAGE1, question='What kind of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tray', position='left')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good', position='right')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What kind of baked good is to the right of the tray?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tray', side='left')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good', side='right')
+    ANSWER0=CLASSIFY(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2397488
   "prompt":
@@ -10782,6 +13140,27 @@
     BOX0=LOC(image=IMAGE,object='sprinkles')
     ANSWER0=ON_TOP_OF(box=BOX0)
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sprinkles')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=VQA(image=IMAGE1,question='What are the sprinkles on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sprinkles')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='baked good')
+    ANSWER0=VQA(image=IMAGE1, question='What type of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sprinkles')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What are the sprinkles on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sprinkles')
+    ANSWER0=VQA(image=IMAGE,question='What are the sprinkles on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     61557
   "prompt":
@@ -10798,6 +13177,28 @@
   - |-
     BOX0=LOC(image=IMAGE,object='letters')
     ANSWER0=ON_TOP_OF(box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='letters')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='baked good')
+    ANSWER0=VQA(image=IMAGE1,question='Which kind of baked good are the letters on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='letters')
+    IMAGE0=CROP_BELOW(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='baked good')
+    ANSWER0=VQA(image=IMAGE1, question='What type of baked good is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='letters')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Which kind of baked good are the letters on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='letters')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Which kind of baked good are the letters on?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2322741
@@ -13935,6 +16336,14 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Do the bananas look ripe or unripe?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    ANSWER0=VQA(image=IMAGE,question='Do the bananas look ripe or unripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas')
+    ANSWER0=VQA(image=IMAGE,question='Do the bananas look ripe or unripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2392936
   "prompt":
@@ -13969,6 +16378,14 @@
     IMAGE1 = CROP(image=IMAGE0, box=BOX1)
     ANSWER0 = VQA(image=IMAGE1, question='Are the bananas unripe or ripe?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana', attribute='thin', negate=True)
+    ANSWER0=VQA(image=IMAGE,question='Are the bananas unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bananas',condition='not thin')
+    ANSWER0=VQA(image=IMAGE,question='Are the bananas unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2320373
   "prompt":
@@ -13997,6 +16414,14 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Is the banana unripe or ripe?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    ANSWER0=VQA(image=IMAGE,question='Is the banana unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    ANSWER0=VQA(image=IMAGE,question='Is the banana unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2320373
   "prompt":
@@ -14025,6 +16450,14 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Is the banana unripe or ripe?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    ANSWER0=VQA(image=IMAGE,question='Is the banana unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    ANSWER0=VQA(image=IMAGE,question='Is the banana unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2320373
   "prompt":
@@ -14053,6 +16486,16 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='Is the banana unripe or ripe?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    COLOR0=COLOR(image=IMAGE,box=BOX0)
+    ANSWER0=EVAL(expr="'unripe' if COLOR0 == 'green' else 'ripe'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='banana')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the banana unripe or ripe?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2341300
   "prompt":
@@ -14082,6 +16525,18 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='What is the color of the water?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='water')
+    COLOR0=COLOR(image=IMAGE0,box=BOX1)
+    FINAL_RESULT=RESULT(var=COLOR0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP_BELOW(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='water')
+    ANSWER0=COLOR(image=IMAGE,box=BOX1)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2409391
   "prompt":
@@ -14110,6 +16565,14 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='What color is that coat?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='coat')
+    COLOR0=COLOR(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=COLOR0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='coat')
+    ANSWER0=COLOR(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2363398
   "prompt":
@@ -14138,6 +16601,14 @@
     IMAGE0 = CROP(image=IMAGE, box=BOX0)
     ANSWER0 = VQA(image=IMAGE0, question='What color do you think the snowpants are?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snowpants')
+    COLOR0=COLOR(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=COLOR0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='snowpants')
+    ANSWER0=COLOR(image=IMAGE,box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2391733
   "prompt":
@@ -14171,6 +16642,20 @@
     IMAGE1 = CROP(image=IMAGE0, box=BOX1)
     ANSWER0 = VQA(image=IMAGE1, question='Which color is the wetsuit?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='person')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='wetsuit')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What color is the wetsuit?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='person')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='wetsuit')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What color is the wetsuit?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     713333
   "prompt":
@@ -14204,6 +16689,20 @@
     IMAGE1 = CROP(image=IMAGE0, box=BOX1)
     ANSWER0 = VQA(image=IMAGE1, question='What color is the curtain?')
     FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='window')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='curtain')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What color is the curtain?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='window')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='curtain')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What color is the curtain?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2378779
   "prompt":
@@ -17700,7 +20199,29 @@
       The sign is a traffic sign.
   "image": |-
     2326628.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='sign')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Which kind of sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sign')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What kind of sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sign')
+    ANSWER0=VQA(image=IMAGE,question='Which kind of sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sign')
+    ANSWER0=VQA(image=IMAGE,question='Which kind of sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sign')
+    ANSWER0=VQA(image=IMAGE,question='Which kind of sign is it?', box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2402625
   "prompt":
@@ -17713,7 +20234,31 @@
       The stop sign is on the pole.
   "image": |-
     2402625.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='pole')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is on the pole?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pole')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is on the pole?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pole')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is on the pole?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pole')
+    ANSWER0=VQA(image=IMAGE,question='What is on the pole?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='pole')
+    IMAGE0=CROP_ABOVE(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is on the pole?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2357167
   "prompt":
@@ -17726,7 +20271,30 @@
       The sign is a stop sign.
   "image": |-
     2357167.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='sign')
+    ANSWER0=FILTER_BY_SIZE(image=IMAGE, box=BOX0, size='large')
+    ANSWER1=VQA(image=ANSWER0, question='What kind of sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='sign')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What kind of sign is large?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='large sign')
+    ANSWER0=VQA(image=IMAGE,question='What kind of sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sign')
+    BOX1=FILTER_SIZE(box=BOX0, condition='large')
+    ANSWER0=VQA(image=IMAGE, question='What kind of sign is this?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOXES=LOC(image=IMAGE,object='sign')
+    LARGE_BOXES=FILTER_SIZE(boxes=BOXES,size='large')
+    FINAL_RESULT=RESULT(var=ANSWERS)
 - "id": |-
     2316646
   "prompt":
@@ -17739,7 +20307,30 @@
       The graffiti is on the sign.
   "image": |-
     2316646.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='graffiti')
+    ANSWER0=LOCATE_CONTEXT(image=IMAGE, box=BOX0)
+    ANSWER1=EVAL(expr="ANSWER0['object']")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='graffiti')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is the graffiti on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='graffiti')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='What is the graffiti on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='graffiti')
+    ANSWER0=VQA(image=IMAGE, question='What is the graffiti on?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='graffiti')
+    ANSWER0=VQA(image=IMAGE,question='What is the graffiti on?', box=BOX0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2379209
   "prompt":
@@ -17752,7 +20343,37 @@
       The sign is a parking sign.
   "image": |-
     2379209.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='sign')
+    BOX1=LOCATE_CONTEXT(image=IMAGE, box=BOX0)
+    BOX2=LOCATE_ON(image=IMAGE, object='sidewalk', context=BOX1)
+    ANSWER0=COUNT(box=BOX2)
+    ANSWER1=VQA(image=IMAGE, question='What sign is it?')
+    FINAL_RESULT=RESULT(var=ANSWER1) if ANSWER0 > 0 else RESULT(var='None')
+  - |-
+    BOX0=LOC(image=IMAGE,object='sidewalk')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='sign')
+    ANSWER0=VQA(image=IMAGE0,question='What sign is on the sidewalk?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sign')
+    BOX1=LOC(image=IMAGE, object='sidewalk')
+    BOX_INTERSECTION=INTERSECTION(box1=BOX0, box2=BOX1)
+    ANSWER0=VQA(image=IMAGE, question='What sign is on the sidewalk?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='sidewalk')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='sign')
+    ANSWER0=VQA(image=IMAGE1, question='What is the sign on the sidewalk?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='sidewalk')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    ANSWER0 = VQA(image=IMAGE0, question='What sign is on the sidewalk?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
 - "id": |-
     2316582
   "prompt":
@@ -17765,7 +20386,28 @@
       The water is beautiful.
   "image": |-
     2316582.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=EXPAND(image=IMAGE, box=BOX0, context='scene')
+    ANSWER0=CLASSIFY(image=IMAGE0, object='water', attribute='beauty')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0=VQA(image=IMAGE,question='Is that water beautiful or ugly?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water beautiful or ugly?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water beautiful or ugly?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0 = VQA(image=IMAGE, question='Is that water beautiful or ugly?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
 - "id": |-
     2378167
   "prompt":
@@ -17778,7 +20420,28 @@
       The wildflowers are beautiful.
   "image": |-
     2378167.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='wildflowers')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wildflowers')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wildflowers')
+    ANSWER0=VQA(image=IMAGE, question='Are the wildflowers beautiful or ugly?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0 = VQA(image=IMAGE, question='Are the wildflowers ugly or beautiful?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='wildflowers')
+    ANSWER0=VQA(image=IMAGE,question='Are the wildflowers beautiful?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2316582
   "prompt":
@@ -17791,7 +20454,29 @@
       The water is beautiful.
   "image": |-
     2316582.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='water')
+    IMAGE0=CROP(image=IMAGE, box=BOX0)
+    ANSWER0=VQA(image=IMAGE0, question='Is the water beautiful or ugly?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    ANSWER0 = VQA(image=IMAGE, question='Is that water beautiful or ugly?')
+    FINAL_RESULT = RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='water')
+    ANSWER0=VQA(image=IMAGE,question='Is the water beautiful?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2378167
   "prompt":
@@ -17804,7 +20489,31 @@
       The wildflowers are beautiful.
   "image": |-
     2378167.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='wildflowers')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wildflowers')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='wildflowers')
+    ANSWER0=VQA(image=IMAGE,question='Are the wildflowers ugly or beautiful?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='wildflowers')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Are the wildflowers ugly or beautiful?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='wildflowers')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2397194
   "prompt":
@@ -17817,7 +20526,31 @@
       The window is beautiful.
   "image": |-
     2397194.jpg
-  "programs": []
+  "programs":
+  - |-
+    BOX0=LOC(image=IMAGE,object='window')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='window')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='window')
+    ANSWER0=VQA(image=IMAGE,question='Is the window ugly or beautiful?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='window')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the window ugly or beautiful?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='window')
+    ANSWER0=ANALYZE(image=IMAGE, box=BOX0, feature='beauty')
+    ANSWER1=EVAL(expr="'beautiful' if {ANSWER0} > 0 else 'ugly'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
 - "id": |-
     2401068
   "prompt":
@@ -18574,6 +21307,35 @@
     BOX1=LOC(image=IMAGE0,object='weapon', position='left')
     ANSWER0=VQA(image=IMAGE0,question='What is the weapon?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='RIGHT')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='animal')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon')
+    ANSWER0=VQA(image=IMAGE1,question='What is the weapon?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='animal', side='right')
+    IMAGE0=CROP_LEFT(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'There is no weapon.' if {ANSWER0} == 0 else 'The weapon is present.'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='animal',instance='right')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon',direction='left')
+    ANSWER0=VQA(image=IMAGE0,question='What is the weapon to the left?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='RIGHT')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='animal')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon')
+    ANSWER0=VQA(image=IMAGE1,question='What is the weapon?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2363887
   "prompt":
@@ -18595,6 +21357,39 @@
     BOX2=LOC(image=IMAGE1,object='weapon', position='right')
     ANSWER0=VQA(image=IMAGE1,question='What kind of weapon is it?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='French fries')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='bread')
+    IMAGE1=CROP_RIGHTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon')
+    ANSWER0=VQA(image=IMAGE1,question='What kind of weapon is there?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='French fries')
+    IMAGE0=CROP_RIGHT(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='bread')
+    IMAGE1=CROP_RIGHT(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon')
+    ANSWER0=COUNT(box=BOX2)
+    ANSWER1=VQA(image=IMAGE1,question='What kind of weapon is present?')
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='French fries')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='bread',direction='right')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon',direction='right')
+    ANSWER0=VQA(image=IMAGE1,question='What kind of weapon is to the right?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='French fries')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='bread')
+    IMAGE1=CROP_RIGHTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon')
+    ANSWER0=VQA(image=IMAGE1,question='What kind of weapon?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2382716
   "prompt":
@@ -18614,6 +21409,34 @@
     BOX1=LOC(image=IMAGE0,object='weapon', position='left')
     ANSWER0=VQA(image=IMAGE0,question='What weapon is it?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='purse')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=VQA(image=IMAGE0,question='What weapon is there?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='purse')
+    IMAGE0=CROP_LEFT(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'There is no weapon.' if {ANSWER0} == 0 else 'The weapon is present.'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='LEFT')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='purse')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='weapon')
+    ANSWER0=VQA(image=IMAGE1,question='What is the weapon?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='purse')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    IMAGE1=CROP_LEFTOF(image=IMAGE0,box=BOX1)
+    ANSWER0=VQA(image=IMAGE1,question='What weapon?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2382716
   "prompt":
@@ -18632,6 +21455,31 @@
     IMAGE0=CROP(image=IMAGE,box=BOX0)
     BOX1=LOC(image=IMAGE0,object='weapon', person='man')
     ANSWER0=VQA(image=IMAGE0,question='What weapon is he holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=VQA(image=IMAGE0,question='What weapon is the man holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=VQA(image=IMAGE0,question='What weapon is the man holding?')
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=VQA(image=IMAGE0,question='What weapon is the man holding?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='man')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='weapon')
+    ANSWER0=VQA(image=IMAGE0,question='What weapon?')
     FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2348624
@@ -18654,6 +21502,42 @@
     BOX2=LOC(image=IMAGE1,object='weapon', material=LOC(image=IMAGE1,object='clock',attribute='material'))
     ANSWER0=VQA(image=IMAGE1,question='What type of weapon is it?')
     FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bear')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='clock')
+    IMAGE1=CROP(image=IMAGE0, box=BOX1)
+    MATERIAL=VQA(image=IMAGE1, question='What material is the clock made of?')
+    WEAPON_TYPE=VQA(image=IMAGE, question='What type of weapon is made of {MATERIAL}?')
+    FINAL_RESULT=RESULT(var=WEAPON_TYPE)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bear')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='RIGHT')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    BOX2=LOC(image=IMAGE1,object='clock')
+    IMAGE2=CROP(image=IMAGE1,box=BOX2)
+    BOX3=LOC(image=IMAGE2,object='weapon')
+    ANSWER0=VQA(image=IMAGE2,question='What type of weapon is made of the same material as the clock?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE,object='bear')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='clock')
+    IMAGE1=CROP(image=IMAGE0,box=BOX1)
+    MATERIAL0=IDENTIFY_MATERIAL(image=IMAGE1)
+    BOX2=LOC(image=IMAGE0,object='weapon')
+    IMAGE2=CROP(image=IMAGE0,box=BOX2)
+    MATERIAL1=IDENTIFY_MATERIAL(image=IMAGE2)
+    ANSWER0=EVAL(expr="MATERIAL0 if MATERIAL0 == MATERIAL1 else 'unknown'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='bear')
+    IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
+    BOX1=LOC(image=IMAGE0, object='clock')
+    FEATURE0=ANALYZE(image=IMAGE0, box=BOX1, feature='material')
+    ANSWER0=SEARCH(image=IMAGE, object='weapon', material={FEATURE0})
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     1421
   "prompt":
@@ -18672,6 +21556,26 @@
     ANSWER0=COUNT(box=BOX0)
     ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
     FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='leaves')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='leaves')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'dense' if {ANSWER0} > THRESHOLD else 'sparse'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='leaves')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=ANALYZE_LEAF_DENSITY(image=IMAGE0)
+    FINAL_RESULT=RESULT(var=ANSWER0)
+  - |-
+    BOX0=LOC(image=IMAGE, object='leaves')
+    FEATURE0=ANALYZE(image=IMAGE, box=BOX0, feature='density')
+    ANSWER0=EVAL(expr="'dense' if {FEATURE0} > threshold else 'sparse'")
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     2317511
   "prompt":
@@ -18690,6 +21594,30 @@
     ANSWER0=COUNT(box=BOX0)
     ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
     FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='grass')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='grass')
+    ANSWER0=DENSITY(image=IMAGE,box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < threshold else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='field')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='grass')
+    ANSWER0=DENSITY(box=BOX1)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < threshold else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='field')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='grass')
+    ANSWER0 = DENSITY(image=IMAGE0, box=BOX1)
+    ANSWER1 = EVAL(expr="'dense' if {ANSWER0} >= {DENSITY_THRESHOLD} else 'sparse'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2317511
   "prompt":
@@ -18708,6 +21636,31 @@
     ANSWER0=COUNT(box=BOX0)
     ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
     FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='grass')
+    ANSWER0=COUNT(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='grass')
+    ANSWER0=COUNT(box=BOX0)
+    TOTAL_GRASS_AREA=TOTAL_AREA(image=IMAGE,object='grass')
+    ANSWER1=EVAL(expr="'sparse' if DENSITY_GRASS < threshold else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='field')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    BOX1=LOC(image=IMAGE0,object='grass')
+    ANSWER0=COUNT(box=BOX1)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < threshold_sparse else 'dense' if {ANSWER0} > threshold_dense else 'neither'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0 = LOC(image=IMAGE, object='field')
+    IMAGE0 = CROP(image=IMAGE, box=BOX0)
+    BOX1 = LOC(image=IMAGE0, object='grass')
+    ANSWER0 = DENSITY(image=IMAGE0, box=BOX1)
+    ANSWER1 = EVAL(expr="'dense' if {ANSWER0} >= {DENSITY_THRESHOLD} else 'sparse'")
+    FINAL_RESULT = RESULT(var=ANSWER1)
 - "id": |-
     2377549
   "prompt":
@@ -18726,6 +21679,26 @@
     ANSWER0=COUNT(box=BOX0)
     ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
     FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tall grass')
+    ANSWER0=DENSITY(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='tall grass')
+    ANSWER0=DENSITY(box=BOX0)
+    ANSWER1=EVAL(expr="'dense' if {ANSWER0} > THRESHOLD else 'sparse'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tall grass')
+    ANSWER0=DENSITY(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < threshold else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='tall grass')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Is the tall grass sparse or dense?')
+    FINAL_RESULT=RESULT(var=ANSWER0)
 - "id": |-
     1421
   "prompt":
@@ -18744,3 +21717,23 @@
     ANSWER0=COUNT(box=BOX0)
     ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
     FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='leaves')
+    ANSWER0=DENSITY(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < THRESHOLD else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE, object='leaves')
+    ANSWER0=DENSITY(box=BOX0)
+    ANSWER1=EVAL(expr="'dense' if {ANSWER0} > THRESHOLD else 'sparse'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='leaves')
+    ANSWER0=DENSITY(box=BOX0)
+    ANSWER1=EVAL(expr="'sparse' if {ANSWER0} < threshold else 'dense'")
+    FINAL_RESULT=RESULT(var=ANSWER1)
+  - |-
+    BOX0=LOC(image=IMAGE,object='leaves')
+    IMAGE0=CROP(image=IMAGE,box=BOX0)
+    ANSWER0=VQA(image=IMAGE0,question='Are the leaves sparse or dense?')
+    FINAL_RESULT=RESULT(var=ANSWER0)

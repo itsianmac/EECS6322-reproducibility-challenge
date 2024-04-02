@@ -183,10 +183,7 @@ def get_bulk_prompt_factory(
     method: Literal["all", "random"] = "random", num_prompts: int = 8
 ) -> BulkPromptFactory:
     prefix = "Think step by step to answer the question."
-    format_ = """
-Question: {question}
-Program:
-    """
+    format_ = "Question: {question}"
     return BulkPromptFactory(
         prefix, GQA_EXAMPLES, format_, method=method, num_prompts=num_prompts
     )
