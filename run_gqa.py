@@ -41,8 +41,12 @@ def do_gqa(
             [],
             f"Expected output to be a dictionary, got {type(result.output)} with value {result.output}",
         )
+
     prediction = result.output.get("var", None)
+    print("===== Visprog PREDICTION =====: ", prediction)
+
     step_details = [d.get("output", None) for d in result.step_details[:-1]]
+
     return prediction, step_details, None
 
 
@@ -50,7 +54,7 @@ def read_gqa(statement_details: Any, images_dir: str):
     try:
         for i, statement_detail in tqdm(
             enumerate(statement_details),
-            desc="Running GQA programs",
+            desc="Reading GQA programs",
             total=len(statement_details),
         ):
             programs = statement_detail["programs"]
@@ -99,6 +103,8 @@ def write_gqa_results(
 
 
 def main():
+
+    print("Running GQA programs")
     parser = argparse.ArgumentParser(
         description="Run all programs in a NLVR yaml file",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -161,14 +167,23 @@ def main():
 
     # Read GQA
     statements = read_gqa(statement_details, args.images_dir)
-
     for i, statement in enumerate(statements):
         img_pth = statement["image"]
         img = Image.open(img_pth).convert("RGB")
 
-        for j, program in statement["programs"]:
-            prediction, step_details, error = do_gqa(program_runner, program, img)
+        for j, program in enumerate(statement["programs"]):
+            # Print question
+            print(f"Question: {statement['prompt']['question']}")
+            print(f"Ground truth answers: {statement['answers']}")
+
+            prediction, step_details, error = do_gqa(
+                program_runner, program["program"], img
+            )
 
             write_gqa_results(
                 args.output_file, statements, prediction, step_details, error, i, j
             )
+
+
+if __name__ == "__main__":
+    main()
