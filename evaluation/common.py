@@ -1,6 +1,7 @@
 from typing import List, Dict, Any
 
 import numpy as np
+from matplotlib import pyplot as plt
 
 
 def aggregate_without_voting(stats: List[Dict[str, Any]]) -> Dict[str, float]:
@@ -26,3 +27,30 @@ def aggregate_with_voting(stats: List[Dict[str, Any]]) -> float:
     print('w/ voting', len(majority_correct))
     accuracy_mean = np.mean(majority_correct)
     return accuracy_mean
+
+
+def build_figure(results: Dict[str, Dict[str, Any]]) -> plt.Figure:
+    fig, ax = plt.subplots()
+
+    r = np.arange(len(results))
+    w = 0.4
+
+    without_voting_means = np.array([result['without_voting']['accuracy_mean']
+                                     for result in results.values()]) * 100
+    without_voting_errors = np.array([result['without_voting']['confidence_interval_95']
+                                      for result in results.values()]) * 100
+    with_voting_means = np.array([result['with_voting'] for result in results.values()]) * 100
+
+    ax.bar(r, without_voting_means, yerr=without_voting_errors, width=w, capsize=5, label='w/o voting')
+    ax.bar(r + w, with_voting_means, width=w, label='w/ voting')
+
+    y_min = min((without_voting_means - without_voting_errors).min(), with_voting_means.min()) - 2
+    y_max = max((without_voting_means + without_voting_errors).max(), with_voting_means.max()) + 2
+    ax.set_ylim(y_min, y_max)
+    ax.set_xticks(r + w / 2)
+    ax.set_xticklabels(results.keys())
+    ax.set_yticks(np.arange(int(np.ceil(y_min)), int(np.floor(y_max)) + 1, 2))
+
+    ax.legend()
+
+    return fig
