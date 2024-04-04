@@ -34,4 +34,8 @@ class CropRight(Crop):
         # TODO: which box we should use?
         original_box = box[0] if len(box) > 0 else (0, 0, image.width, image.height)
         right_box = (original_box[2], 0, image.width, image.height)
-        return image.crop(right_box) if len(box) > 0 else image
+        # check that boinding box dimensions are valid
+        if right_box[0] < right_box[2] and right_box[1] < right_box[3] and len(box) > 0:
+            return image.crop(right_box)
+        else:
+            return image

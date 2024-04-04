@@ -34,4 +34,7 @@ class CropBelow(Crop):
         # TODO: which box we should use?
         original_box = box[0] if len(box) > 0 else (0, 0, image.width, image.height)
         below_box = (0, original_box[3], image.width, image.height)
-        return image.crop(below_box) if len(box) > 0 else image
+        if below_box[0] < below_box[2] and below_box[1] < below_box[3] and len(box) > 0:
+            return image.crop(below_box)
+        else:
+            return image

@@ -34,4 +34,8 @@ class CropLeft(Crop):
         # TODO: which box we should use?
         original_box = box[0] if len(box) > 0 else (0, 0, image.width, image.height)
         left_box = (0, 0, original_box[0], image.height)
-        return image.crop(left_box) if len(box) > 0 else image
+        # check that bounding box dimensions are valid
+        if left_box[0] < left_box[2] and left_box[1] < left_box[3] and len(box) > 0:
+            return image.crop(left_box)
+        else:
+            return image

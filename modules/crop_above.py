@@ -34,4 +34,9 @@ class CropAbove(Crop):
         # TODO: which box we should use?
         original_box = box[0] if len(box) > 0 else (0, 0, image.width, image.height)
         above_box = (0, 0, image.width, original_box[1])
-        return image.crop(above_box) if len(box) > 0 else image
+
+        # check that boinding box dimensions are valid
+        if above_box[0] < above_box[2] and above_box[1] < above_box[3] and len(box) > 0:
+            return image.crop(above_box)
+        else:
+            return image
