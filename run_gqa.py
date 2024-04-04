@@ -9,28 +9,20 @@ import yaml
 from PIL import Image
 from tqdm import tqdm
 
-from modules import (
-    VQA,
-    Count,
-    Crop,
-    CropAbove,
-    CropBelow,
-    CropLeft,
-    CropRight,
-    Eval,
-    ExecutionError,
-    Loc,
-    Result,
-)
+from modules import (VQA, Count, Crop, CropAbove, CropBelow, CropLeft,
+                     CropRight, Eval, ExecutionError, Loc, Result)
 from visprog import ProgramRunner
 
 
 def do_gqa(
     program_runner: ProgramRunner, program: str, image: Image.Image
 ) -> Tuple[Optional[bool], List[Any], Optional[str]]:
+
     initial_state = {
         "IMAGE": image,
     }
+    print("===== Visprog PROGRAM =====: ", program)
+
     try:
         steps, result = program_runner.execute_program(program, initial_state)
     except ExecutionError as e:
@@ -43,6 +35,7 @@ def do_gqa(
         )
 
     prediction = result.output.get("var", None)
+
     print("===== Visprog PREDICTION =====: ", prediction)
 
     step_details = [d.get("output", None) for d in result.step_details[:-1]]
@@ -65,6 +58,8 @@ def read_gqa(statement_details: Any, images_dir: str):
             for j in range(len(programs)):
                 if isinstance(programs[j], str):
                     programs[j] = dict(program=programs[j])
+                if "results" in programs[j]:
+                    continue
                 if "results" not in programs[j]:
                     programs[j]["results"] = {}
 
@@ -87,7 +82,7 @@ def write_gqa_results(
 ):
     statements[i]["programs"][j]["results"] = dict(
         prediction=prediction,
-        steps=step_details,
+        # steps=step_details,
         execution_error=error,
         data_error=None,
     )
@@ -175,14 +170,21 @@ def main():
             # Print question
             print(f"Question: {statement['prompt']['question']}")
             print(f"Ground truth answers: {statement['answers']}")
+            print(f"id: {statement['id']}")
 
-            prediction, step_details, error = do_gqa(
-                program_runner, program["program"], img
-            )
+            # If there is a results key, we have already generated the program
+            try:
+                prediction, step_details, error = do_gqa(
+                    program_runner, program["program"], img
+                )
 
-            write_gqa_results(
-                args.output_file, statements, prediction, step_details, error, i, j
-            )
+                write_gqa_results(
+                    args.output_file, statements, prediction, step_details, error, i, j
+                )
+            except KeyboardInterrupt:
+                raise
+            except:
+                continue
 
 
 if __name__ == "__main__":
