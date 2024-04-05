@@ -54,7 +54,6 @@ def main():
                     print(f"Prediction: {pred_str}")
                     print(f"Ground truth: {gt}")
                     if pred_str is not None:
-
                         if pred_str in gt or gt in pred_str:
                             print("Correct")
                             correct_preds += 1
