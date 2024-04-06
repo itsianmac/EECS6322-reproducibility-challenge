@@ -7082,7 +7082,10 @@
       ANSWER0 = VQA(image=IMAGE0, question=''What is the dog on?'')
 
       FINAL_RESULT = RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0 = LOC(image=IMAGE, object=''dog'')
 
       BOX1 = LOC_BELOW(image=IMAGE, box=BOX0)
@@ -7101,7 +7104,10 @@
       ANSWER0 = VQA(image=IMAGE0, question=''What is the dog on?'')
 
       FINAL_RESULT = RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''dog'')
 
       ANSWER0=VQA(image=IMAGE, question=''What is the dog on?'')
@@ -11907,7 +11913,10 @@
       ANSWER0=VQA(image=IMAGE0, question=''What is on the fruit?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0 = LOC(image=IMAGE, object=''bananas'')
 
       IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -11917,7 +11926,10 @@
       ANSWER0 = VQA(image=IMAGE0, question=''What is on the fruit?'')
 
       FINAL_RESULT = RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE,object=''bananas'')
 
       BOX1=LOC_LEFTOF(image=IMAGE,box=BOX0)
@@ -11950,7 +11962,10 @@
       ANSWER0=VQA(image=IMAGE0,question=''What is on the fruit?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   prompt:
     question: What is on the fruit that the bananas are to the left of?
 - answers:
@@ -14640,7 +14655,10 @@
       ANSWER0=VQA(image=IMAGE0, question=''What kind of vehicle is this?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0 = LOC(image=IMAGE, object=''silver car'')
 
       IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -14648,7 +14666,10 @@
       ANSWER0 = VQA(image=IMAGE0, question=''What type of vehicle is on the left?'')
 
       FINAL_RESULT = RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''silver car'')
 
       IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -14656,7 +14677,10 @@
       ANSWER0=VQA(image=IMAGE0, question=''What is the vehicle to the left called?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''silver car'')
 
       IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -14666,7 +14690,10 @@
       ANSWER0=VQA(image=IMAGE0, question=''What kind of vehicle is it?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''silver car'')
 
       IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -14676,7 +14703,10 @@
       ANSWER0=VQA(image=IMAGE0, question=''What kind of vehicle is it?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   prompt:
     question: How is the vehicle to the left of the silver car called?
 - answers:
@@ -15523,7 +15553,10 @@
       bag?'')
 
       FINAL_RESULT = RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''bag'', location=''right'')
 
       IMAGE0=CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -16877,7 +16910,10 @@
       ANSWER0=VQA(image=IMAGE0, question=''What is the bag that this bear is in?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''bear'')
 
       IMAGE0=CROP(image=IMAGE, box=BOX0)
@@ -18197,7 +18233,10 @@
       ANSWER0=VQA(image=IMAGE1,question=''What drink is it?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''glasses of wine'')
 
       IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
@@ -20825,7 +20864,10 @@
       ANSWER0=VQA(image=IMAGE0,question=''What fruits are on the dessert?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE,object=''dessert'')
 
       IMAGE0=CROP_LEFTOF(image=IMAGE,box=BOX0)
@@ -20835,7 +20877,10 @@
       ANSWER0=VQA(image=IMAGE0,question=''What fruits are on the dessert?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0 = LOC(image=IMAGE, object=''dessert'')
 
       IMAGE0 = CROP_LEFTOF(image=IMAGE, box=BOX0)
@@ -20845,7 +20890,10 @@
       ANSWER = VQA(image=IMAGE0, question=''What fruits are on the dessert?'')
 
       FINAL_RESULT = RESULT(var=ANSWER)'
-    results: {}
+    results: 
+      data_error: null
+      execution_error: null
+      prediction: null
   prompt:
     question: What fruits are on the dessert on the left side of the photo?
 - answers:
@@ -24293,7 +24341,10 @@
       ANSWER0 = VQA(image=IMAGE0, question=''What is on the shelf?'')
 
       FINAL_RESULT = RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   prompt:
     question: What is on the shelf in the top of the photo?
 - answers:
@@ -30878,7 +30929,10 @@
       ANSWER0=VQA(image=IMAGE0,question=''What is the meat called?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''girl'')
 
       IMAGE0=CROP(image=IMAGE, box=BOX0)
@@ -30955,7 +31009,10 @@
       ANSWER0=VQA(image=IMAGE0,question=''What is the food called?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results: 
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''utensil'')
 
       IMAGE0=CROP(image=IMAGE, box=BOX0)
@@ -33908,7 +33965,10 @@
       ANSWER0=VQA(image=IMAGE0,question=''What is on the pole?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   prompt:
     question: What is on the pole?
 - answers:
@@ -35966,7 +36026,10 @@
       ANSWER0=VQA(image=IMAGE1,question=''What type of weapon is it?'')
 
       FINAL_RESULT=RESULT(var=ANSWER0)'
-    results: {}
+    results:
+      data_error: null
+      execution_error: null
+      prediction: null
   - program: 'BOX0=LOC(image=IMAGE, object=''bear'')
 
       IMAGE0=CROP_RIGHTOF(image=IMAGE, box=BOX0)
