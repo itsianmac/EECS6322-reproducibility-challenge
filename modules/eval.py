@@ -1,17 +1,19 @@
 import re
-from typing import Any, Dict, Tuple, Optional
+from typing import Any, Dict, Optional, Tuple
 
 from PIL import Image
 
-from modules.visprog_module import VisProgModule, ParsedStep, ExecutionError
+from modules.visprog_module import ExecutionError, ParsedStep, VisProgModule
 
 
 class Eval(VisProgModule):
-    pattern = re.compile(r"(?P<output>\S*)\s*=\s*EVAL\s*"
-                         r"\(\s*expr\s*=\s*[\"\'](?P<expr>.*)[\"\']\s*\)")
+    pattern = re.compile(
+        r"(?P<output>\S*)\s*=\s*EVAL\s*"
+        r"\(\s*expr\s*=\s*[\"\'](?P<expr>.*)[\"\']\s*\)"
+    )
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
-        """ Parse step and return list of input values/variable names
+        """Parse step and return list of input values/variable names
             and output variable name.
 
         Parameters
@@ -30,17 +32,19 @@ class Eval(VisProgModule):
         """
         replace_pattern = re.compile(r"\{(?P<var>[^}]+)}")
         variable_names = []
-        expression = match.group('expr')
+        expression = match.group("expr")
         for var_match in replace_pattern.finditer(step):
-            expression = expression.replace(var_match.group(0), var_match.group('var'))
-            expression = expression.replace('xor', '^')
-            variable_names.append(var_match.group('var'))
-        return ParsedStep(match.group('output'),
-                          inputs={'expr': expression},
-                          input_var_names={var: var for var in variable_names})
+            expression = expression.replace(var_match.group(0), var_match.group("var"))
+            expression = expression.replace("xor", "^")
+            variable_names.append(var_match.group("var"))
+        return ParsedStep(
+            match.group("output"),
+            inputs={"expr": expression},
+            input_var_names={var: var for var in variable_names},
+        )
 
     def perform_module_function(self, expr: str, **kwargs) -> Any:
-        """ Perform the color pop operation on the image using the object mask
+        """Perform the color pop operation on the image using the object mask
 
         Parameters
         ----------
@@ -55,20 +59,26 @@ class Eval(VisProgModule):
         Image.Image
             The color popped image
         """
-        return eval(expr, kwargs)
+        # Ensure expr can be passed to eval, otherwise return none
+        try:
+            return eval(expr, kwargs)
+        except:
+            return None
 
-    def execute(self, step: str, state: dict, match: Optional[re.Match[str]] = None) -> Tuple[Any, Dict[str, Any]]:
+    def execute(
+        self, step: str, state: dict, match: Optional[re.Match[str]] = None
+    ) -> Tuple[Any, Dict[str, Any]]:
         try:
             return super().execute(step, state, match)
         except SyntaxError:
-            raise ExecutionError(step, 'invalid syntax')
+            raise ExecutionError(step, "invalid syntax")
         except NameError as e:
-            raise ExecutionError(step, f'invalid variable name: {e.name}')
+            raise ExecutionError(step, f"invalid variable name: {e.name}")
         except TypeError as e:
             raise ExecutionError(step, str(e))
 
     def html(self, output: Any, expr: str, **kwargs) -> Dict[str, Any]:
-        """ Generate HTML to display the output
+        """Generate HTML to display the output
 
         Parameters
         ----------
@@ -84,7 +94,7 @@ class Eval(VisProgModule):
             The HTML to display the output
         """
         return {
-            'expr': expr,
-            'args': kwargs,
-            'output': output,
+            "expr": expr,
+            "args": kwargs,
+            "output": output,
         }

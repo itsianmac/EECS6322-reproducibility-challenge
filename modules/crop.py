@@ -2,19 +2,21 @@ import re
 from typing import Any, Dict, Tuple
 
 import numpy as np
-from PIL import Image, ImageFilter
 import PIL
+from PIL import Image, ImageFilter
 
-from modules.visprog_module import VisProgModule, ParsedStep
+from modules.visprog_module import ParsedStep, VisProgModule
 
 
 class Crop(VisProgModule):
-    pattern = re.compile(r"(?P<output>\S*)\s*=\s*CROP\s*"
-                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
-                         r",\s*box\s*=\s*(?P<box>\S*)\s*\)")
+    pattern = re.compile(
+        r"(?P<output>\S*)\s*=\s*CROP\s*"
+        r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+        r",\s*box\s*=\s*(?P<box>\S*)\s*\)"
+    )
 
     def parse(self, match: re.Match[str], step: str) -> ParsedStep:
-        """ Parse step and return list of input values/variable names
+        """Parse step and return list of input values/variable names
             and output variable name.
 
         Parameters
@@ -31,14 +33,15 @@ class Crop(VisProgModule):
             in the original Visprog paper... so will need to take some liberties here
             and just use a torch tensor or image... can also leave it untyped
         """
-        return ParsedStep(match.group('output'),
-                          input_var_names={
-                              'image': match.group('image'),
-                              'box': match.group('box')
-                          })
+        return ParsedStep(
+            match.group("output"),
+            input_var_names={"image": match.group("image"), "box": match.group("box")},
+        )
 
-    def perform_module_function(self, image: Image.Image, box: Tuple[Tuple[float, ...], ...]) -> Image.Image:
-        """ Perform the color pop operation on the image using the object mask
+    def perform_module_function(
+        self, image: Image.Image, box: Tuple[Tuple[float, ...], ...]
+    ) -> Image.Image:
+        """Perform the color pop operation on the image using the object mask
 
         Parameters
         ----------
@@ -53,11 +56,13 @@ class Crop(VisProgModule):
         Image.Image
             The color popped image
         """
-        # TODO: which box we should use?
-        return image.crop(box[0])
+        # If there is a crop, crop it, if not, return the image as is...
+        return image.crop(box[0]) if len(box) > 0 else image
 
-    def html(self, output: Image.Image, image: Image.Image, box: Tuple[float,...]) -> Dict[str, Any]:
-        """ Generate HTML to display the output
+    def html(
+        self, output: Image.Image, image: Image.Image, box: Tuple[float, ...]
+    ) -> Dict[str, Any]:
+        """Generate HTML to display the output
 
         Parameters
         ----------
@@ -73,6 +78,6 @@ class Crop(VisProgModule):
             The HTML to display the output
         """
         return {
-            'input': image,
-            'output': output,
+            "input": image,
+            "output": output,
         }

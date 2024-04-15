@@ -1,9 +1,9 @@
 import argparse
 import importlib
 import os
+import random
 import re
 import time
-import random
 
 import yaml
 from selenium.common import TimeoutException
@@ -68,9 +68,15 @@ def main():
         default=False,
     )
     parser.add_argument(
+        '-wt', '--wait_time',
+        type=int,
+        default=5,
+    )
+    parser.add_argument(
         'prompts_file',
         type=str,
     )
+    
     parser.add_argument(
         'output_file',
         type=str,
@@ -119,17 +125,26 @@ def main():
                     if not final_lines:
                         raise ValueError('No program generated')
                     if len(final_lines) != len(prompt_objects) + 1:
+
+                        print(f"Final lines does not equal prompt objects + 1... waiting for {args.wait_time - 5} seconds")
+                        time.sleep(args.wait_time - 5)
+
                         if len(final_lines) == 1:
                             print(f'Answer: {program}')
                         raise ValueError(f'Ambiguous program generated. Expected {len(prompt_objects)} programs, '
                                          f'got {len(final_lines) - 1}')
+
                     programs = ['\n'.join(lines[before_line + 1:final_line + 1])
                                 for before_line, final_line in zip(final_lines[:-1], final_lines[1:])]
+
                     for prompt_object, program in zip(prompt_objects, programs):
                         prompt_object['programs'].append(program)
+
                     print(f'Generated programs: {"\n\n".join(programs)}')
+
                     with open(args.output_file, 'w') as f:
                         yaml.dump(prompts, f, default_style='|', sort_keys=False)
+
                 except (TimeoutException, ValueError) as e:
                     if isinstance(e, ValueError):
                         if not e.args or not (e.args[0] == 'No program generated' or e.args[0].startswith('Ambiguous')):
@@ -139,8 +154,9 @@ def main():
                         print('TimeoutException')
                 finally:
                     gpt.new_chat()
-                    print('waiting 5 seconds')
-                    time.sleep(5)
+                    print(f'waiting {args.wait_time} seconds')
+                    time.sleep(args.wait_time)
+
                 print('---------')
     finally:
         gpt.quit()

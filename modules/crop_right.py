@@ -7,12 +7,16 @@ from modules import Crop
 
 
 class CropRight(Crop):
-    pattern = re.compile(r"(?P<output>\S*)\s*=\s*CROP_RIGHTOF\s*"
-                         r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
-                         r",\s*box\s*=\s*(?P<box>\S*)\s*\)")
+    pattern = re.compile(
+        r"(?P<output>\S*)\s*=\s*CROP_RIGHTOF\s*"
+        r"\(\s*image\s*=\s*(?P<image>\S*)\s*"
+        r",\s*box\s*=\s*(?P<box>\S*)\s*\)"
+    )
 
-    def perform_module_function(self, image: Image.Image, box: Tuple[Tuple[float, ...], ...]) -> Image.Image:
-        """ Perform the color pop operation on the image using the object mask
+    def perform_module_function(
+        self, image: Image.Image, box: Tuple[Tuple[float, ...], ...]
+    ) -> Image.Image:
+        """Perform the color pop operation on the image using the object mask
 
         Parameters
         ----------
@@ -28,6 +32,10 @@ class CropRight(Crop):
             The color popped image
         """
         # TODO: which box we should use?
-        original_box = box[0]
+        original_box = box[0] if len(box) > 0 else (0, 0, image.width, image.height)
         right_box = (original_box[2], 0, image.width, image.height)
-        return image.crop(right_box)
+        # check that boinding box dimensions are valid
+        if right_box[0] < right_box[2] and right_box[1] < right_box[3] and len(box) > 0:
+            return image.crop(right_box)
+        else:
+            return image
